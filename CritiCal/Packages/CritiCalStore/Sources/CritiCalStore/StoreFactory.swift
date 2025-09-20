@@ -10,17 +10,18 @@ import Foundation
 import CritiCalModels
 
 public enum StoreFactory {
-    public static func makeContainer(cloud: Bool = true) throws -> ModelContainer {
+    public static func makeContainer(cloud: Bool = true, inMemory: Bool = false) throws -> ModelContainer {
         let schema = Schema([Event.self])
         let config = ModelConfiguration(
             schema: schema,
+            isStoredInMemoryOnly: inMemory,
             cloudKitDatabase: cloud ? .automatic : .none
         )
         return try ModelContainer(for: schema, configurations: config)
     }
 
-    public static func makeEventRepository(cloud: Bool = true) throws -> EventRepository {
-        let container = try makeContainer(cloud: cloud)
+    public static func makeEventRepository(cloud: Bool = true, inMemory: Bool = false) throws -> EventRepository {
+        let container = try makeContainer(cloud: cloud, inMemory: inMemory)
         return EventRepository(modelContainer: container)
     }
 }
