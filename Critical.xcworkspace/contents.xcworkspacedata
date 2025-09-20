@@ -4,4 +4,8 @@
    <FileRef
       location = "container:CritiCal/CritiCal.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:CLAUDE.md"
+      assignedFileDataType = "net.daringfireball.markdown">
+   </FileRef>
 </Workspace>
