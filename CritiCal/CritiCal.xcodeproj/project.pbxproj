@@ -1,0 +1,707 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B302E7C4FDF00013437 /* CritiCalDomain */; };
+		D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B322E7C4FDF00013437 /* CritiCalIntents */; };
+		D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B342E7C4FDF00013437 /* CritiCalModels */; };
+		D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B362E7C4FDF00013437 /* CritiCalStore */; };
+		D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B382E7C4FDF00013437 /* CritiCalUI */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D2145E892E7C23C000699882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2145E732E7C23BF00699882 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2145E7A2E7C23BF00699882;
+			remoteInfo = CritiCal;
+		};
+		D2145E932E7C23C000699882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2145E732E7C23BF00699882 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2145E7A2E7C23BF00699882;
+			remoteInfo = CritiCal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D2145E7B2E7C23BF00699882 /* CritiCal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CritiCal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2145E882E7C23C000699882 /* CritiCalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CritiCalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2145E922E7C23C000699882 /* CritiCalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CritiCalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D21460692E7C4CC300699882 /* CritiCal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CritiCal.xcodeproj; sourceTree = "<group>"; };
+		D21697432E7C4CD900A5E1CF /* CritiCal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CritiCal.xcodeproj; sourceTree = "<group>"; };
+		D24D20372E7C4D4F00DC2126 /* CritiCal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CritiCal.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D21460542E7C296C00699882 /* Exceptions for "CritiCal" folder in "CritiCal" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D2145E7A2E7C23BF00699882 /* CritiCal */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D2073B1E2E7C4EFA00013437 /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		D2145E7D2E7C23BF00699882 /* CritiCal */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D21460542E7C296C00699882 /* Exceptions for "CritiCal" folder in "CritiCal" target */,
+			);
+			path = CritiCal;
+			sourceTree = "<group>";
+		};
+		D2145E8B2E7C23C000699882 /* CritiCalTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CritiCalTests;
+			sourceTree = "<group>";
+		};
+		D2145E952E7C23C000699882 /* CritiCalUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CritiCalUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2145E782E7C23BF00699882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */,
+				D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */,
+				D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */,
+				D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */,
+				D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E852E7C23C000699882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E8F2E7C23C000699882 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D2073B252E7C4FC200013437 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2145E722E7C23BF00699882 = {
+			isa = PBXGroup;
+			children = (
+				D2073B1E2E7C4EFA00013437 /* Packages */,
+				D2145E7D2E7C23BF00699882 /* CritiCal */,
+				D2145E8B2E7C23C000699882 /* CritiCalTests */,
+				D2145E952E7C23C000699882 /* CritiCalUITests */,
+				D2073B252E7C4FC200013437 /* Frameworks */,
+				D2145E7C2E7C23BF00699882 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D2145E7C2E7C23BF00699882 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2145E7B2E7C23BF00699882 /* CritiCal.app */,
+				D2145E882E7C23C000699882 /* CritiCalTests.xctest */,
+				D2145E922E7C23C000699882 /* CritiCalUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D214606A2E7C4CC300699882 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D21697442E7C4CD900A5E1CF /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D24D20382E7C4D4F00DC2126 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D2145E7A2E7C23BF00699882 /* CritiCal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2145E9C2E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCal" */;
+			buildPhases = (
+				D2145E772E7C23BF00699882 /* Sources */,
+				D2145E782E7C23BF00699882 /* Frameworks */,
+				D2145E792E7C23BF00699882 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D2145E7D2E7C23BF00699882 /* CritiCal */,
+			);
+			name = CritiCal;
+			packageProductDependencies = (
+				D2073B302E7C4FDF00013437 /* CritiCalDomain */,
+				D2073B322E7C4FDF00013437 /* CritiCalIntents */,
+				D2073B342E7C4FDF00013437 /* CritiCalModels */,
+				D2073B362E7C4FDF00013437 /* CritiCalStore */,
+				D2073B382E7C4FDF00013437 /* CritiCalUI */,
+			);
+			productName = CritiCal;
+			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2145E872E7C23C000699882 /* CritiCalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2145E9F2E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCalTests" */;
+			buildPhases = (
+				D2145E842E7C23C000699882 /* Sources */,
+				D2145E852E7C23C000699882 /* Frameworks */,
+				D2145E862E7C23C000699882 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2145E8A2E7C23C000699882 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D2145E8B2E7C23C000699882 /* CritiCalTests */,
+			);
+			name = CritiCalTests;
+			packageProductDependencies = (
+			);
+			productName = CritiCalTests;
+			productReference = D2145E882E7C23C000699882 /* CritiCalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D2145E912E7C23C000699882 /* CritiCalUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2145EA22E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCalUITests" */;
+			buildPhases = (
+				D2145E8E2E7C23C000699882 /* Sources */,
+				D2145E8F2E7C23C000699882 /* Frameworks */,
+				D2145E902E7C23C000699882 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2145E942E7C23C000699882 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D2145E952E7C23C000699882 /* CritiCalUITests */,
+			);
+			name = CritiCalUITests;
+			packageProductDependencies = (
+			);
+			productName = CritiCalUITests;
+			productReference = D2145E922E7C23C000699882 /* CritiCalUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D2145E732E7C23BF00699882 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					D2145E7A2E7C23BF00699882 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					D2145E872E7C23C000699882 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = D2145E7A2E7C23BF00699882;
+					};
+					D2145E912E7C23C000699882 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = D2145E7A2E7C23BF00699882;
+					};
+				};
+			};
+			buildConfigurationList = D2145E762E7C23BF00699882 /* Build configuration list for PBXProject "CritiCal" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D2145E722E7C23BF00699882;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D2145E7C2E7C23BF00699882 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D24D20382E7C4D4F00DC2126 /* Products */;
+					ProjectRef = D24D20372E7C4D4F00DC2126 /* CritiCal.xcodeproj */;
+				},
+				{
+					ProductGroup = D21697442E7C4CD900A5E1CF /* Products */;
+					ProjectRef = D21697432E7C4CD900A5E1CF /* CritiCal.xcodeproj */;
+				},
+				{
+					ProductGroup = D214606A2E7C4CC300699882 /* Products */;
+					ProjectRef = D21460692E7C4CC300699882 /* CritiCal.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2145E7A2E7C23BF00699882 /* CritiCal */,
+				D2145E872E7C23C000699882 /* CritiCalTests */,
+				D2145E912E7C23C000699882 /* CritiCalUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D2145E792E7C23BF00699882 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E862E7C23C000699882 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E902E7C23C000699882 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2145E772E7C23BF00699882 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E842E7C23C000699882 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2145E8E2E7C23C000699882 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D2145E8A2E7C23C000699882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2145E7A2E7C23BF00699882 /* CritiCal */;
+			targetProxy = D2145E892E7C23C000699882 /* PBXContainerItemProxy */;
+		};
+		D2145E942E7C23C000699882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2145E7A2E7C23BF00699882 /* CritiCal */;
+			targetProxy = D2145E932E7C23C000699882 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D2145E9A2E7C23C000699882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D2145E9B2E7C23C000699882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D2145E9D2E7C23C000699882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CritiCal/CritiCal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CritiCal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CritiCal;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "CritiCal can access your calendar to store and sync your in-app events list with your system calendar. This is optional.";
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "CritiCal can access your calendar to write a copy of your in-app events into your system calendar.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "CritiCal can connect your events to contacts for managing plus-ones, PR details and more.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When finding venues, CritiCal may prioritise locations nearer to you, and use your current location to provide travel time estimates";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D2145E9E2E7C23C000699882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CritiCal/CritiCal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CritiCal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CritiCal;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "CritiCal can access your calendar to store and sync your in-app events list with your system calendar. This is optional.";
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "CritiCal can access your calendar to write a copy of your in-app events into your system calendar.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "CritiCal can connect your events to contacts for managing plus-ones, PR details and more.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "When finding venues, CritiCal may prioritise locations nearer to you, and use your current location to provide travel time estimates";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D2145EA02E7C23C000699882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CritiCal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CritiCal";
+			};
+			name = Debug;
+		};
+		D2145EA12E7C23C000699882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CritiCal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CritiCal";
+			};
+			name = Release;
+		};
+		D2145EA32E7C23C000699882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CritiCal;
+			};
+			name = Debug;
+		};
+		D2145EA42E7C23C000699882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RM7C8J5K3X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.strangemagic.CritiCalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CritiCal;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D2145E762E7C23BF00699882 /* Build configuration list for PBXProject "CritiCal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2145E9A2E7C23C000699882 /* Debug */,
+				D2145E9B2E7C23C000699882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2145E9C2E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2145E9D2E7C23C000699882 /* Debug */,
+				D2145E9E2E7C23C000699882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2145E9F2E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2145EA02E7C23C000699882 /* Debug */,
+				D2145EA12E7C23C000699882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2145EA22E7C23C000699882 /* Build configuration list for PBXNativeTarget "CritiCalUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2145EA32E7C23C000699882 /* Debug */,
+				D2145EA42E7C23C000699882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D2073B302E7C4FDF00013437 /* CritiCalDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalDomain;
+		};
+		D2073B322E7C4FDF00013437 /* CritiCalIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalIntents;
+		};
+		D2073B342E7C4FDF00013437 /* CritiCalModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalModels;
+		};
+		D2073B362E7C4FDF00013437 /* CritiCalStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalStore;
+		};
+		D2073B382E7C4FDF00013437 /* CritiCalUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalUI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D2145E732E7C23BF00699882 /* Project object */;
+}
