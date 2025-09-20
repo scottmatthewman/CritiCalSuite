@@ -131,24 +131,52 @@ struct EventDTOIdentifiableTests {
 
 @Suite("EventDTO - Sendable")
 struct EventDTOSendableTests {
-    @Test("EventDTO conforms to sendable")
+    /// Tests that EventDTO conforms to Sendable protocol for safe concurrent access.
+    ///
+    /// ## Purpose
+    /// This test verifies that EventDTO can be safely shared across concurrent contexts
+    /// without data races, which is essential for use in async/await and actor-based code.
+    ///
+    /// ## What It Tests
+    /// 1. **Compile-time safety**: Confirms EventDTO is recognized as Sendable by the compiler
+    /// 2. **Value semantics**: Verifies that each concurrent task gets its own copy of the data
+    /// 3. **No data races**: Ensures multiple tasks can access the same DTO instance safely
+    ///
+    /// ## Why This Test Matters
+    /// - **Documentation**: Explicitly shows EventDTO is designed for concurrent use
+    /// - **Regression prevention**: Ensures future changes don't break Sendable conformance
+    /// - **API contract**: Guarantees the type can be used in async/await and actor contexts
+    ///
+    /// ## Implementation Details
+    /// The test creates a single EventDTO instance and shares it across two concurrent tasks
+    /// using TaskGroup. Both tasks capture and return the same DTO. Since EventDTO is an
+    /// immutable struct, Swift automatically infers Sendable conformance, and each task
+    /// receives its own copy due to value semantics.
+    @Test("EventDTO conforms to sendable and can be safely shared across concurrent contexts")
     func testSendableConformance() async {
+        // Create a single EventDTO instance to share across concurrent tasks
         let dto = EventDTO(
             title: "Concurrent Event",
             date: Date.now,
             venueName: "Concurrent Venue"
         )
 
+        // Use TaskGroup to create multiple concurrent tasks
         await withTaskGroup(of: EventDTO.self) { group in
-            group.addTask { dto }
-            group.addTask { dto }
+            // Add two tasks that both capture the same dto
+            // This wouldn't compile if EventDTO wasn't Sendable
+            group.addTask { dto }  // Task 1: captures and returns the dto
+            group.addTask { dto }  // Task 2: captures and returns the same dto
 
+            // Collect results from both concurrent tasks
             var results: [EventDTO] = []
             for await result in group {
                 results.append(result)
             }
 
+            // Verify both tasks successfully returned their copies
             #expect(results.count == 2)
+            // Verify the copies are equal (value semantics preserved)
             #expect(results[0] == results[1])
         }
     }

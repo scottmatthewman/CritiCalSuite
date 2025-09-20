@@ -15,12 +15,33 @@ public struct GetEventIntent: AppIntent {
 
     @Parameter(title: "Event") var event: EventEntity
 
-    public init() { }
+    private let repositoryProvider: EventRepositoryProviding
+
+    public init() {
+        self.repositoryProvider = SharedStores.defaultProvider()
+    }
+
+    public init(repositoryProvider: EventRepositoryProviding) {
+        self.repositoryProvider = repositoryProvider
+    }
 
     public func perform() async throws -> some IntentResult & ReturnsValue<EventEntity> & ProvidesDialog {
-        let repo = try await SharedStores.eventRepo()
-        _ = try await repo.event(byIdentifier: event.id)
-        return .result(value: event, dialog: "Fetched \(event.title).")
+        let repo = try await repositoryProvider.eventRepo()
+
+        // Fetch the actual event from repository to validate it exists
+        guard let repositoryEvent = try await repo.event(byIdentifier: event.id) else {
+            throw EventIntentError.eventNotFound(id: event.id)
+        }
+
+        // Return the validated event data from repository, not the input parameter
+        let validatedEntity = EventEntity(
+            id: repositoryEvent.id,
+            title: repositoryEvent.title,
+            date: repositoryEvent.date,
+            venueName: repositoryEvent.venueName
+        )
+
+        return .result(value: validatedEntity, dialog: "Fetched \(validatedEntity.title).")
     }
 }
 

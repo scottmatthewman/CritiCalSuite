@@ -37,6 +37,11 @@ public protocol EventReading: Sendable {
     func recent(limit: Int) async throws -> [EventDTO]
     func event(byIdentifier id: UUID) async throws -> EventDTO?
     func search(text: String, limit: Int) async throws -> [EventDTO]
+
+    // Timeframe-based queries
+    func eventsToday(in calendar: Calendar, now: Date) async throws -> [EventDTO]
+    func eventsBefore(_ cutOff: Date) async throws -> [EventDTO]
+    func eventsAfter(_ cutOff: Date) async throws -> [EventDTO]
 }
 
 public protocol EventWriting: Sendable {
