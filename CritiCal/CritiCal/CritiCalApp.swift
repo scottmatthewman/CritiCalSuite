@@ -5,10 +5,12 @@
 //  Created by Scott Matthewman on 18/09/2025.
 //
 
-import SwiftUI
-import SwiftData
+import AppIntents
+import CritiCalIntents
 import CritiCalStore
 import CritiCalUI
+import SwiftData
+import SwiftUI
 
 @main
 struct CritiCalApp: App {
@@ -24,5 +26,6 @@ struct CritiCalApp: App {
         .environment(\.eventReader, repo)
         .environment(\.eventWriter, repo)
         .modelContainer(container)
+        .handlesExternalEvents(matching: [OpenEventIntent.persistentIdentifier])
     }
 }

@@ -5,8 +5,10 @@
 //  Created by Scott Matthewman on 20/09/2025.
 //
 
-import SwiftUI
+import AppIntents
 import CritiCalUI
+import CritiCalIntents
+import SwiftUI
 
 struct AppRouter: View {
     enum Route: Hashable {
@@ -26,6 +28,10 @@ struct AppRouter: View {
                     EventDetailView(id: id)
                 }
             }
+        }
+        .onAppIntentExecution(OpenEventIntent.self) { intent in
+            let eventID = intent.target.id
+            path = [.eventDetails(eventID)]
         }
     }
 }
