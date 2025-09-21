@@ -61,7 +61,7 @@ struct GetEventIntentPerformTests {
         let mockProvider = MockRepositoryProvider()
 
         // Create intent with event that doesn't exist in repository
-        var intent = GetEventIntent(repositoryProvider: mockProvider)
+        let intent = GetEventIntent(repositoryProvider: mockProvider)
         intent.event = EventEntity(
             id: UUID(), // Random ID not in repository
             title: "Missing Event",
@@ -114,7 +114,7 @@ struct ListEventsIntentPerformTests {
         await mockProvider.addMockEvents(todayEvents)
 
         // Create intent with mock repository and .today timeframe
-        var intent = ListEventsIntent(repositoryProvider: mockProvider)
+        let intent = ListEventsIntent(repositoryProvider: mockProvider)
         intent.timeframe = .today
 
         // Actually call perform() method
@@ -177,7 +177,7 @@ struct ListEventsIntentPerformTests {
         await mockProvider.addMockEvents(pastEvents + [futureEvent])
 
         // Create intent with .past timeframe
-        var intent = ListEventsIntent(repositoryProvider: mockProvider)
+        let intent = ListEventsIntent(repositoryProvider: mockProvider)
         intent.timeframe = .past
 
         // Call perform() method
@@ -223,7 +223,7 @@ struct ListEventsIntentPerformTests {
         await mockProvider.addMockEvents(futureEvents + [pastEvent])
 
         // Create intent with .future timeframe
-        var intent = ListEventsIntent(repositoryProvider: mockProvider)
+        let intent = ListEventsIntent(repositoryProvider: mockProvider)
         intent.timeframe = .future
 
         // Call perform() method

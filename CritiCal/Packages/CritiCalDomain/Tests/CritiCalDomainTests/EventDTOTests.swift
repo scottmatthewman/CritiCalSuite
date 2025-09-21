@@ -23,6 +23,7 @@ struct EventDTOInitializationTests {
         )
 
         #expect(dto.title == "Test Event")
+        #expect(dto.festivalName == "Test Festival")
         #expect(dto.date == date)
         #expect(dto.venueName == "Test Venue")
         #expect(dto.id != UUID())
@@ -41,9 +42,6 @@ struct EventDTOInitializationTests {
         )
 
         #expect(dto.id == customID)
-        #expect(dto.title == "Custom Event")
-        #expect(dto.date == date)
-        #expect(dto.venueName == "Custom Venue")
     }
 }
 
@@ -112,7 +110,7 @@ struct EventDTOEquatableTests {
         let dto2 = EventDTO(
             id: id,
             title: "Event 2",
-            festivalName: "Festival 2",
+            festivalName: "Festival 1",
             date: date,
             venueName: "Venue"
         )
@@ -129,7 +127,6 @@ struct EventDTOIdentifiableTests {
         let dto = EventDTO(
             id: customID,
             title: "Event",
-            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue"
         )

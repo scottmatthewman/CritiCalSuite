@@ -8,6 +8,7 @@
 import Testing
 import Foundation
 import AppIntents
+import CritiCalDomain
 @testable import CritiCalIntents
 
 @Suite("EventEntity - Initialization")
@@ -359,6 +360,25 @@ struct EventEntityIntegrationTests {
         #expect(entity.festivalName == dtoFestivalName)
         #expect(entity.date == dtoDate)
         #expect(entity.venueName == dtoVenueName)
+    }
+
+    @Test("EventEntity can be created directly from a DTO")
+    func testDTOInitialization() {
+        let dto = EventDTO(
+            id: UUID(),
+            title: "Event",
+            festivalName: "Festival",
+            date: Date.now,
+            venueName: "Venue"
+        )
+
+        let entity = EventEntity(from: dto)
+
+        #expect(entity.id == dto.id)
+        #expect(entity.title == dto.title)
+        #expect(entity.festivalName == dto.festivalName)
+        #expect(entity.date == dto.date)
+        #expect(entity.venueName == dto.venueName)
     }
 
     @Test("Multiple EventEntities can be created in batch")

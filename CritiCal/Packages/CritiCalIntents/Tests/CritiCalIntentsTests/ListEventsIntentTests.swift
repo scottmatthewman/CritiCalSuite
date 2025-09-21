@@ -153,7 +153,7 @@ struct ListEventsIntentRepositoryTests {
         await mockProvider.addMockEvents(createMockEvents())
 
         // Create intent with .past timeframe
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .past
 
         // Expected: Intent should call repo.eventsBefore()
@@ -171,7 +171,7 @@ struct ListEventsIntentRepositoryTests {
         await mockProvider.addMockEvents(createMockEvents())
 
         // Create intent with .future timeframe
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .future
 
         // Expected: Intent should call repo.eventsAfter()
@@ -274,7 +274,7 @@ struct ListEventsIntentResultTests {
     @Test("ListEventsIntent returns correct result type")
     func testResultType() async throws {
         // Create intent
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .today
 
         // Verify the return type signature
@@ -287,7 +287,7 @@ struct ListEventsIntentResultTests {
     @Test("ListEventsIntent result should contain filtered events")
     func testResultContainsFilteredEvents() async throws {
         // Create intent with specific timeframe
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .today
 
         // Expected: The result should contain only events matching the timeframe
@@ -333,17 +333,17 @@ struct ListEventsIntentBusinessLogicTests {
         await mockProvider.addMockEvent(testEvent)
 
         // Test .today timeframe calls eventsToday()
-        var todayIntent = ListEventsIntent(repositoryProvider: mockProvider)
+        let todayIntent = ListEventsIntent(repositoryProvider: mockProvider)
         todayIntent.timeframe = .today
         _ = try await todayIntent.perform()
 
         // Test .past timeframe calls eventsBefore()
-        var pastIntent = ListEventsIntent(repositoryProvider: mockProvider)
+        let pastIntent = ListEventsIntent(repositoryProvider: mockProvider)
         pastIntent.timeframe = .past
         _ = try await pastIntent.perform()
 
         // Test .future timeframe calls eventsAfter()
-        var futureIntent = ListEventsIntent(repositoryProvider: mockProvider)
+        let futureIntent = ListEventsIntent(repositoryProvider: mockProvider)
         futureIntent.timeframe = .future
         _ = try await futureIntent.perform()
 
@@ -481,7 +481,7 @@ struct ListEventsIntentErrorHandlingTests {
 
     @Test("ListEventsIntent perform method can throw errors")
     func testPerformCanThrow() {
-        let intent = ListEventsIntent()
+        _ = ListEventsIntent()
 
         // Verify the perform method has correct throwing signature
         #expect(Bool(true)) // perform() method exists and can throw
@@ -489,7 +489,7 @@ struct ListEventsIntentErrorHandlingTests {
 
     @Test("ListEventsIntent should handle repository errors")
     func testRepositoryErrorHandling() async throws {
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .today
 
         // Expected: If repository throws an error, intent should handle it appropriately
@@ -501,7 +501,7 @@ struct ListEventsIntentErrorHandlingTests {
 
     @Test("ListEventsIntent uses repository methods correctly")
     func testRepositoryMethodsExist() async throws {
-        var intent = ListEventsIntent()
+        let intent = ListEventsIntent()
         intent.timeframe = .today
 
         // Repository methods eventsToday(), eventsBefore(), eventsAfter() now exist

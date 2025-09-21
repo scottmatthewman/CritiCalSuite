@@ -90,7 +90,7 @@ struct EventPropertyTests {
 
     @Test("Event properties can be modified after initialization")
     func testPropertyModification() {
-        var event = Event()
+        let event = Event()
 
         let newID = UUID()
         let newDate = Date.now.addingTimeInterval(3600)
@@ -110,7 +110,7 @@ struct EventPropertyTests {
 
     @Test("Event properties retain their values")
     func testPropertyRetention() {
-        var event = Event(title: "Original Title", venueName: "Original Venue")
+        let event = Event(title: "Original Title", venueName: "Original Venue")
         let originalID = event.identifier
         let originalDate = event.date
 
@@ -139,7 +139,11 @@ struct EventPropertyTests {
 
     @Test("Event can handle empty string properties")
     func testEmptyStringProperties() {
-        var event = Event(title: "Test", festivalName: "Test", venueName: "Test")
+        let event = Event(
+            title: "Test",
+            festivalName: "Test",
+            venueName: "Test"
+        )
 
         event.title = ""
         event.festivalName = ""
@@ -155,7 +159,7 @@ struct EventPropertyTests {
 
     @Test("Event properties are independent")
     func testPropertyIndependence() {
-        var event = Event()
+        let event = Event()
 
         let originalVenue = event.venueName
         let originalFestival = event.festivalName
@@ -199,7 +203,7 @@ struct EventDataIntegrityTests {
     @Test("Event maintains string integrity across property access")
     func testStringIntegrityOverTime() {
         let complexString = "Multi\nLine\tWith\r\nSpecial Characters: !@#$%^&*()"
-        var event = Event()
+        let event = Event()
 
         event.title = complexString
         event.venueName = complexString
@@ -321,7 +325,7 @@ struct EventEdgeCaseTests {
 
     @Test("Event maintains consistency with rapid property changes")
     func testRapidPropertyChanges() {
-        var event = Event()
+        let event = Event()
 
         // Rapidly change properties multiple times
         for i in 0..<100 {
@@ -390,7 +394,7 @@ struct EventValueSemanticsTests {
 
     @Test("Property changes don't affect other instances")
     func testPropertyIsolation() {
-        var event1 = Event(title: "Original")
+        let event1 = Event(title: "Original")
         let event2 = Event(title: "Original")
 
         event1.title = "Modified"
@@ -407,7 +411,7 @@ struct EventValueSemanticsTests {
             date: Date.now.addingTimeInterval(3600)
         )
 
-        var targetEvent = Event()
+        let targetEvent = Event()
         targetEvent.title = sourceEvent.title
         targetEvent.venueName = sourceEvent.venueName
         targetEvent.date = sourceEvent.date
@@ -424,7 +428,7 @@ struct EventValueSemanticsTests {
         let originalIdentifier = event.identifier
 
         // Modify other properties
-        var mutableEvent = event
+        let mutableEvent = event
         mutableEvent.title = "Changed"
         mutableEvent.venueName = "Changed"
         mutableEvent.date = Date.now.addingTimeInterval(3600)
@@ -434,7 +438,7 @@ struct EventValueSemanticsTests {
 
     @Test("Events maintain independence in collections")
     func testCollectionIndependence() {
-        var events = [
+        let events = [
             Event(title: "Event 1"),
             Event(title: "Event 2"),
             Event(title: "Event 3")
@@ -449,7 +453,7 @@ struct EventValueSemanticsTests {
 
     @Test("Event property assignment preserves data types")
     func testDataTypePreservation() {
-        var event = Event()
+        let event = Event()
 
         let stringValue: String = "Type Test"
         let dateValue: Date = Date.now

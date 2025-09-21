@@ -44,4 +44,12 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         self.date = date
         self.venueName = venueName
     }
+
+    public init(from dto: EventDTO) {
+        self.id = dto.id
+        self.title = dto.title
+        self.festivalName = dto.festivalName
+        self.date = dto.date
+        self.venueName = dto.venueName
+    }
 }

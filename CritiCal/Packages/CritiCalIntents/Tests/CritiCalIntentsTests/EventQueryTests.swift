@@ -11,6 +11,18 @@ import AppIntents
 import CritiCalDomain
 @testable import CritiCalIntents
 
+func createMockEvents(itemCount: Int = 5) -> [EventDTO] {
+    return (1...itemCount).map { index in
+        EventDTO(
+            id: UUID(),
+            title: "Event \(index)",
+            festivalName: "Festival \(index)",
+            date: Date.now.addingTimeInterval(Double(index - 1) * 3600),
+            venueName: "Venue \(index)"
+        )
+    }
+}
+
 @Suite("EventQuery - Initialization")
 struct EventQueryInitializationTests {
 
@@ -60,52 +72,12 @@ struct EventQueryEntityQueryTests {
 
 @Suite("EventQuery - Suggested Entities")
 struct EventQuerySuggestedEntitiesTests {
-
-    func createMockEvents() -> [EventDTO] {
-        return [
-            EventDTO(
-                id: UUID(),
-                title: "Event 1",
-                festivalName: "Festival 1",
-                date: Date.now,
-                venueName: "Venue 1"
-            ),
-            EventDTO(
-                id: UUID(),
-                title: "Event 2",
-                festivalName: "Festival 2",
-                date: Date.now.addingTimeInterval(3600),
-                venueName: "Venue 2"
-            ),
-            EventDTO(
-                id: UUID(),
-                title: "Event 3",
-                festivalName: "Festival 3",
-                date: Date.now.addingTimeInterval(7200),
-                venueName: "Venue 3"
-            ),
-            EventDTO(
-                id: UUID(),
-                title: "Conference",
-                festivalName: "",
-                date: Date.now.addingTimeInterval(10800),
-                venueName: "Conference Center"
-            ),
-            EventDTO(
-                id: UUID(),
-                title: "Workshop",
-                festivalName: "",
-                date: Date.now.addingTimeInterval(14400),
-                venueName: "Workshop Hall"
-            ),
-        ]
-    }
-
     @Test("suggestedEntities returns recent events from repository")
     func testSuggestedEntitiesReturnsRecent() async throws {
+        let itemCount = 5
         // Setup mock provider and data
         let mockProvider = MockRepositoryProvider()
-        let mockEvents = createMockEvents()
+        let mockEvents = createMockEvents(itemCount: itemCount)
         await mockProvider.addMockEvents(mockEvents)
 
         // Create query with mock provider
@@ -119,7 +91,7 @@ struct EventQuerySuggestedEntitiesTests {
         #expect(await mockProvider.getLastRecentLimit() == 10)
 
         // Verify results
-        #expect(entities.count == 5) // All mock events returned (less than limit of 10)
+        #expect(entities.count == itemCount) // All mock events returned
         #expect(entities[0].title == "Event 1")
         #expect(entities[1].title == "Event 2")
         #expect(entities[0].venueName == "Venue 1")
@@ -136,15 +108,7 @@ struct EventQuerySuggestedEntitiesTests {
     func testSuggestedEntitiesLimit() async throws {
         // Setup mock with many events
         let mockProvider = MockRepositoryProvider()
-        let manyEvents = (0..<15).map { index in
-            EventDTO(
-                id: UUID(),
-                title: "Event \(index)",
-                festivalName: "Festival \(index)",
-                date: Date.now.addingTimeInterval(Double(index) * 3600),
-                venueName: "Venue \(index)"
-            )
-        }
+        let manyEvents = createMockEvents(itemCount: 15)
         await mockProvider.addMockEvents(manyEvents)
 
         let query = EventQuery(repositoryProvider: mockProvider)
@@ -161,23 +125,17 @@ struct EventQuerySuggestedEntitiesTests {
         let mockProvider = MockRepositoryProvider()
         let searchableEvents = [
             EventDTO(
-                id: UUID(),
                 title: "Swift Conference",
-                festivalName: "",
                 date: Date.now,
                 venueName: "Convention Center"
             ),
             EventDTO(
-                id: UUID(),
                 title: "React Workshop",
-                festivalName: "",
                 date: Date.now,
                 venueName: "Tech Hub"
             ),
             EventDTO(
-                id: UUID(),
                 title: "Design Meetup",
-                festivalName: "",
                 date: Date.now,
                 venueName: "Swift Building"
             )
@@ -217,16 +175,12 @@ struct EventQueryEntityResolutionTests {
         // Setup mock with known events
         let mockProvider = MockRepositoryProvider()
         let event1 = EventDTO(
-            id: UUID(),
             title: "Event 1",
-            festivalName: "Festival 1",
             date: Date.now,
             venueName: "Venue 1"
         )
         let event2 = EventDTO(
-            id: UUID(),
             title: "Event 2",
-            festivalName: "Festival 2",
             date: Date.now,
             venueName: "Venue 2"
         )
@@ -246,9 +200,7 @@ struct EventQueryEntityResolutionTests {
     func testEntitiesForMissingIdentifiers() async throws {
         let mockProvider = MockRepositoryProvider()
         let existingEvent = EventDTO(
-            id: UUID(),
             title: "Existing Event",
-            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue"
         )
@@ -280,23 +232,17 @@ struct EventQueryEntityResolutionTests {
     func testEntitiesPreservesOrder() async throws {
         let mockProvider = MockRepositoryProvider()
         let event1 = EventDTO(
-            id: UUID(),
             title: "First",
-            festivalName: "First Fest",
             date: Date.now,
             venueName: "Venue 1"
         )
         let event2 = EventDTO(
-            id: UUID(),
             title: "Second",
-            festivalName: "Second Fest",
             date: Date.now,
             venueName: "Venue 2"
         )
         let event3 = EventDTO(
-            id: UUID(),
             title: "Third",
-            festivalName: "Third Fest",
             date: Date.now,
             venueName: "Venue 3"
         )

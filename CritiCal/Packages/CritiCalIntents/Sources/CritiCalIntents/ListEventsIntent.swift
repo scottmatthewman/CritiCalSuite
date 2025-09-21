@@ -39,13 +39,7 @@ public struct ListEventsIntent: AppIntent {
         }
 
         let entities = dtos.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
+            EventEntity(from: $0)
         }
         return .result(value: entities)
     }

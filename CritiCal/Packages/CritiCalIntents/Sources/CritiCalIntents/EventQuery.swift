@@ -28,7 +28,7 @@ public struct EventQuery: EntityQuery, Sendable {
     public func suggestedEntities() async throws -> [EventEntity] {
         let repo = try await repositoryProvider.eventRepo()
         let recent = try await repo.recent(limit: 10)
-        return recent.map { entity(from: $0) }
+        return recent.map { EventEntity(from: $0) }
     }
 
     // Resolve a specific ID saved in a Shortcut.
@@ -38,7 +38,7 @@ public struct EventQuery: EntityQuery, Sendable {
         results.reserveCapacity(identifiers.count)
         for id in identifiers {
             if let dto = try await repo.event(byIdentifier: id) {
-                results.append(entity(from: dto))
+                results.append(EventEntity(from: dto))
             }
         }
         return results
@@ -48,17 +48,7 @@ public struct EventQuery: EntityQuery, Sendable {
     public func suggestedEntities(for query: String) async throws -> [EventEntity] {
         let repo = try await repositoryProvider.eventRepo()
         let results = try await repo.search(text: query, limit: 10)
-        return results.map { entity(from: $0) }
-    }
-
-    private func entity(from dto: EventDTO) -> EventEntity {
-        EventEntity(
-            id: dto.id,
-            title: dto.title,
-            festivalName: dto.festivalName,
-            date: dto.date,
-            venueName: dto.venueName
-        )
+        return results.map { EventEntity(from: $0) }
     }
 }
 

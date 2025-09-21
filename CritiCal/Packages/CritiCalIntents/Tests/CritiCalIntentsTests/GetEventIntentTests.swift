@@ -83,7 +83,7 @@ struct GetEventIntentRepositoryTests {
         await mockProvider.addMockEvent(testDTO)
 
         // Create intent with mock repository and test event entity
-        var intent = GetEventIntent(repositoryProvider: mockProvider)
+        let intent = GetEventIntent(repositoryProvider: mockProvider)
         intent.event = EventEntity(
             id: testDTO.id,
             title: "Input Title", // Different from repository
@@ -113,7 +113,7 @@ struct GetEventIntentRepositoryTests {
         let mockProvider = MockRepositoryProvider()
 
         // Create intent with event that doesn't exist in repository
-        var intent = GetEventIntent(repositoryProvider: mockProvider)
+        let intent = GetEventIntent(repositoryProvider: mockProvider)
         intent.event = EventEntity(
             id: UUID(), // Random ID not in repository
             title: "Missing Event",
@@ -145,7 +145,7 @@ struct GetEventIntentResultTests {
     @Test("GetEventIntent returns correct result type")
     func testResultType() async throws {
         // Create intent with test event
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: UUID(),
             title: "Result Test Event",
@@ -174,7 +174,7 @@ struct GetEventIntentResultTests {
         )
 
         // Create intent
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: testEvent.id,
             title: testEvent.title,
@@ -193,7 +193,7 @@ struct GetEventIntentResultTests {
     @Test("GetEventIntent dialog should mention event title")
     func testDialogContent() async throws {
         // Create intent with specific event
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: UUID(),
             title: "Dialog Test Event",
@@ -215,7 +215,7 @@ struct GetEventIntentEdgeCaseTests {
 
     @Test("GetEventIntent handles event with special characters")
     func testSpecialCharacters() async throws {
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: UUID(),
             title: "Event with émojis 🎉 & spëcial chars!",
@@ -233,7 +233,7 @@ struct GetEventIntentEdgeCaseTests {
     func testLongEventTitle() async throws {
         let longTitle = String(repeating: "Very Long Event Title ", count: 20)
 
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: UUID(),
             title: longTitle,
@@ -251,7 +251,7 @@ struct GetEventIntentEdgeCaseTests {
         let futureDate = Date.now.addingTimeInterval(86400 * 30) // 30 days future
         let pastDate = Date.now.addingTimeInterval(-86400 * 30) // 30 days past
 
-        let futureIntent = GetEventIntent()
+        _ = GetEventIntent()
         let futureEvent = EventEntity(
             id: UUID(),
             title: "Future Event",
@@ -260,7 +260,7 @@ struct GetEventIntentEdgeCaseTests {
             venueName: "Future Venue"
         )
 
-        let pastIntent = GetEventIntent()
+        _ = GetEventIntent()
         let pastEvent = EventEntity(
             id: UUID(),
             title: "Past Event",
@@ -279,7 +279,7 @@ struct GetEventIntentErrorHandlingTests {
 
     @Test("GetEventIntent perform method can throw errors")
     func testPerformCanThrow() {
-        let intent = GetEventIntent()
+        _ = GetEventIntent()
 
         // Verify the perform method has correct throwing signature
         // This ensures errors from repository layer can be propagated
@@ -288,7 +288,7 @@ struct GetEventIntentErrorHandlingTests {
 
     @Test("GetEventIntent should handle repository errors")
     func testRepositoryErrorHandling() async throws {
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
         intent.event = EventEntity(
             id: UUID(),
             title: "Error Test Event",
