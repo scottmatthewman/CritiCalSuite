@@ -114,13 +114,15 @@ public actor EventRepository: EventReading & EventWriting {
         title: String,
         festivalName: String,
         venueName: String,
-        date: Date
+        date: Date,
+        durationMinutes: Int? = nil
     ) async throws -> UUID {
         let newEvent = Event(
             title: title,
             festivalName: festivalName,
             venueName: venueName,
-            date: date
+            date: date,
+            durationMinutes: durationMinutes
         )
         modelContext.insert(newEvent)
         do {
@@ -135,8 +137,9 @@ public actor EventRepository: EventReading & EventWriting {
         eventID: UUID,
         title: String?,
         festivalName: String?,
+        venueName: String?,
         date: Date?,
-        venueName: String?
+        durationMinutes: Int?
     ) async throws {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == eventID })
         guard let event = try modelContext.fetch(fd).first else {
@@ -147,6 +150,7 @@ public actor EventRepository: EventReading & EventWriting {
         if let festivalName { event.festivalName = festivalName }
         if let date { event.date = date }
         if let venueName { event.venueName = venueName }
+        if let durationMinutes { event.durationMinutes = durationMinutes }
 
         do {
             try modelContext.save()
@@ -177,6 +181,7 @@ private extension Event {
             title: title,
             festivalName: festivalName,
             date: date,
+            durationMinutes: durationMinutes,
             venueName: venueName
         )
     }

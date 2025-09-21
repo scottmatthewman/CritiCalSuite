@@ -377,8 +377,9 @@ struct StoreFactoryIntegrationTests {
             eventID: eventID,
             title: "Updated CRUD Event",
             festivalName: "Updated CRUD Festival",
+            venueName: "Updated CRUD Venue",
             date: nil,
-            venueName: "Updated CRUD Venue"
+            durationMinutes: nil
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
