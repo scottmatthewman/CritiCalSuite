@@ -37,6 +37,18 @@ struct EventEntityInitializationTests {
         #expect(entity.venueName == venueName)
     }
 
+    @Test("EventEntity initializes with default values for optional properties")
+    func testInitializationWithDefaults() {
+        let entity = EventEntity(
+            title: "Default Event",
+            date: Date.now
+        )
+
+        #expect(type(of: entity.id) == UUID.self)
+        #expect(entity.festivalName == "")
+        #expect(entity.venueName == "")
+    }
+
     @Test("EventEntity properties remain accessible after initialization")
     func testPropertyAccessibility() {
         let entity = EventEntity(
@@ -63,16 +75,10 @@ struct EventEntityInitializationTests {
     @Test("EventEntity handles edge case values")
     func testEdgeCaseValues() {
         let entity = EventEntity(
-            id: UUID(),
             title: "",
-            festivalName: "",
             date: Date.distantPast,
-            venueName: ""
         )
 
-        #expect(entity.title == "")
-        #expect(entity.festivalName == "")
-        #expect(entity.venueName == "")
         #expect(entity.date == Date.distantPast)
     }
 
@@ -83,7 +89,6 @@ struct EventEntityInitializationTests {
         let specialVenue = "Café Müller & Co."
 
         let entity = EventEntity(
-            id: UUID(),
             title: specialTitle,
             festivalName: specialFestival,
             date: Date.now,
@@ -98,11 +103,9 @@ struct EventEntityInitializationTests {
 
 @Suite("EventEntity - Display Representation")
 struct EventEntityDisplayTests {
-
     @Test("Display representation formats title correctly")
     func testDisplayRepresentationTitle() {
         let entity = EventEntity(
-            id: UUID(),
             title: "Annual Conference",
             festivalName: "Business Expo",
             date: Date.now,
@@ -110,8 +113,9 @@ struct EventEntityDisplayTests {
         )
 
         let displayRep = entity.displayRepresentation
-        // LocalizedStringResource interpolates the title value
-        #expect(String(describing: displayRep.title).contains("Annual Conference"))
+        // Convert LocalizedStringResource to String for testing
+        let titleString = String(localized: displayRep.title)
+        #expect(titleString == "Annual Conference (Business Expo)")
     }
 
     @Test("Display representation formats subtitle with venue and date")
@@ -139,11 +143,13 @@ struct EventEntityDisplayTests {
 
     @Test("Display representation handles empty venue name")
     func testDisplayRepresentationEmptyVenue() {
+        let date = Date.now
+        let strDate = date.formatted()
         let entity = EventEntity(
             id: UUID(),
             title: "Virtual Event",
             festivalName: "Online Expo",
-            date: Date.now,
+            date: date,
             venueName: ""
         )
 
@@ -152,8 +158,8 @@ struct EventEntityDisplayTests {
         #expect(displayRep.subtitle != nil)
 
         // String representation will have empty venue but still include date
-        let subtitleString = String(describing: displayRep.subtitle!)
-        #expect(subtitleString.contains(","))
+        let subtitleString = String(localized: displayRep.subtitle!)
+        #expect(subtitleString == strDate) // Only use date if venue is empty
     }
 
     @Test("Display representation handles very long titles")
@@ -168,8 +174,15 @@ struct EventEntityDisplayTests {
         )
 
         let displayRep = entity.displayRepresentation
-        // Title should contain the long title text
-        #expect(String(describing: displayRep.title).contains("Very Long Event Title"))
+        #expect(
+            String(localized: displayRep.title)
+                .contains("Very Long Event Title"),
+            "Title should contain the long event title text"
+        )
+        #expect(
+            String(localized: displayRep.title).contains(" (Mega Festival)"),
+            "Title should contain the festival name"
+        )
     }
 }
 

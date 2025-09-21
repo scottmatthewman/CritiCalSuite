@@ -28,15 +28,31 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     public var venueName: String
 
     public var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(title)", subtitle: "\(venueName), \(date.formatted())")
+        DisplayRepresentation(title: displayTitle, subtitle: displaySubtitle)
+    }
+
+    private var displayTitle: LocalizedStringResource {
+        if festivalName.isEmpty {
+            "\(title)"
+        } else {
+            "\(title) (\(festivalName))"
+        }
+    }
+
+    private var displaySubtitle: LocalizedStringResource {
+        if venueName.isEmpty {
+            "\(date.formatted())"
+        } else {
+            "\(venueName), \(date.formatted())"
+        }
     }
 
     public init(
-        id: UUID,
+        id: UUID = UUID(),
         title: String,
-        festivalName: String,
+        festivalName: String = "",
         date: Date,
-        venueName: String
+        venueName: String = ""
     ) {
         self.id = id
         self.title = title
