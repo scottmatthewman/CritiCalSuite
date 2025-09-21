@@ -83,6 +83,27 @@ private(set) var recentCalled = false
         }
     }
 
+    func eventsNext7Days(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+        let startOfToday = calendar.startOfDay(for: now)
+        guard let endOf7Days = calendar.date(byAdding: .day, value: 7, to: startOfToday) else {
+            return []
+        }
+
+        return mockEvents.filter { event in
+            event.date >= startOfToday && event.date < endOf7Days
+        }
+    }
+
+    func eventsThisMonth(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+        guard let range = calendar.dateInterval(of: .month, for: now) else {
+            return []
+        }
+
+        return mockEvents.filter { event in
+            event.date >= range.start && event.date <= range.end
+        }
+    }
+
     // MARK: - EventWriting Implementation
 
     @discardableResult
@@ -90,7 +111,8 @@ private(set) var recentCalled = false
         title: String,
         festivalName: String,
         venueName: String,
-        date: Date
+        date: Date,
+        durationMinutes: Int? = nil
     ) async throws -> UUID {
         let id = UUID()
         let newEvent = EventDTO(
@@ -98,6 +120,7 @@ private(set) var recentCalled = false
             title: title,
             festivalName: festivalName,
             date: date,
+            durationMinutes: durationMinutes,
             venueName: venueName
         )
         mockEvents.append(newEvent)
@@ -108,8 +131,9 @@ private(set) var recentCalled = false
         eventID: UUID,
         title: String?,
         festivalName: String?,
+        venueName: String?,
         date: Date?,
-        venueName: String?
+        durationMinutes: Int?
     ) async throws {
         guard let index = mockEvents.firstIndex(where: { $0.id == eventID }) else {
             throw EventStoreError.notFound
@@ -121,6 +145,7 @@ private(set) var recentCalled = false
             title: title ?? existingEvent.title,
             festivalName: festivalName ?? existingEvent.festivalName,
             date: date ?? existingEvent.date,
+            durationMinutes: durationMinutes ?? existingEvent.durationMinutes,
             venueName: venueName ?? existingEvent.venueName
         )
         mockEvents[index] = updatedEvent

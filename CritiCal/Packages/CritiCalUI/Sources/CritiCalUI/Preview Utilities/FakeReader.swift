@@ -39,6 +39,14 @@ struct FakeReader: EventReading {
         []
     }
 
+    func eventsNext7Days(in calendar: Calendar, now: Date) async throws -> [CritiCalDomain.EventDTO] {
+        []
+    }
+
+    func eventsThisMonth(in calendar: Calendar, now: Date) async throws -> [CritiCalDomain.EventDTO] {
+        []
+    }
+
     func recent(limit: Int) async throws -> [EventDTO] {
         Array(events.prefix(limit))
     }

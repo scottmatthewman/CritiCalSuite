@@ -17,20 +17,35 @@ struct EventRow: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                if event.festivalName.isEmpty == false {
-                    Text(event.festivalName)
-                        .textCase(.uppercase)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
+            VStack(alignment: .leading, spacing: 4) {
                 Text(event.title)
                     .font(.headline)
-                Text(event.venueName)
-                    .font(.subheadline)
-                Text(event.date, style: .date)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                if event.festivalName.isEmpty == false {
+                    Text(event.festivalName)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                Label {
+                    Text(
+                        event.date ..< event.endDate,
+                        format: .interval.weekday().month().day().year().hour().minute()
+                    )
+                } icon: {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.tint)
+                }
+                .font(.footnote)
+                .padding(.top, 2)
+
+                if !event.venueName.isEmpty {
+                    Label {
+                        Text(event.venueName)
+                    } icon: {
+                        Image(systemName: "location")
+                            .foregroundStyle(.tint)
+                    }
+                    .font(.footnote)
+                }
             }
             Spacer()
         }
@@ -43,6 +58,7 @@ struct EventRow: View {
         title: "A Midsummer Night’s Dream",
         festivalName: "Lambeth Fringe",
         date: .iso8601("2025-09-21T19:30:00Z"),
+        durationMinutes: 90,
         venueName: "Bridge Theatre"
     )
     let reader = FakeReader(events: [dto])

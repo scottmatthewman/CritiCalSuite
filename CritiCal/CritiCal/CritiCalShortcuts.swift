@@ -23,6 +23,12 @@ struct CritiCalShortcuts: AppShortcutsProvider {
             shortTitle: "List Events",
             systemImageName: "calendar"
         )
+        AppShortcut(
+            intent: OpenEventIntent(),
+            phrases: ["Open \(.applicationName) event"],
+            shortTitle: "Open Event",
+            systemImageName: "arrow.up.forward.app"
+        )
     }
 }
 

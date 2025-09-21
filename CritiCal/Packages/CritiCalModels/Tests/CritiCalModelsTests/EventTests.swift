@@ -21,7 +21,8 @@ struct EventInitializationTests {
             title: "Test Event",
             festivalName: "Test Festival",
             venueName: "Test Venue",
-            date: customDate
+            date: customDate,
+            durationMinutes: 120
         )
 
         #expect(event.identifier == customID)
@@ -29,6 +30,7 @@ struct EventInitializationTests {
         #expect(event.festivalName == "Test Festival")
         #expect(event.venueName == "Test Venue")
         #expect(event.date == customDate)
+        #expect(event.durationMinutes == 120)
     }
 
     @Test("Event initializes with default parameters")
@@ -42,14 +44,16 @@ struct EventInitializationTests {
         #expect(event.venueName == "")
         // Date should be reasonably close to now (within 1 second)
         #expect(abs(event.date.timeIntervalSince(Date.now)) < 1.0)
+        #expect(event.durationMinutes == nil)
     }
 
     @Test("Event initializes with partial parameters")
     func testInitializationWithPartialParameters() {
-        let event = Event(title: "Partial Event", venueName: "Partial Venue")
+        let event = Event(title: "Partial Event", venueName: "Partial Venue", durationMinutes: 90)
 
         #expect(event.title == "Partial Event")
         #expect(event.venueName == "Partial Venue")
+        #expect(event.durationMinutes == 90)
         #expect(event.identifier != UUID()) // Should have generated a UUID
         #expect(abs(event.date.timeIntervalSince(Date.now)) < 1.0) // Should be close to now
     }
@@ -63,6 +67,7 @@ struct EventInitializationTests {
         #expect(event.title == "")
         #expect(event.festivalName == "")
         #expect(event.venueName == "")
+        #expect(event.durationMinutes == nil)
         #expect(event.identifier != UUID())
     }
 
@@ -135,6 +140,7 @@ struct EventPropertyTests {
         #expect(type(of: event.festivalName) == String.self)
         #expect(type(of: event.venueName) == String.self)
         #expect(type(of: event.date) == Date.self)
+        #expect(type(of: event.durationMinutes) == Optional<Int>.self)
     }
 
     @Test("Event can handle empty string properties")

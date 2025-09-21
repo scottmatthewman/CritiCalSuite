@@ -24,6 +24,9 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     @Property(title: "Date")
     public var date: Date
 
+    @Property(title: "End Date")
+    public var endDate: Date
+
     @Property(title: "Venue Name")
     public var venueName: String
 
@@ -47,25 +50,29 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         }
     }
 
-    public init(
-        id: UUID = UUID(),
-        title: String,
-        festivalName: String = "",
-        date: Date,
-        venueName: String = ""
-    ) {
-        self.id = id
-        self.title = title
-        self.festivalName = festivalName
-        self.date = date
-        self.venueName = venueName
-    }
+//    public init(
+//        id: UUID = UUID(),
+//        title: String,
+//        festivalName: String = "",
+//        date: Date,
+//        endDate: Date? = nil,
+//        venueName: String = ""
+//    ) {
+//        self.id = id
+//        self.title = title
+//        self.festivalName = festivalName
+//        self.date = date
+//        self.endDate = endDate ?? date
+//        self.venueName = venueName
+//
+//    }
 
     public init(from dto: EventDTO) {
         self.id = dto.id
         self.title = dto.title
         self.festivalName = dto.festivalName
         self.date = dto.date
+        self.endDate = dto.endDate
         self.venueName = dto.venueName
     }
 }

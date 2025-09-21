@@ -84,19 +84,45 @@ public actor EventRepository: EventReading & EventWriting {
         return try modelContext.fetch(fetchDescriptor).map { $0.dto }
     }
 
+    public func eventsNext7Days(
+        in calendar: Calendar = .current,
+        now: Date = .now
+    ) async throws -> [EventDTO] {
+        guard
+            let startOfToday = calendar.dateInterval(of: .day, for: now)?.start,
+            let endOf7Days = calendar.date(byAdding: .day, value: 7, to: startOfToday)
+        else { return [] }
+
+        let interval = DateInterval(start: startOfToday, end: endOf7Days)
+        return try await eventsIn(interval: interval)
+    }
+
+    public func eventsThisMonth(
+        in calendar: Calendar = .current,
+        now: Date = .now
+    ) async throws -> [EventDTO] {
+        guard
+            let range = calendar.dateInterval(of: .month, for: now)
+        else { return [] }
+
+        return try await eventsIn(interval: range)
+    }
+
     // MARK: - EventWriting
 
     public func create(
         title: String,
         festivalName: String,
         venueName: String,
-        date: Date
+        date: Date,
+        durationMinutes: Int? = nil
     ) async throws -> UUID {
         let newEvent = Event(
             title: title,
             festivalName: festivalName,
             venueName: venueName,
-            date: date
+            date: date,
+            durationMinutes: durationMinutes
         )
         modelContext.insert(newEvent)
         do {
@@ -111,8 +137,9 @@ public actor EventRepository: EventReading & EventWriting {
         eventID: UUID,
         title: String?,
         festivalName: String?,
+        venueName: String?,
         date: Date?,
-        venueName: String?
+        durationMinutes: Int?
     ) async throws {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == eventID })
         guard let event = try modelContext.fetch(fd).first else {
@@ -123,6 +150,7 @@ public actor EventRepository: EventReading & EventWriting {
         if let festivalName { event.festivalName = festivalName }
         if let date { event.date = date }
         if let venueName { event.venueName = venueName }
+        if let durationMinutes { event.durationMinutes = durationMinutes }
 
         do {
             try modelContext.save()
@@ -153,6 +181,7 @@ private extension Event {
             title: title,
             festivalName: festivalName,
             date: date,
+            durationMinutes: durationMinutes,
             venueName: venueName
         )
     }

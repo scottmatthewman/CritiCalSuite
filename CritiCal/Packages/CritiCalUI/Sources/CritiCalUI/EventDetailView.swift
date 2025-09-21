@@ -25,13 +25,31 @@ public struct EventDetailView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(event.title)
                             .font(.title.bold())
-                        Text(
-                            event.date.formatted(date: .long, time: .shortened)
-                        )
-                        .foregroundStyle(.secondary)
+                        if !event.festivalName.isEmpty {
+                            Text(event.festivalName)
+                                .font(.headline)
+                                .foregroundStyle(.secondary)
+                        }
                         Divider()
-                        if event.venueName.isEmpty == false {
-                            Text(event.venueName)
+                        Label {
+                            Text(
+                                event.date ..< event.endDate,
+                                format: .interval.weekday().month().day().year().hour().minute()
+                            )
+                        } icon: {
+                            Image(systemName: "calendar")
+                                .foregroundStyle(.tint)
+                        }
+                        .font(.callout)
+
+                        if !event.venueName.isEmpty {
+                            Label {
+                                Text(event.venueName)
+                            } icon: {
+                                Image(systemName: "location")
+                                    .foregroundStyle(.tint)
+                            }
+                            .font(.callout)
                         }
                     }
                 }
@@ -42,7 +60,9 @@ public struct EventDetailView: View {
         }
         .task { await load() }
         .navigationTitle("Event")
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     private func load() async {
@@ -56,6 +76,7 @@ public struct EventDetailView: View {
         title: "A Midsummer Night’s Dream",
         festivalName: "London Theatre Festival",
         date: .iso8601("2025-09-21T19:30:00Z"),
+        durationMinutes: 135,
         venueName: "Bridge Theatre"
     )
     let reader = FakeReader(events: [dto])
