@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 import CritiCalDomain
+import CritiCalModels
 
 public struct EventListView: View {
-    @Environment(\.eventReader) private var reader
-    public var onSelect: (UUID) -> Void
+    // Use @Query to efficiently load events directly from SwiftData
+    @Query(sort: \Event.date, order: .reverse) private var events: [Event]
 
-    @State private var events: [EventDTO] = []
-    @State private var isLoading: Bool = false
-    @State private var error: Error?
+    public var onSelect: (UUID) -> Void
 
     public init(
         onSelect: @escaping (UUID) -> Void = { _ in }
@@ -24,39 +24,31 @@ public struct EventListView: View {
 
     public var body: some View {
         Group {
-            if isLoading {
-                ProgressView("Loading…")
-            } else if let error {
+            if events.isEmpty {
                 ContentUnavailableView {
-                    Label("Couldn't load events", systemImage: "exclamationmark.triangle")
+                    Label("No Events", systemImage: "calendar")
                 } description: {
-                    Text(error.localizedDescription)
+                    Text("No events have been added yet")
                 }
             } else {
                 List(events) { event in
                     Button {
-                        onSelect(event.id)
+                        onSelect(event.identifier)
                     } label: {
-                        EventRow(event: event)
+                        // Convert Event to EventDTO for EventRow
+                        EventRow(event: EventDTO(
+                            id: event.identifier,
+                            title: event.title,
+                            festivalName: event.festivalName,
+                            date: event.date,
+                            venueName: event.venueName
+                        ))
                     }
                 }
                 .buttonStyle(.plain)
             }
         }
         .navigationTitle("Events")
-        .task { await loadEvents() }
-    }
-
-    private func loadEvents() async {
-        guard let reader else { return }
-        isLoading = true
-        defer { isLoading = false }
-
-        do {
-            events = try await reader.recent(limit: 200)
-        } catch {
-            self.error = error
-        }
     }
 }
 

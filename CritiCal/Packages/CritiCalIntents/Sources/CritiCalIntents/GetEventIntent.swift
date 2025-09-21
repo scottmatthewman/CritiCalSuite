@@ -25,7 +25,8 @@ public struct GetEventIntent: AppIntent {
         self.repositoryProvider = repositoryProvider
     }
 
-    public func perform() async throws -> some IntentResult & ReturnsValue<EventEntity> & ProvidesDialog {
+    @MainActor
+    public func perform() async throws -> some IntentResult & ReturnsValue<EventEntity> & ProvidesDialog & ShowsSnippetView {
         let repo = try await repositoryProvider.eventRepo()
 
         // Fetch the actual event from repository to validate it exists
@@ -42,7 +43,11 @@ public struct GetEventIntent: AppIntent {
             venueName: repositoryEvent.venueName
         )
 
-        return .result(value: validatedEntity, dialog: "Fetched \(validatedEntity.title).")
+        return .result(
+            value: validatedEntity,
+            dialog: "Fetched \(validatedEntity.title).",
+            view: EventSnippetView(event: validatedEntity)
+        )
     }
 }
 

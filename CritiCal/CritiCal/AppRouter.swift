@@ -17,7 +17,9 @@ struct AppRouter: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            ContentView()
+            EventListView {
+                path.append(.eventDetails($0))
+            }
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .eventDetails(let id):

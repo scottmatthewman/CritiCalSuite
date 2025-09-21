@@ -17,20 +17,37 @@ struct EventRow: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                if event.festivalName.isEmpty == false {
-                    Text(event.festivalName)
-                        .textCase(.uppercase)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
+            VStack(alignment: .leading, spacing: 4) {
                 Text(event.title)
                     .font(.headline)
-                Text(event.venueName)
-                    .font(.subheadline)
-                Text(event.date, style: .date)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                if event.festivalName.isEmpty == false {
+                    Text(event.festivalName)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                Label {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(event.date, style: .date)
+                        Text("at")
+                            .foregroundStyle(.secondary)
+                        Text(event.date, style: .time)
+                    }
+                } icon: {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.tint)
+                }
+                .font(.footnote)
+                .padding(.top, 2)
+
+                if !event.venueName.isEmpty {
+                    Label {
+                        Text(event.venueName)
+                    } icon: {
+                        Image(systemName: "location")
+                            .foregroundStyle(.tint)
+                    }
+                    .font(.footnote)
+                }
             }
             Spacer()
         }

@@ -25,13 +25,31 @@ public struct EventDetailView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(event.title)
                             .font(.title.bold())
-                        Text(
-                            event.date.formatted(date: .long, time: .shortened)
-                        )
-                        .foregroundStyle(.secondary)
+                        if !event.festivalName.isEmpty {
+                            Text(event.festivalName)
+                                .font(.headline)
+                                .foregroundStyle(.secondary)
+                        }
                         Divider()
-                        if event.venueName.isEmpty == false {
-                            Text(event.venueName)
+                        Label {
+                            Text(event.date, style: .date)
+                            Text("at")
+                                .foregroundStyle(.secondary)
+                            Text(event.date, style: .time)
+                        } icon: {
+                            Image(systemName: "calendar")
+                                .foregroundStyle(.tint)
+                        }
+                        .font(.callout)
+
+                        if !event.venueName.isEmpty {
+                            Label {
+                                Text(event.venueName)
+                            } icon: {
+                                Image(systemName: "location")
+                                    .foregroundStyle(.tint)
+                            }
+                            .font(.callout)
                         }
                     }
                 }
@@ -42,7 +60,9 @@ public struct EventDetailView: View {
         }
         .task { await load() }
         .navigationTitle("Event")
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     private func load() async {
