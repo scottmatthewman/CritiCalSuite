@@ -309,7 +309,9 @@ struct ListEventsIntentBusinessLogicTests {
         #expect(allCases.contains(.today))
         #expect(allCases.contains(.past))
         #expect(allCases.contains(.future))
-        #expect(allCases.count == 3)
+        #expect(allCases.contains(.next7Days))
+        #expect(allCases.contains(.thisMonth))
+        #expect(allCases.count == 5)
 
         // The switch statement in perform() should handle all these cases
         // All repository methods now exist and work correctly

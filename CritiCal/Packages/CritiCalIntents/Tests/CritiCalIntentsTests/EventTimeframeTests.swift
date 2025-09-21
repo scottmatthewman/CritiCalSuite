@@ -18,10 +18,12 @@ struct EventTimeframeEnumTests {
     func testAllCases() {
         let allCases = EventTimeframe.allCases
 
-        #expect(allCases.count == 3)
+        #expect(allCases.count == 5)
         #expect(allCases.contains(.today))
         #expect(allCases.contains(.past))
         #expect(allCases.contains(.future))
+        #expect(allCases.contains(.next7Days))
+        #expect(allCases.contains(.thisMonth))
     }
 
     @Test("EventTimeframe cases have correct raw values")
@@ -29,6 +31,8 @@ struct EventTimeframeEnumTests {
         #expect(EventTimeframe.today.rawValue == "today")
         #expect(EventTimeframe.past.rawValue == "past")
         #expect(EventTimeframe.future.rawValue == "future")
+        #expect(EventTimeframe.next7Days.rawValue == "next7Days")
+        #expect(EventTimeframe.thisMonth.rawValue == "thisMonth")
     }
 
     @Test("EventTimeframe can be initialized from raw values")
@@ -36,6 +40,8 @@ struct EventTimeframeEnumTests {
         #expect(EventTimeframe(rawValue: "today") == .today)
         #expect(EventTimeframe(rawValue: "past") == .past)
         #expect(EventTimeframe(rawValue: "future") == .future)
+        #expect(EventTimeframe(rawValue: "next7Days") == .next7Days)
+        #expect(EventTimeframe(rawValue: "thisMonth") == .thisMonth)
         #expect(EventTimeframe(rawValue: "invalid") == nil)
     }
 
@@ -68,10 +74,12 @@ struct EventTimeframeAppEnumTests {
     func testCaseDisplayRepresentations() {
         let caseDisplays = EventTimeframe.caseDisplayRepresentations
 
-        #expect(caseDisplays.count == 3)
+        #expect(caseDisplays.count == 5)
         #expect(caseDisplays[.today] != nil)
         #expect(caseDisplays[.past] != nil)
         #expect(caseDisplays[.future] != nil)
+        #expect(caseDisplays[.next7Days] != nil)
+        #expect(caseDisplays[.thisMonth] != nil)
     }
 
     @Test("Case display representations have expected content")
@@ -82,6 +90,8 @@ struct EventTimeframeAppEnumTests {
         #expect(String(describing: caseDisplays[.today]!).contains("Today"))
         #expect(String(describing: caseDisplays[.past]!).contains("Past"))
         #expect(String(describing: caseDisplays[.future]!).contains("Future"))
+        #expect(String(describing: caseDisplays[.next7Days]!).contains("Next 7 Days"))
+        #expect(String(describing: caseDisplays[.thisMonth]!).contains("This Month"))
     }
 }
 
@@ -104,6 +114,8 @@ struct EventTimeframeSendableTests {
             group.addTask { timeframe }
             group.addTask { timeframe }
             group.addTask { timeframe }
+            group.addTask { timeframe }
+            group.addTask { timeframe }
 
             var results: [EventTimeframe] = []
             for await result in group {
@@ -111,7 +123,7 @@ struct EventTimeframeSendableTests {
             }
 
             // Verify all tasks received the timeframe
-            #expect(results.count == 3)
+            #expect(results.count == 5)
 
             // Verify all have the same value (identity preserved)
             #expect(results.allSatisfy { $0 == .today })
@@ -130,16 +142,18 @@ struct EventTimeframeSendableTests {
 
     @Test("All EventTimeframe cases are Sendable")
     func testAllCasesSendable() async {
-        let timeframes = [EventTimeframe.today, .past, .future]
+        let timeframes = [EventTimeframe.today, .past, .future, .next7Days, .thisMonth]
 
         await withTaskGroup(of: [EventTimeframe].self) { group in
             group.addTask { timeframes }
 
             for await result in group {
-                #expect(result.count == 3)
+                #expect(result.count == 5)
                 #expect(result.contains(.today))
                 #expect(result.contains(.past))
                 #expect(result.contains(.future))
+                #expect(result.contains(.next7Days))
+                #expect(result.contains(.thisMonth))
             }
         }
     }
@@ -167,12 +181,14 @@ struct EventTimeframeEqualityTests {
 
     @Test("EventTimeframe is Hashable")
     func testHashable() {
-        let timeframes: Set<EventTimeframe> = [.today, .past, .future]
+        let timeframes: Set<EventTimeframe> = [.today, .past, .future, .next7Days, .thisMonth]
 
-        #expect(timeframes.count == 3)
+        #expect(timeframes.count == 5)
         #expect(timeframes.contains(.today))
         #expect(timeframes.contains(.past))
         #expect(timeframes.contains(.future))
+        #expect(timeframes.contains(.next7Days))
+        #expect(timeframes.contains(.thisMonth))
     }
 
     @Test("EventTimeframe hash values are consistent")
@@ -227,7 +243,7 @@ struct EventTimeframeUsageTests {
         let timeframes = EventTimeframe.allCases
 
         // All cases should be available for parameter selection
-        #expect(timeframes.count == 3)
+        #expect(timeframes.count == 5)
 
         // Each case should have a display representation
         for timeframe in timeframes {
@@ -264,7 +280,7 @@ struct EventTimeframeUsageTests {
         }
 
         // If we get here, all timeframe cases successfully correspond to working repository methods
-        #expect(EventTimeframe.allCases.count == 3) // Verify we tested all expected cases
+        #expect(EventTimeframe.allCases.count == 5) // Verify we tested all expected cases
     }
 }
 
@@ -297,7 +313,7 @@ struct EventTimeframeEdgeCaseTests {
         let allCases = EventTimeframe.allCases
 
         // Verify CaseIterable is implemented correctly
-        #expect(allCases.count == 3)
+        #expect(allCases.count == 5)
 
         // Verify all expected cases are present
         let caseSet = Set(allCases)

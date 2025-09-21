@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import Foundation
 import CritiCalStore
 import CritiCalDomain
 
@@ -36,6 +37,10 @@ public struct ListEventsIntent: AppIntent {
             dtos = try await repo.eventsBefore(.now)
         case .future:
             dtos = try await repo.eventsAfter(.now)
+        case .next7Days:
+            dtos = try await repo.eventsNext7Days(in: .current, now: .now)
+        case .thisMonth:
+            dtos = try await repo.eventsThisMonth(in: .current, now: .now)
         }
 
         let entities = dtos.map {

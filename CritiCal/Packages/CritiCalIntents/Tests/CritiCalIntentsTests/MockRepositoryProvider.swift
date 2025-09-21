@@ -83,6 +83,27 @@ private(set) var recentCalled = false
         }
     }
 
+    func eventsNext7Days(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+        let startOfToday = calendar.startOfDay(for: now)
+        guard let endOf7Days = calendar.date(byAdding: .day, value: 7, to: startOfToday) else {
+            return []
+        }
+
+        return mockEvents.filter { event in
+            event.date >= startOfToday && event.date < endOf7Days
+        }
+    }
+
+    func eventsThisMonth(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+        guard let range = calendar.dateInterval(of: .month, for: now) else {
+            return []
+        }
+
+        return mockEvents.filter { event in
+            event.date >= range.start && event.date <= range.end
+        }
+    }
+
     // MARK: - EventWriting Implementation
 
     @discardableResult
