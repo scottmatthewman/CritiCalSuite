@@ -244,13 +244,19 @@ struct EventTimeframeUsageTests {
         let mockProvider = MockRepositoryProvider()
 
         // Add test data so repository methods have something to return
-        let testEvent = EventDTO(id: UUID(), title: "Test Event", date: Date.now, venueName: "Test Venue")
+        let testEvent = EventDTO(
+            id: UUID(),
+            title: "Test Event",
+            festivalName: "test Festival",
+            date: Date.now,
+            venueName: "Test Venue"
+        )
         await mockProvider.addMockEvent(testEvent)
 
         // Verify each timeframe case works with ListEventsIntent
         // This confirms the correspondence: .today -> eventsToday(), .past -> eventsBefore(), .future -> eventsAfter()
         for timeframe in EventTimeframe.allCases {
-            var intent = ListEventsIntent(repositoryProvider: mockProvider)
+            let intent = ListEventsIntent(repositoryProvider: mockProvider)
             intent.timeframe = timeframe
 
             // If the correspondence is broken, this would fail at compile time or runtime

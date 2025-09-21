@@ -63,11 +63,41 @@ struct EventQuerySuggestedEntitiesTests {
 
     func createMockEvents() -> [EventDTO] {
         return [
-            EventDTO(id: UUID(), title: "Event 1", date: Date.now, venueName: "Venue 1"),
-            EventDTO(id: UUID(), title: "Event 2", date: Date.now.addingTimeInterval(3600), venueName: "Venue 2"),
-            EventDTO(id: UUID(), title: "Event 3", date: Date.now.addingTimeInterval(7200), venueName: "Venue 3"),
-            EventDTO(id: UUID(), title: "Conference", date: Date.now.addingTimeInterval(10800), venueName: "Conference Center"),
-            EventDTO(id: UUID(), title: "Workshop", date: Date.now.addingTimeInterval(14400), venueName: "Workshop Hall"),
+            EventDTO(
+                id: UUID(),
+                title: "Event 1",
+                festivalName: "Festival 1",
+                date: Date.now,
+                venueName: "Venue 1"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Event 2",
+                festivalName: "Festival 2",
+                date: Date.now.addingTimeInterval(3600),
+                venueName: "Venue 2"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Event 3",
+                festivalName: "Festival 3",
+                date: Date.now.addingTimeInterval(7200),
+                venueName: "Venue 3"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Conference",
+                festivalName: "",
+                date: Date.now.addingTimeInterval(10800),
+                venueName: "Conference Center"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Workshop",
+                festivalName: "",
+                date: Date.now.addingTimeInterval(14400),
+                venueName: "Workshop Hall"
+            ),
         ]
     }
 
@@ -110,6 +140,7 @@ struct EventQuerySuggestedEntitiesTests {
             EventDTO(
                 id: UUID(),
                 title: "Event \(index)",
+                festivalName: "Festival \(index)",
                 date: Date.now.addingTimeInterval(Double(index) * 3600),
                 venueName: "Venue \(index)"
             )
@@ -129,9 +160,27 @@ struct EventQuerySuggestedEntitiesTests {
         // Setup mock with searchable events
         let mockProvider = MockRepositoryProvider()
         let searchableEvents = [
-            EventDTO(id: UUID(), title: "Swift Conference", date: Date.now, venueName: "Convention Center"),
-            EventDTO(id: UUID(), title: "React Workshop", date: Date.now, venueName: "Tech Hub"),
-            EventDTO(id: UUID(), title: "Design Meetup", date: Date.now, venueName: "Swift Building")
+            EventDTO(
+                id: UUID(),
+                title: "Swift Conference",
+                festivalName: "",
+                date: Date.now,
+                venueName: "Convention Center"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "React Workshop",
+                festivalName: "",
+                date: Date.now,
+                venueName: "Tech Hub"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Design Meetup",
+                festivalName: "",
+                date: Date.now,
+                venueName: "Swift Building"
+            )
         ]
         await mockProvider.addMockEvents(searchableEvents)
 
@@ -167,8 +216,20 @@ struct EventQueryEntityResolutionTests {
     func testEntitiesForExistingIdentifiers() async throws {
         // Setup mock with known events
         let mockProvider = MockRepositoryProvider()
-        let event1 = EventDTO(id: UUID(), title: "Event 1", date: Date.now, venueName: "Venue 1")
-        let event2 = EventDTO(id: UUID(), title: "Event 2", date: Date.now, venueName: "Venue 2")
+        let event1 = EventDTO(
+            id: UUID(),
+            title: "Event 1",
+            festivalName: "Festival 1",
+            date: Date.now,
+            venueName: "Venue 1"
+        )
+        let event2 = EventDTO(
+            id: UUID(),
+            title: "Event 2",
+            festivalName: "Festival 2",
+            date: Date.now,
+            venueName: "Venue 2"
+        )
         await mockProvider.addMockEvents([event1, event2])
 
         let query = EventQuery(repositoryProvider: mockProvider)
@@ -184,7 +245,13 @@ struct EventQueryEntityResolutionTests {
     @Test("entities(for:) handles missing identifiers gracefully")
     func testEntitiesForMissingIdentifiers() async throws {
         let mockProvider = MockRepositoryProvider()
-        let existingEvent = EventDTO(id: UUID(), title: "Existing Event", date: Date.now, venueName: "Venue")
+        let existingEvent = EventDTO(
+            id: UUID(),
+            title: "Existing Event",
+            festivalName: "Festival",
+            date: Date.now,
+            venueName: "Venue"
+        )
         await mockProvider.addMockEvent(existingEvent)
 
         let query = EventQuery(repositoryProvider: mockProvider)
@@ -212,9 +279,27 @@ struct EventQueryEntityResolutionTests {
     @Test("entities(for:) preserves identifier order when possible")
     func testEntitiesPreservesOrder() async throws {
         let mockProvider = MockRepositoryProvider()
-        let event1 = EventDTO(id: UUID(), title: "First", date: Date.now, venueName: "Venue 1")
-        let event2 = EventDTO(id: UUID(), title: "Second", date: Date.now, venueName: "Venue 2")
-        let event3 = EventDTO(id: UUID(), title: "Third", date: Date.now, venueName: "Venue 3")
+        let event1 = EventDTO(
+            id: UUID(),
+            title: "First",
+            festivalName: "First Fest",
+            date: Date.now,
+            venueName: "Venue 1"
+        )
+        let event2 = EventDTO(
+            id: UUID(),
+            title: "Second",
+            festivalName: "Second Fest",
+            date: Date.now,
+            venueName: "Venue 2"
+        )
+        let event3 = EventDTO(
+            id: UUID(),
+            title: "Third",
+            festivalName: "Third Fest",
+            date: Date.now,
+            venueName: "Venue 3"
+        )
 
         await mockProvider.addMockEvents([event1, event2, event3])
 
@@ -239,12 +324,14 @@ struct EventQueryDTOConversionTests {
     func testDTOToEntityConversion() {
         let dtoId = UUID()
         let dtoTitle = "Test Event"
+        let dtoFestivalName = "Test Festival"
         let dtoDate = Date.now
         let dtoVenueName = "Test Venue"
 
         let dto = EventDTO(
             id: dtoId,
             title: dtoTitle,
+            festivalName: dtoFestivalName,
             date: dtoDate,
             venueName: dtoVenueName
         )
@@ -253,6 +340,7 @@ struct EventQueryDTOConversionTests {
         let entity = EventEntity(
             id: dto.id,
             title: dto.title,
+            festivalName: dto.festivalName,
             date: dto.date,
             venueName: dto.venueName
         )
@@ -269,6 +357,7 @@ struct EventQueryDTOConversionTests {
             EventDTO(
                 id: UUID(),
                 title: "Event \(index)",
+                festivalName: "Festival \(index)",
                 date: Date.now.addingTimeInterval(Double(index) * 3600),
                 venueName: "Venue \(index)"
             )
@@ -279,6 +368,7 @@ struct EventQueryDTOConversionTests {
             EventEntity(
                 id: $0.id,
                 title: $0.title,
+                festivalName: $0.festivalName,
                 date: $0.date,
                 venueName: $0.venueName
             )
@@ -321,6 +411,7 @@ struct EventQueryIntegrationTests {
             EventEntity(
                 id: UUID(),
                 title: "Event",
+                festivalName: "Festival",
                 date: Date.now,
                 venueName: "Venue"
             )

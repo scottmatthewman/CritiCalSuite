@@ -19,12 +19,14 @@ struct EventInitializationTests {
         let event = Event(
             identifier: customID,
             title: "Test Event",
+            festivalName: "Test Festival",
             venueName: "Test Venue",
             date: customDate
         )
 
         #expect(event.identifier == customID)
         #expect(event.title == "Test Event")
+        #expect(event.festivalName == "Test Festival")
         #expect(event.venueName == "Test Venue")
         #expect(event.date == customDate)
     }
@@ -36,6 +38,7 @@ struct EventInitializationTests {
         // Should have a valid UUID (not empty)
         #expect(event.identifier != UUID())
         #expect(event.title == "")
+        #expect(event.festivalName == "")
         #expect(event.venueName == "")
         // Date should be reasonably close to now (within 1 second)
         #expect(abs(event.date.timeIntervalSince(Date.now)) < 1.0)
@@ -58,6 +61,7 @@ struct EventInitializationTests {
 
         #expect(event.date == futureDate)
         #expect(event.title == "")
+        #expect(event.festivalName == "")
         #expect(event.venueName == "")
         #expect(event.identifier != UUID())
     }
@@ -93,11 +97,13 @@ struct EventPropertyTests {
 
         event.identifier = newID
         event.title = "Modified Title"
+        event.festivalName = "Modified Festival"
         event.venueName = "Modified Venue"
         event.date = newDate
 
         #expect(event.identifier == newID)
         #expect(event.title == "Modified Title")
+        #expect(event.festivalName == "Modified Festival")
         #expect(event.venueName == "Modified Venue")
         #expect(event.date == newDate)
     }
@@ -126,20 +132,24 @@ struct EventPropertyTests {
 
         #expect(type(of: event.identifier) == UUID.self)
         #expect(type(of: event.title) == String.self)
+        #expect(type(of: event.festivalName) == String.self)
         #expect(type(of: event.venueName) == String.self)
         #expect(type(of: event.date) == Date.self)
     }
 
     @Test("Event can handle empty string properties")
     func testEmptyStringProperties() {
-        var event = Event(title: "Test", venueName: "Test")
+        var event = Event(title: "Test", festivalName: "Test", venueName: "Test")
 
         event.title = ""
+        event.festivalName = ""
         event.venueName = ""
 
         #expect(event.title == "")
+        #expect(event.festivalName == "")
         #expect(event.venueName == "")
         #expect(event.title.isEmpty)
+        #expect(event.festivalName.isEmpty)
         #expect(event.venueName.isEmpty)
     }
 
@@ -147,13 +157,16 @@ struct EventPropertyTests {
     func testPropertyIndependence() {
         var event = Event()
 
-        event.title = "Title Change"
         let originalVenue = event.venueName
+        let originalFestival = event.festivalName
         let originalID = event.identifier
         let originalDate = event.date
 
+        event.title = "Title Change"
+
         // Changing title shouldn't affect other properties
         #expect(event.venueName == originalVenue)
+        #expect(event.festivalName == originalFestival)
         #expect(event.identifier == originalID)
         #expect(event.date == originalDate)
     }

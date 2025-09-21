@@ -17,6 +17,7 @@ struct EventDTOInitializationTests {
         let date = Date.now
         let dto = EventDTO(
             title: "Test Event",
+            festivalName: "Test Festival",
             date: date,
             venueName: "Test Venue"
         )
@@ -34,6 +35,7 @@ struct EventDTOInitializationTests {
         let dto = EventDTO(
             id: customID,
             title: "Custom Event",
+            festivalName: "Custom Festival",
             date: date,
             venueName: "Custom Venue"
         )
@@ -55,6 +57,7 @@ struct EventDTOEquatableTests {
         let dto1 = EventDTO(
             id: id,
             title: "Event",
+            festivalName: "Festival",
             date: date,
             venueName: "Venue"
         )
@@ -62,6 +65,7 @@ struct EventDTOEquatableTests {
         let dto2 = EventDTO(
             id: id,
             title: "Event",
+            festivalName: "Festival",
             date: date,
             venueName: "Venue"
         )
@@ -76,6 +80,7 @@ struct EventDTOEquatableTests {
         let dto1 = EventDTO(
             id: UUID(),
             title: "Event",
+            festivalName: "Festival",
             date: date,
             venueName: "Venue"
         )
@@ -83,6 +88,7 @@ struct EventDTOEquatableTests {
         let dto2 = EventDTO(
             id: UUID(),
             title: "Event",
+            festivalName: "Festival",
             date: date,
             venueName: "Venue"
         )
@@ -98,6 +104,7 @@ struct EventDTOEquatableTests {
         let dto1 = EventDTO(
             id: id,
             title: "Event 1",
+            festivalName: "Festival 1",
             date: date,
             venueName: "Venue"
         )
@@ -105,6 +112,7 @@ struct EventDTOEquatableTests {
         let dto2 = EventDTO(
             id: id,
             title: "Event 2",
+            festivalName: "Festival 2",
             date: date,
             venueName: "Venue"
         )
@@ -121,6 +129,7 @@ struct EventDTOIdentifiableTests {
         let dto = EventDTO(
             id: customID,
             title: "Event",
+            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue"
         )
@@ -157,6 +166,7 @@ struct EventDTOSendableTests {
         // Create a single EventDTO instance to share across concurrent tasks
         let dto = EventDTO(
             title: "Concurrent Event",
+            festivalName: "Concurrent Festival",
             date: Date.now,
             venueName: "Concurrent Venue"
         )

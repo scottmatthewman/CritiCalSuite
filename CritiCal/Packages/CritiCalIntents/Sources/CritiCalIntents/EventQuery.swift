@@ -55,6 +55,7 @@ public struct EventQuery: EntityQuery, Sendable {
         EventEntity(
             id: dto.id,
             title: dto.title,
+            festivalName: dto.festivalName,
             date: dto.date,
             venueName: dto.venueName
         )

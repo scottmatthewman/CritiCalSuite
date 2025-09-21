@@ -86,8 +86,18 @@ public actor EventRepository: EventReading & EventWriting {
 
     // MARK: - EventWriting
 
-    public func create(title: String, venueName: String, date: Date) async throws -> UUID {
-        let newEvent = Event(title: title, venueName: venueName, date: date)
+    public func create(
+        title: String,
+        festivalName: String,
+        venueName: String,
+        date: Date
+    ) async throws -> UUID {
+        let newEvent = Event(
+            title: title,
+            festivalName: festivalName,
+            venueName: venueName,
+            date: date
+        )
         modelContext.insert(newEvent)
         do {
             try modelContext.save()
@@ -97,13 +107,20 @@ public actor EventRepository: EventReading & EventWriting {
         }
     }
 
-    public func update(eventID: UUID, title: String?, date: Date?, venueName: String?) async throws {
+    public func update(
+        eventID: UUID,
+        title: String?,
+        festivalName: String?,
+        date: Date?,
+        venueName: String?
+    ) async throws {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == eventID })
         guard let event = try modelContext.fetch(fd).first else {
             throw EventStoreError.notFound
         }
 
         if let title { event.title = title }
+        if let festivalName { event.festivalName = festivalName }
         if let date { event.date = date }
         if let venueName { event.venueName = venueName }
 
@@ -134,6 +151,7 @@ private extension Event {
         .init(
             id: identifier,
             title: title,
+            festivalName: festivalName,
             date: date,
             venueName: venueName
         )

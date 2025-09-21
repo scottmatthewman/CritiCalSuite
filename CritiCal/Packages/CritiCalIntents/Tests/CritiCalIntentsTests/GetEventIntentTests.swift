@@ -44,11 +44,12 @@ struct GetEventIntentParameterTests {
 
     @Test("GetEventIntent event parameter can be set")
     func testEventParameterSetting() {
-        var intent = GetEventIntent()
+        let intent = GetEventIntent()
 
         let testEvent = EventEntity(
             id: UUID(),
             title: "Test Event",
+            festivalName: "Test Festival",
             date: Date.now,
             venueName: "Test Venue"
         )
@@ -68,6 +69,7 @@ struct GetEventIntentRepositoryTests {
         return EventDTO(
             id: UUID(),
             title: "Repository Test Event",
+            festivalName: "Repository Test Festival",
             date: Date.now,
             venueName: "Repository Test Venue"
         )
@@ -85,6 +87,7 @@ struct GetEventIntentRepositoryTests {
         intent.event = EventEntity(
             id: testDTO.id,
             title: "Input Title", // Different from repository
+            festivalName: "Input Festival", // Different from repository
             date: Date.now.addingTimeInterval(3600), // Different from repository
             venueName: "Input Venue" // Different from repository
         )
@@ -95,6 +98,7 @@ struct GetEventIntentRepositoryTests {
         // Verify it fetched the event from repository by ID and returned repository data
         #expect(result.value?.id == testDTO.id)
         #expect(result.value?.title == testDTO.title) // Should be repository title, not input
+        #expect(result.value?.festivalName == testDTO.festivalName) // Should be repository festival, not input
         #expect(result.value?.venueName == testDTO.venueName) // Should be repository venue, not input
         #expect(result.value?.date == testDTO.date) // Should be repository date, not input
 
@@ -113,6 +117,7 @@ struct GetEventIntentRepositoryTests {
         intent.event = EventEntity(
             id: UUID(), // Random ID not in repository
             title: "Missing Event",
+            festivalName: "Missing Festival",
             date: Date.now,
             venueName: "Missing Venue"
         )
@@ -144,6 +149,7 @@ struct GetEventIntentResultTests {
         intent.event = EventEntity(
             id: UUID(),
             title: "Result Test Event",
+            festivalName: "Result Test Festival",
             date: Date.now,
             venueName: "Result Test Venue"
         )
@@ -162,6 +168,7 @@ struct GetEventIntentResultTests {
         let testEvent = EventDTO(
             id: UUID(),
             title: "Validated Event",
+            festivalName: "Validated Festival",
             date: Date.now,
             venueName: "Validated Venue"
         )
@@ -171,6 +178,7 @@ struct GetEventIntentResultTests {
         intent.event = EventEntity(
             id: testEvent.id,
             title: testEvent.title,
+            festivalName: testEvent.festivalName,
             date: testEvent.date,
             venueName: testEvent.venueName
         )
@@ -189,6 +197,7 @@ struct GetEventIntentResultTests {
         intent.event = EventEntity(
             id: UUID(),
             title: "Dialog Test Event",
+            festivalName: "Dialog Test Festival",
             date: Date.now,
             venueName: "Dialog Test Venue"
         )
@@ -210,11 +219,13 @@ struct GetEventIntentEdgeCaseTests {
         intent.event = EventEntity(
             id: UUID(),
             title: "Event with émojis 🎉 & spëcial chars!",
+            festivalName: "Korean Festival – 한글 축제",
             date: Date.now,
             venueName: "Café & Restaurant"
         )
 
         #expect(intent.event.title.contains("émojis"))
+        #expect(intent.event.festivalName.contains("한글"))
         #expect(intent.event.venueName.contains("Café"))
     }
 
@@ -226,6 +237,7 @@ struct GetEventIntentEdgeCaseTests {
         intent.event = EventEntity(
             id: UUID(),
             title: longTitle,
+            festivalName: "Long Title Festival",
             date: Date.now,
             venueName: "Normal Venue"
         )
@@ -243,6 +255,7 @@ struct GetEventIntentEdgeCaseTests {
         let futureEvent = EventEntity(
             id: UUID(),
             title: "Future Event",
+            festivalName: "Future Festival",
             date: futureDate,
             venueName: "Future Venue"
         )
@@ -251,6 +264,7 @@ struct GetEventIntentEdgeCaseTests {
         let pastEvent = EventEntity(
             id: UUID(),
             title: "Past Event",
+            festivalName: "Past Festival",
             date: pastDate,
             venueName: "Past Venue"
         )
@@ -278,6 +292,7 @@ struct GetEventIntentErrorHandlingTests {
         intent.event = EventEntity(
             id: UUID(),
             title: "Error Test Event",
+            festivalName: "Error Test Festival",
             date: Date.now,
             venueName: "Error Test Venue"
         )

@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "A114010E-53F5-4A0D-AE2C-23BD532512B0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/CritiCalUI",
+        "identifier" : "CritiCalUITests",
+        "name" : "CritiCalUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/CritiCalIntents",
+        "identifier" : "CritiCalIntentsTests",
+        "name" : "CritiCalIntentsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:CritiCal.xcodeproj",
+        "identifier" : "D2145E872E7C23C000699882",
+        "name" : "CritiCalTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/CritiCalDomain",
+        "identifier" : "CritiCalDomainTests",
+        "name" : "CritiCalDomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/CritiCalModels",
+        "identifier" : "CritiCalModelsTests",
+        "name" : "CritiCalModelsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/CritiCalStore",
+        "identifier" : "CritiCalStoreTests",
+        "name" : "CritiCalStoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -38,7 +38,15 @@ public struct ListEventsIntent: AppIntent {
             dtos = try await repo.eventsAfter(.now)
         }
 
-        let entities = dtos.map { EventEntity(id: $0.id, title: $0.title, date: $0.date, venueName: $0.venueName) }
+        let entities = dtos.map {
+            EventEntity(
+                id: $0.id,
+                title: $0.title,
+                festivalName: $0.festivalName,
+                date: $0.date,
+                venueName: $0.venueName
+            )
+        }
         return .result(value: entities)
     }
 }

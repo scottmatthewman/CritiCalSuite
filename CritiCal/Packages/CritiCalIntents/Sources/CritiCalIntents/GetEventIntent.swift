@@ -37,6 +37,7 @@ public struct GetEventIntent: AppIntent {
         let validatedEntity = EventEntity(
             id: repositoryEvent.id,
             title: repositoryEvent.title,
+            festivalName: repositoryEvent.festivalName,
             date: repositoryEvent.date,
             venueName: repositoryEvent.venueName
         )

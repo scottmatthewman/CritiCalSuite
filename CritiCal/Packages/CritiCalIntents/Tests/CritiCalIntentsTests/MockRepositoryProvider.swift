@@ -86,14 +86,31 @@ private(set) var recentCalled = false
     // MARK: - EventWriting Implementation
 
     @discardableResult
-    func create(title: String, venueName: String, date: Date) async throws -> UUID {
+    func create(
+        title: String,
+        festivalName: String,
+        venueName: String,
+        date: Date
+    ) async throws -> UUID {
         let id = UUID()
-        let newEvent = EventDTO(id: id, title: title, date: date, venueName: venueName)
+        let newEvent = EventDTO(
+            id: id,
+            title: title,
+            festivalName: festivalName,
+            date: date,
+            venueName: venueName
+        )
         mockEvents.append(newEvent)
         return id
     }
 
-    func update(eventID: UUID, title: String?, date: Date?, venueName: String?) async throws {
+    func update(
+        eventID: UUID,
+        title: String?,
+        festivalName: String?,
+        date: Date?,
+        venueName: String?
+    ) async throws {
         guard let index = mockEvents.firstIndex(where: { $0.id == eventID }) else {
             throw EventStoreError.notFound
         }
@@ -102,6 +119,7 @@ private(set) var recentCalled = false
         let updatedEvent = EventDTO(
             id: eventID,
             title: title ?? existingEvent.title,
+            festivalName: festivalName ?? existingEvent.festivalName,
             date: date ?? existingEvent.date,
             venueName: venueName ?? existingEvent.venueName
         )

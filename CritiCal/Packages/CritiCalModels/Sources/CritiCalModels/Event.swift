@@ -15,17 +15,20 @@ public final class Event {
     public var identifier: UUID = UUID()
     @Attribute(.preserveValueOnDeletion) public var title: String = ""
     @Attribute(.preserveValueOnDeletion) public var date: Date = Date.now
+    public var festivalName: String = ""
     public var venueName: String = ""
 
     public init(
         identifier: UUID = UUID(),
         title: String = "",
+        festivalName: String = "",
         venueName: String = "",
         date: Date = Date.now
 
     ) {
         self.identifier = identifier
         self.title = title
+        self.festivalName = festivalName
         self.venueName = venueName
         self.date = date
     }

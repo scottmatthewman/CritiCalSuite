@@ -20,6 +20,7 @@ struct GetEventIntentPerformTests {
         let repositoryEvent = EventDTO(
             id: UUID(),
             title: "Repository Event Title",
+            festivalName: "Repository Festival",
             date: Date.now,
             venueName: "Repository Venue"
         )
@@ -27,10 +28,11 @@ struct GetEventIntentPerformTests {
         await mockProvider.addMockEvent(repositoryEvent)
 
         // Create intent and configure it with test data
-        var intent = GetEventIntent(repositoryProvider: mockProvider)
+        let intent = GetEventIntent(repositoryProvider: mockProvider)
         intent.event = EventEntity(
             id: repositoryEvent.id, // Same ID
             title: "Input Event Title", // Different title
+            festivalName: "Input Festival", // Different festival
             date: Date.now.addingTimeInterval(3600), // Different date
             venueName: "Input Venue" // Different venue
         )
@@ -41,6 +43,7 @@ struct GetEventIntentPerformTests {
         // Verify it returns the REPOSITORY data, not the input data
         #expect(result.value?.id == repositoryEvent.id)
         #expect(result.value?.title == "Repository Event Title") // From repository
+        #expect(result.value?.festivalName == "Repository Festival") // From repository
         #expect(result.value?.venueName == "Repository Venue") // From repository
         #expect(result.value?.date == repositoryEvent.date) // From repository
 
@@ -62,6 +65,7 @@ struct GetEventIntentPerformTests {
         intent.event = EventEntity(
             id: UUID(), // Random ID not in repository
             title: "Missing Event",
+            festivalName: "Missing Festival",
             date: Date.now,
             venueName: "Missing Venue"
         )
@@ -92,8 +96,20 @@ struct ListEventsIntentPerformTests {
         let mockProvider = MockRepositoryProvider()
         let now = Date.now
         let todayEvents = [
-            EventDTO(id: UUID(), title: "Today Event 1", date: now, venueName: "Today Venue 1"),
-            EventDTO(id: UUID(), title: "Today Event 2", date: now.addingTimeInterval(3600), venueName: "Today Venue 2")
+            EventDTO(
+                id: UUID(),
+                title: "Today Event 1",
+                festivalName: "Today Festival 1",
+                date: now,
+                venueName: "Today Venue 1"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Today Event 2",
+                festivalName: "Today Festival 2",
+                date: now.addingTimeInterval(3600),
+                venueName: "Today Venue 2"
+            )
         ]
         await mockProvider.addMockEvents(todayEvents)
 
@@ -135,11 +151,29 @@ struct ListEventsIntentPerformTests {
         let mockProvider = MockRepositoryProvider()
         let now = Date.now
         let pastEvents = [
-            EventDTO(id: UUID(), title: "Past Event 1", date: now.addingTimeInterval(-86400), venueName: "Past Venue 1"),
-            EventDTO(id: UUID(), title: "Past Event 2", date: now.addingTimeInterval(-172800), venueName: "Past Venue 2")
+            EventDTO(
+                id: UUID(),
+                title: "Past Event 1",
+                festivalName: "Past Festival 1",
+                date: now.addingTimeInterval(-86400),
+                venueName: "Past Venue 1"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Past Event 2",
+                festivalName: "Past Festival 2",
+                date: now.addingTimeInterval(-172800),
+                venueName: "Past Venue 2"
+            )
         ]
         // Future event is slightly in the future to avoid cutoff boundary issue
-        let futureEvent = EventDTO(id: UUID(), title: "Future Event", date: now.addingTimeInterval(3600), venueName: "Future Venue")
+        let futureEvent = EventDTO(
+            id: UUID(),
+            title: "Future Event",
+            festivalName: "Future Festival",
+            date: now.addingTimeInterval(3600),
+            venueName: "Future Venue"
+        )
         await mockProvider.addMockEvents(pastEvents + [futureEvent])
 
         // Create intent with .past timeframe
@@ -164,10 +198,28 @@ struct ListEventsIntentPerformTests {
         let mockProvider = MockRepositoryProvider()
         let now = Date.now
         let futureEvents = [
-            EventDTO(id: UUID(), title: "Future Event 1", date: now.addingTimeInterval(86400), venueName: "Future Venue 1"),
-            EventDTO(id: UUID(), title: "Future Event 2", date: now.addingTimeInterval(172800), venueName: "Future Venue 2")
+            EventDTO(
+                id: UUID(),
+                title: "Future Event 1",
+                festivalName: "Future Fest 1",
+                date: now.addingTimeInterval(86400),
+                venueName: "Future Venue 1"
+            ),
+            EventDTO(
+                id: UUID(),
+                title: "Future Event 2",
+                festivalName: "Future Fest 2",
+                date: now.addingTimeInterval(172800),
+                venueName: "Future Venue 2"
+            )
         ]
-        let pastEvent = EventDTO(id: UUID(), title: "Past Event", date: now.addingTimeInterval(-3600), venueName: "Past Venue")
+        let pastEvent = EventDTO(
+            id: UUID(),
+            title: "Past Event",
+            festivalName: "Past Fest",
+            date: now.addingTimeInterval(-3600),
+            venueName: "Past Venue"
+        )
         await mockProvider.addMockEvents(futureEvents + [pastEvent])
 
         // Create intent with .future timeframe

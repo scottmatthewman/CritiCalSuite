@@ -17,12 +17,14 @@ struct EventEntityInitializationTests {
     func testBasicInitialization() {
         let id = UUID()
         let title = "Test Event"
+        let festival = "Test Festival"
         let date = Date.now
         let venueName = "Test Venue"
 
         let entity = EventEntity(
             id: id,
             title: title,
+            festivalName: festival,
             date: date,
             venueName: venueName
         )
@@ -30,6 +32,7 @@ struct EventEntityInitializationTests {
         #expect(entity.id == id)
         #expect(entity.title == title)
         #expect(entity.date == date)
+        #expect(entity.festivalName == festival)
         #expect(entity.venueName == venueName)
     }
 
@@ -38,6 +41,7 @@ struct EventEntityInitializationTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Concert",
+            festivalName: "Summer Fest",
             date: Date.now.addingTimeInterval(86400),
             venueName: "Madison Square Garden"
         )
@@ -45,11 +49,13 @@ struct EventEntityInitializationTests {
         // Test that all properties can be accessed
         let _ = entity.id
         let _ = entity.title
+        let _ = entity.festivalName
         let _ = entity.date
         let _ = entity.venueName
 
         // Properties should maintain their values
         #expect(entity.title == "Concert")
+        #expect(entity.festivalName == "Summer Fest")
         #expect(entity.venueName == "Madison Square Garden")
     }
 
@@ -58,11 +64,13 @@ struct EventEntityInitializationTests {
         let entity = EventEntity(
             id: UUID(),
             title: "",
+            festivalName: "",
             date: Date.distantPast,
             venueName: ""
         )
 
         #expect(entity.title == "")
+        #expect(entity.festivalName == "")
         #expect(entity.venueName == "")
         #expect(entity.date == Date.distantPast)
     }
@@ -70,16 +78,19 @@ struct EventEntityInitializationTests {
     @Test("EventEntity handles special characters in strings")
     func testSpecialCharacters() {
         let specialTitle = "Event with 特殊文字 & émojis 🎉"
+        let specialFestival = "Fête de la Musique"
         let specialVenue = "Café Müller & Co."
 
         let entity = EventEntity(
             id: UUID(),
             title: specialTitle,
+            festivalName: specialFestival,
             date: Date.now,
             venueName: specialVenue
         )
 
         #expect(entity.title == specialTitle)
+        #expect(entity.festivalName == specialFestival)
         #expect(entity.venueName == specialVenue)
     }
 }
@@ -92,6 +103,7 @@ struct EventEntityDisplayTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Annual Conference",
+            festivalName: "Business Expo",
             date: Date.now,
             venueName: "Convention Center"
         )
@@ -107,6 +119,7 @@ struct EventEntityDisplayTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Tech Talk",
+            festivalName: "Business Expo",
             date: testDate,
             venueName: "Tech Hub"
         )
@@ -128,6 +141,7 @@ struct EventEntityDisplayTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Virtual Event",
+            festivalName: "Online Expo",
             date: Date.now,
             venueName: ""
         )
@@ -147,6 +161,7 @@ struct EventEntityDisplayTests {
         let entity = EventEntity(
             id: UUID(),
             title: longTitle,
+            festivalName: "Mega Festival",
             date: Date.now,
             venueName: "Venue"
         )
@@ -179,6 +194,7 @@ struct EventEntityAppEntityTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Test",
+            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue"
         )
@@ -200,6 +216,7 @@ struct EventEntityIdentifiableTests {
         let entity = EventEntity(
             id: customID,
             title: "Event",
+            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue"
         )
@@ -212,6 +229,7 @@ struct EventEntityIdentifiableTests {
         let entity1 = EventEntity(
             id: UUID(),
             title: "Event 1",
+            festivalName: "Festival 1",
             date: Date.now,
             venueName: "Venue 1"
         )
@@ -219,6 +237,7 @@ struct EventEntityIdentifiableTests {
         let entity2 = EventEntity(
             id: UUID(),
             title: "Event 2",
+            festivalName: "Festival 2",
             date: Date.now,
             venueName: "Venue 2"
         )
@@ -233,6 +252,7 @@ struct EventEntityIdentifiableTests {
         let entity1 = EventEntity(
             id: sharedID,
             title: "Event",
+            festivalName: "Festival",
             date: Date.now,
             venueName: "Venue 1"
         )
@@ -240,6 +260,7 @@ struct EventEntityIdentifiableTests {
         let entity2 = EventEntity(
             id: sharedID,
             title: "Different Event",
+            festivalName: "Different Festival",
             date: Date.now.addingTimeInterval(3600),
             venueName: "Venue 2"
         )
@@ -262,6 +283,7 @@ struct EventEntitySendableTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Concurrent Event",
+            festivalName: "Concurrent Festival",
             date: Date.now,
             venueName: "Concurrent Venue"
         )
@@ -297,6 +319,7 @@ struct EventEntitySendableTests {
         let entity = EventEntity(
             id: UUID(),
             title: "Isolated Event",
+            festivalName: "Isolated Festival",
             date: Date.now,
             venueName: "Isolated Venue"
         )
@@ -319,18 +342,21 @@ struct EventEntityIntegrationTests {
         // Simulate creating an EventEntity from EventDTO values
         let dtoId = UUID()
         let dtoTitle = "DTO Event"
+        let dtoFestivalName = "DTO Festival"
         let dtoDate = Date.now
         let dtoVenueName = "DTO Venue"
 
         let entity = EventEntity(
             id: dtoId,
             title: dtoTitle,
+            festivalName: dtoFestivalName,
             date: dtoDate,
             venueName: dtoVenueName
         )
 
         #expect(entity.id == dtoId)
         #expect(entity.title == dtoTitle)
+        #expect(entity.festivalName == dtoFestivalName)
         #expect(entity.date == dtoDate)
         #expect(entity.venueName == dtoVenueName)
     }
@@ -341,6 +367,7 @@ struct EventEntityIntegrationTests {
             EventEntity(
                 id: UUID(),
                 title: "Event \(index)",
+                festivalName: "Festival \(index)",
                 date: Date.now.addingTimeInterval(Double(index) * 3600),
                 venueName: "Venue \(index)"
             )

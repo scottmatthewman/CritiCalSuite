@@ -18,6 +18,9 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     @Property(title: "Title")
     public var title: String
 
+    @Property(title: "Festival Name")
+    public var festivalName: String
+
     @Property(title: "Date")
     public var date: Date
 
@@ -28,9 +31,16 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         DisplayRepresentation(title: "\(title)", subtitle: "\(venueName), \(date.formatted())")
     }
 
-    public init(id: UUID, title: String, date: Date, venueName: String) {
+    public init(
+        id: UUID,
+        title: String,
+        festivalName: String,
+        date: Date,
+        venueName: String
+    ) {
         self.id = id
         self.title = title
+        self.festivalName = festivalName
         self.date = date
         self.venueName = venueName
     }

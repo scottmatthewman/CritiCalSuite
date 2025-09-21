@@ -8,21 +8,21 @@
 import SwiftUI
 import SwiftData
 import CritiCalStore
+import CritiCalUI
 
 @main
 struct CritiCalApp: App {
-    var container: ModelContainer {
-        do {
-            return try StoreFactory.makeContainer(cloud: true)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+    @State private var container = try! StoreFactory.makeContainer(cloud: true)
+    private var repo: EventRepository {
+        EventRepository(modelContainer: container)
     }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRouter()
         }
+        .environment(\.eventReader, repo)
+        .environment(\.eventWriter, repo)
         .modelContainer(container)
     }
 }

@@ -10,17 +10,20 @@ import Foundation
 public struct EventDTO: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let title: String
+    public let festivalName: String
     public let date: Date
     public let venueName: String
 
     public init(
         id: UUID = UUID(),
         title: String,
+        festivalName: String,
         date: Date,
         venueName: String
     ) {
         self.id = id
         self.title = title
+        self.festivalName = festivalName
         self.date = date
         self.venueName = venueName
     }
@@ -45,8 +48,8 @@ public protocol EventReading: Sendable {
 }
 
 public protocol EventWriting: Sendable {
-    @discardableResult func create(title: String, venueName: String, date: Date) async throws -> UUID
-    func update(eventID: UUID, title: String?, date: Date?, venueName: String?) async throws
+    @discardableResult func create(title: String, festivalName: String, venueName: String, date: Date) async throws -> UUID
+    func update(eventID: UUID, title: String?, festivalName: String?, date: Date?, venueName: String?) async throws
     func delete(eventID: UUID) async throws
 }
 

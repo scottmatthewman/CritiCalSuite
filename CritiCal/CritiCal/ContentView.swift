@@ -10,21 +10,23 @@ import SwiftData
 import CritiCalModels
 
 struct ContentView: View {
-    @Query(sort: [SortDescriptor(\Event.date)]) var events: [Event]
+    @Query(sort: [SortDescriptor(\Event.date, order: .reverse)]) var events: [Event]
 
     var body: some View {
         NavigationStack {
             List(events) { event in
-                HStack(alignment: .firstTextBaseline) {
-                    VStack(alignment: .leading) {
-                        Text(event.title)
-                            .font(.headline)
-                        Text(event.venueName)
-                            .font(.subheadline)
+                VStack(alignment: .leading) {
+                    HStack(alignment: .firstTextBaseline) {
+                        VStack(alignment: .leading) {
+                            Text(event.title)
+                                .font(.headline)
+                            Text(event.venueName)
+                                .font(.subheadline)
+                        }
+                        Spacer()
+                        Text(event.date, style: .date)
+                            .font(.caption)
                     }
-                    Spacer()
-                    Text(event.date, style: .date)
-                        .font(.caption)
                 }
             }
             .navigationTitle("Events")

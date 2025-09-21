@@ -240,6 +240,7 @@ struct StoreFactoryIntegrationTests {
         // Create an event
         let eventID = try await repository.create(
             title: "Factory Test Event",
+            festivalName: "Factory Test Festival",
             venueName: "Factory Test Venue",
             date: Date.now
         )
@@ -250,6 +251,7 @@ struct StoreFactoryIntegrationTests {
         #expect(retrievedEvent != nil)
         #expect(retrievedEvent?.id == eventID)
         #expect(retrievedEvent?.title == "Factory Test Event")
+        #expect(retrievedEvent?.festivalName == "Factory Test Festival")
         #expect(retrievedEvent?.venueName == "Factory Test Venue")
     }
 
@@ -258,8 +260,18 @@ struct StoreFactoryIntegrationTests {
         let repository = try StoreFactory.makeEventRepository(cloud: false, inMemory: true)
 
         // Create multiple events
-        let event1ID = try await repository.create(title: "Event 1", venueName: "Venue 1", date: Date.now)
-        let event2ID = try await repository.create(title: "Event 2", venueName: "Venue 2", date: Date.now.addingTimeInterval(3600))
+        let event1ID = try await repository.create(
+            title: "Event 1",
+            festivalName: "",
+            venueName: "Venue 1",
+            date: Date.now
+        )
+        let event2ID = try await repository.create(
+            title: "Event 2",
+            festivalName: "",
+            venueName: "Venue 2",
+            date: Date.now.addingTimeInterval(3600)
+        )
 
         // Verify both events exist
         let event1 = try await repository.event(byIdentifier: event1ID)
@@ -283,6 +295,7 @@ struct StoreFactoryIntegrationTests {
                 group.addTask {
                     try? await repository.create(
                         title: "Concurrent Event \(i)",
+                        festivalName: "Concurrent Festival",
                         venueName: "Venue \(i)",
                         date: Date.now.addingTimeInterval(Double(i) * 3600)
                     )
@@ -313,6 +326,7 @@ struct StoreFactoryIntegrationTests {
         // Add event to repository1
         let event1ID = try await repository1.create(
             title: "Repository 1 Event",
+            festivalName: "Festival 1",
             venueName: "Venue 1",
             date: Date.now
         )
@@ -320,6 +334,7 @@ struct StoreFactoryIntegrationTests {
         // Add event to repository2
         let event2ID = try await repository2.create(
             title: "Repository 2 Event",
+            festivalName: "Festival 2",
             venueName: "Venue 2",
             date: Date.now
         )
@@ -348,6 +363,7 @@ struct StoreFactoryIntegrationTests {
         // Create
         let eventID = try await repository.create(
             title: "CRUD Test Event",
+            festivalName: "CRUD Festival",
             venueName: "CRUD Venue",
             date: Date.now
         )
@@ -360,12 +376,14 @@ struct StoreFactoryIntegrationTests {
         try await repository.update(
             eventID: eventID,
             title: "Updated CRUD Event",
+            festivalName: "Updated CRUD Festival",
             date: nil,
             venueName: "Updated CRUD Venue"
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
         #expect(updatedEvent?.title == "Updated CRUD Event")
+        #expect(updatedEvent?.festivalName == "Updated CRUD Festival")
         #expect(updatedEvent?.venueName == "Updated CRUD Venue")
 
         // Delete
