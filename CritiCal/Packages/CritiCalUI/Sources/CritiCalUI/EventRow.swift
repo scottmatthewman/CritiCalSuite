@@ -26,12 +26,10 @@ struct EventRow: View {
                         .foregroundStyle(.secondary)
                 }
                 Label {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text(event.date, style: .date)
-                        Text("at")
-                            .foregroundStyle(.secondary)
-                        Text(event.date, style: .time)
-                    }
+                    Text(
+                        event.date ..< event.endDate,
+                        format: .interval.weekday().month().day().year().hour().minute()
+                    )
                 } icon: {
                     Image(systemName: "calendar")
                         .foregroundStyle(.tint)
@@ -60,6 +58,7 @@ struct EventRow: View {
         title: "A Midsummer Night’s Dream",
         festivalName: "Lambeth Fringe",
         date: .iso8601("2025-09-21T19:30:00Z"),
+        durationMinutes: 90,
         venueName: "Bridge Theatre"
     )
     let reader = FakeReader(events: [dto])

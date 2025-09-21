@@ -35,13 +35,7 @@ public struct GetEventIntent: AppIntent {
         }
 
         // Return the validated event data from repository, not the input parameter
-        let validatedEntity = EventEntity(
-            id: repositoryEvent.id,
-            title: repositoryEvent.title,
-            festivalName: repositoryEvent.festivalName,
-            date: repositoryEvent.date,
-            venueName: repositoryEvent.venueName
-        )
+        let validatedEntity = EventEntity(from: repositoryEvent)
 
         return .result(
             value: validatedEntity,

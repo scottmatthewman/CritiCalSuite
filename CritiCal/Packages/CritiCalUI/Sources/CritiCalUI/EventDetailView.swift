@@ -32,10 +32,10 @@ public struct EventDetailView: View {
                         }
                         Divider()
                         Label {
-                            Text(event.date, style: .date)
-                            Text("at")
-                                .foregroundStyle(.secondary)
-                            Text(event.date, style: .time)
+                            Text(
+                                event.date ..< event.endDate,
+                                format: .interval.weekday().month().day().year().hour().minute()
+                            )
                         } icon: {
                             Image(systemName: "calendar")
                                 .foregroundStyle(.tint)
@@ -76,6 +76,7 @@ public struct EventDetailView: View {
         title: "A Midsummer Night’s Dream",
         festivalName: "London Theatre Festival",
         date: .iso8601("2025-09-21T19:30:00Z"),
+        durationMinutes: 135,
         venueName: "Bridge Theatre"
     )
     let reader = FakeReader(events: [dto])

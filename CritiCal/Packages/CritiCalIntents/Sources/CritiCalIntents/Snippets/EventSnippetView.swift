@@ -5,6 +5,7 @@
 //  Created by Claude on 21/09/2025.
 //
 
+import CritiCalDomain
 import SwiftUI
 import AppIntents
 
@@ -35,15 +36,18 @@ public struct EventSnippetView: View {
             // Date and Venue
             VStack(alignment: .leading, spacing: 8) {
                 Label {
-                    Text(event.date, style: .date)
-                    Text("at")
-                        .foregroundStyle(.secondary)
-                    Text(event.date, style: .time)
+                    Text(
+                        event.date ..< event.endDate,
+                        format: .interval.weekday().month().day().year().hour().minute()
+                    )
                 } icon: {
                     Image(systemName: "calendar")
                         .foregroundStyle(.tint)
                 }
                 .font(.callout)
+
+
+
 
                 if !event.venueName.isEmpty {
                     Label {
@@ -64,13 +68,15 @@ public struct EventSnippetView: View {
 }
 
 #Preview("Event Snippet", traits: .sizeThatFitsLayout) {
+    let dto = EventDTO(
+        title: "SwiftUI Workshop",
+        festivalName: "WWDC 2025",
+        date: Date.now,
+        durationMinutes: 60,
+        venueName: "Moscone Center"
+    )
     EventSnippetView(
-        event: EventEntity(
-            title: "SwiftUI Workshop",
-            festivalName: "WWDC 2025",
-            date: Date.now,
-            venueName: "Moscone Center"
-        )
+        event: EventEntity(from: dto)
     )
     .padding()
 }

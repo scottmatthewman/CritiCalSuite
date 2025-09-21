@@ -30,4 +30,10 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
         self.durationMinutes = durationMinutes
         self.venueName = venueName
     }
+
+    /// The calculated end date of the event, based on date + durationMinutes
+    public var endDate: Date {
+        guard let durationMinutes else { return date }
+        return Calendar.current.date(byAdding: .minute, value: durationMinutes, to: date) ?? date
+    }
 }

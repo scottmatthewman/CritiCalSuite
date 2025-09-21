@@ -188,3 +188,129 @@ struct EventDTOSendableTests {
         }
     }
 }
+
+@Suite("EventDTO - EndDate Calculation")
+struct EventDTOEndDateTests {
+
+    @Test("endDate returns same date when durationMinutes is nil")
+    func testEndDateWithNilDuration() {
+        let startDate = Date(timeIntervalSince1970: 1000000) // Fixed date for consistency
+        let dto = EventDTO(
+            title: "Event Without Duration",
+            date: startDate,
+            durationMinutes: nil
+        )
+
+        #expect(dto.endDate == startDate)
+    }
+
+    @Test("endDate calculates correctly with positive duration")
+    func testEndDateWithPositiveDuration() {
+        let startDate = Date(timeIntervalSince1970: 1000000)
+        let durationMinutes = 120 // 2 hours
+        let dto = EventDTO(
+            title: "Two Hour Event",
+            date: startDate,
+            durationMinutes: durationMinutes
+        )
+
+        let expectedEndDate = Calendar.current.date(byAdding: .minute, value: durationMinutes, to: startDate)!
+        #expect(dto.endDate == expectedEndDate)
+
+        // Verify the time difference is correct (120 minutes = 7200 seconds)
+        let timeDifference = dto.endDate.timeIntervalSince(startDate)
+        #expect(timeDifference == 7200.0)
+    }
+
+    @Test("endDate handles various duration values")
+    func testEndDateWithVariousDurations() {
+        let startDate = Date(timeIntervalSince1970: 1000000)
+
+        // Test 30 minutes
+        let dto30 = EventDTO(title: "30 min", date: startDate, durationMinutes: 30)
+        #expect(dto30.endDate.timeIntervalSince(startDate) == 1800.0)
+
+        // Test 90 minutes
+        let dto90 = EventDTO(title: "90 min", date: startDate, durationMinutes: 90)
+        #expect(dto90.endDate.timeIntervalSince(startDate) == 5400.0)
+
+        // Test 1 minute
+        let dto1 = EventDTO(title: "1 min", date: startDate, durationMinutes: 1)
+        #expect(dto1.endDate.timeIntervalSince(startDate) == 60.0)
+
+        // Test 24 hours (1440 minutes)
+        let dto1440 = EventDTO(title: "24 hours", date: startDate, durationMinutes: 1440)
+        #expect(dto1440.endDate.timeIntervalSince(startDate) == 86400.0)
+    }
+
+    @Test("endDate handles zero duration")
+    func testEndDateWithZeroDuration() {
+        let startDate = Date(timeIntervalSince1970: 1000000)
+        let dto = EventDTO(
+            title: "Zero Duration Event",
+            date: startDate,
+            durationMinutes: 0
+        )
+
+        // Zero duration should return the same date
+        #expect(dto.endDate == startDate)
+        #expect(dto.endDate.timeIntervalSince(startDate) == 0.0)
+    }
+
+    @Test("endDate handles negative duration")
+    func testEndDateWithNegativeDuration() {
+        let startDate = Date(timeIntervalSince1970: 1000000)
+        let dto = EventDTO(
+            title: "Negative Duration Event",
+            date: startDate,
+            durationMinutes: -60 // -1 hour
+        )
+
+        // Negative duration should calculate backwards from start date
+        let expectedEndDate = Calendar.current.date(byAdding: .minute, value: -60, to: startDate)!
+        #expect(dto.endDate == expectedEndDate)
+        #expect(dto.endDate.timeIntervalSince(startDate) == -3600.0)
+    }
+
+    @Test("endDate preserves across daylight saving time transitions")
+    func testEndDateAcrossDST() {
+        // Use a calendar and timezone that observes DST
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "America/New_York")!
+
+        // Create a date just before DST change (example: March 10, 2024, 1:30 AM)
+        let components = DateComponents(year: 2024, month: 3, day: 10, hour: 1, minute: 30)
+        guard let startDate = calendar.date(from: components) else {
+            #expect(Bool(false), "Failed to create test date")
+            return
+        }
+
+        // Event spans DST change (90 minutes, crossing 2 AM DST transition)
+        let dto = EventDTO(
+            title: "DST Crossing Event",
+            date: startDate,
+            durationMinutes: 90
+        )
+
+        // The calculation should handle DST correctly
+        let expectedEndDate = calendar.date(byAdding: .minute, value: 90, to: startDate)!
+        #expect(dto.endDate == expectedEndDate)
+    }
+
+    @Test("endDate calculation is consistent for multiple accesses")
+    func testEndDateConsistency() {
+        let dto = EventDTO(
+            title: "Consistency Test",
+            date: Date.now,
+            durationMinutes: 60
+        )
+
+        // Access endDate multiple times and ensure it returns the same value
+        let endDate1 = dto.endDate
+        let endDate2 = dto.endDate
+        let endDate3 = dto.endDate
+
+        #expect(endDate1 == endDate2)
+        #expect(endDate2 == endDate3)
+    }
+}
