@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public enum ConfirmationStatus: String, Equatable, Sendable, CaseIterable {
+public enum ConfirmationStatus: String, Equatable, CaseIterable, @unchecked Sendable {
     case draft
     case tentative
     case bidForReview
@@ -51,6 +51,17 @@ public extension ConfirmationStatus {
             "This event, or your attendance, has been cancelled"
         }
     }
+
+    var systemImage: String {
+        switch self {
+        case .draft: "circle.dotted"
+        case .tentative: "questionmark.circle"
+        case .bidForReview: "hand.raised.circle"
+        case .awaitingConfirmation: "hourglass.circle"
+        case .confirmed: "calendar.circle"
+        case .cancelled: "xmark.circle"
+        }
+    }
 }
 
 // MARK: Status collections
@@ -65,4 +76,9 @@ extension ConfirmationStatus {
     ]
     static let isDraft: Set<ConfirmationStatus> = [.draft]
     static let isCancelled: Set<ConfirmationStatus> = [.cancelled]
+
+    public func isConfirmed() -> Bool { Self.isConfirmed.contains(self) }
+    public func isPending() -> Bool { Self.isPending.contains(self) }
+    public func isDraft() -> Bool { Self.isDraft.contains(self) }
+    public func isCancelled() -> Bool { Self.isCancelled.contains(self) }
 }

@@ -11,16 +11,12 @@ import CritiCalDomain
 import CritiCalModels
 
 public struct EventListView: View {
+    @Environment(NavigationRouter.self) private var router
+
     // Use @Query to efficiently load events directly from SwiftData
     @Query(sort: \Event.date, order: .reverse) private var events: [Event]
 
-    public var onSelect: (UUID) -> Void
-
-    public init(
-        onSelect: @escaping (UUID) -> Void = { _ in }
-    ) {
-        self.onSelect = onSelect
-    }
+    public init() {}
 
     public var body: some View {
         Group {
@@ -33,7 +29,7 @@ public struct EventListView: View {
             } else {
                 List(events) { event in
                     Button {
-                        onSelect(event.identifier)
+                        router.navigate(toEvent: event.identifier)
                     } label: {
                         // Convert Event to EventDTO for EventRow
                         EventRow(event: EventDTO(
@@ -41,7 +37,10 @@ public struct EventListView: View {
                             title: event.title,
                             festivalName: event.festivalName,
                             date: event.date,
-                            venueName: event.venueName
+                            venueName: event.venueName,
+                            confirmationStatus: ConfirmationStatus(
+                                rawValue: event.confirmationStatusRaw ?? "draft"
+                            ) ?? .draft
                         ))
                     }
                 }
@@ -57,13 +56,15 @@ public struct EventListView: View {
         title: "Tech Rehearsal",
         festivalName: "",
         date: .iso8601("2025-09-21T19:30:00Z"),
-        venueName: "Donmar Warehouse"
+        venueName: "Donmar Warehouse",
+        confirmationStatus: .confirmed
     )
     let e2 = EventDTO(
         title: "Press Night",
         festivalName: "Camden Fringe 2025",
         date: .iso8601("2025-09-22T19:30:00Z"),
-        venueName: "National Theatre"
+        venueName: "National Theatre",
+        confirmationStatus: .awaitingConfirmation
     )
 
     let reader = FakeReader(events: [e1, e2])
@@ -71,5 +72,6 @@ public struct EventListView: View {
     NavigationStack {
         EventListView()
             .environment(\.eventReader, reader)
+            .environment(NavigationRouter())
     }
 }

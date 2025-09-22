@@ -22,7 +22,8 @@ struct EventInitializationTests {
             festivalName: "Test Festival",
             venueName: "Test Venue",
             date: customDate,
-            durationMinutes: 120
+            durationMinutes: 120,
+            confirmationStatusRaw: "confirmed"
         )
 
         #expect(event.identifier == customID)
@@ -31,6 +32,7 @@ struct EventInitializationTests {
         #expect(event.venueName == "Test Venue")
         #expect(event.date == customDate)
         #expect(event.durationMinutes == 120)
+        #expect(event.confirmationStatusRaw == "confirmed")
     }
 
     @Test("Event initializes with default parameters")
@@ -45,6 +47,7 @@ struct EventInitializationTests {
         // Date should be reasonably close to now (within 1 second)
         #expect(abs(event.date.timeIntervalSince(Date.now)) < 1.0)
         #expect(event.durationMinutes == nil)
+        #expect(event.confirmationStatusRaw == "draft")
     }
 
     @Test("Event initializes with partial parameters")
@@ -56,6 +59,8 @@ struct EventInitializationTests {
         #expect(event.durationMinutes == 90)
         #expect(event.identifier != UUID()) // Should have generated a UUID
         #expect(abs(event.date.timeIntervalSince(Date.now)) < 1.0) // Should be close to now
+        #expect(event.festivalName == "")
+        #expect(event.confirmationStatusRaw == "draft")
     }
 
     @Test("Event initializes with custom date only")
@@ -67,6 +72,7 @@ struct EventInitializationTests {
         #expect(event.title == "")
         #expect(event.festivalName == "")
         #expect(event.venueName == "")
+        #expect(event.confirmationStatusRaw == "draft")
         #expect(event.durationMinutes == nil)
         #expect(event.identifier != UUID())
     }
@@ -105,12 +111,14 @@ struct EventPropertyTests {
         event.festivalName = "Modified Festival"
         event.venueName = "Modified Venue"
         event.date = newDate
+        event.confirmationStatusRaw = "confirmed"
 
         #expect(event.identifier == newID)
         #expect(event.title == "Modified Title")
         #expect(event.festivalName == "Modified Festival")
         #expect(event.venueName == "Modified Venue")
         #expect(event.date == newDate)
+        #expect(event.confirmationStatusRaw == "confirmed")
     }
 
     @Test("Event properties retain their values")

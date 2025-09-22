@@ -11,27 +11,43 @@ import CritiCalIntents
 import SwiftUI
 
 struct AppRouter: View {
-    enum Route: Hashable {
-        case eventDetails(UUID)
-    }
-
-    @State private var path: [Route] = []
+    @Environment(NavigationRouter.self) private var router
 
     var body: some View {
-        NavigationStack(path: $path) {
-            EventListView {
-                path.append(.eventDetails($0))
+        @Bindable var router = router
+        TabView(selection: $router.selectedTab) {
+            Tab("Home", systemImage: "house", value: .home) {
+                ContentUnavailableView("Home", systemImage: "house")
             }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .eventDetails(let id):
-                    EventDetailView(id: id)
+            Tab("Events", systemImage: "theatermasks", value: .events) {
+                NavigationStack(path: $router.eventsPath) {
+                    EventListView()
+                        .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
+                            switch route {
+                            case .eventDetails(let id):
+                                EventDetailView(id: id)
+                            }
+                        }
                 }
+            }
+            Tab("Reviews", systemImage: "star.bubble", value: .reviews) {
+                NavigationStack(path: $router.reviewsPath) {
+                    ContentUnavailableView("Reviews", systemImage: "star.bubble")
+                }
+            }
+            Tab(value: .search, role: .search) {
+                ContentUnavailableView.search
             }
         }
         .onAppIntentExecution(OpenEventIntent.self) { intent in
             let eventID = intent.target.id
-            path = [.eventDetails(eventID)]
+            router.navigate(toEvent: eventID)
         }
+        .tabBarMinimizeBehavior(.onScrollDown)
     }
+}
+
+#Preview {
+    AppRouter()
+        .environment(NavigationRouter())
 }

@@ -57,7 +57,8 @@ struct EventDTOEquatableTests {
             title: "Event",
             festivalName: "Festival",
             date: date,
-            venueName: "Venue"
+            venueName: "Venue",
+            confirmationStatus: .cancelled
         )
 
         let dto2 = EventDTO(
@@ -65,7 +66,8 @@ struct EventDTOEquatableTests {
             title: "Event",
             festivalName: "Festival",
             date: date,
-            venueName: "Venue"
+            venueName: "Venue",
+            confirmationStatus: .cancelled
         )
 
         #expect(dto1 == dto2)

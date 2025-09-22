@@ -96,26 +96,78 @@ struct ConfirmationStatusDisplayRepresentationTests {
 
 @Suite("ConfirmationStatus - computed collections")
 struct ConfirmationStatusComputedCollectionsTests {
-    @Test("isConfirmed includes only confirmed status")
+    @Test("isConfirmed collection includes only confirmed status")
     func testIsConfirmedCollection() {
         #expect(ConfirmationStatus.isConfirmed == [.confirmed])
     }
 
-    @Test("isPending includes only intermediate statuses")
+    @Test("isPending collection includes only intermediate statuses")
     func testIsPendingCollection() {
         #expect(ConfirmationStatus.isPending == [
             .draft, .tentative, .bidForReview, .awaitingConfirmation
         ])
     }
 
-    @Test("isDraft includes only draft status")
+    @Test("isDraft collection includes only draft status")
     func testIsDraftCollection() {
         #expect(ConfirmationStatus.isDraft == [.draft])
     }
 
-    @Test("isCancelled includes only cancelled status")
+    @Test("isCancelled collection includes only cancelled status")
     func testIsCancelledCollection() {
         #expect(ConfirmationStatus.isCancelled == [.cancelled])
+    }
+
+    @Test("Only confirmed status returns true for isConfirmed()",
+          arguments: [
+            (ConfirmationStatus.draft, false),
+            (ConfirmationStatus.tentative, false),
+            (ConfirmationStatus.bidForReview, false),
+            (ConfirmationStatus.awaitingConfirmation, false),
+            (ConfirmationStatus.confirmed, true),
+            (ConfirmationStatus.cancelled, false)
+          ])
+    func testIsConfirmedMethod(status: ConfirmationStatus, expectedResult: Bool) {
+        #expect(status.isConfirmed() == expectedResult, "Expected \(status) to return \(expectedResult) for isConfirmed()")
+    }
+
+    @Test("All in progress actions return true for isPending()",
+          arguments: [
+            (ConfirmationStatus.draft, true),
+            (ConfirmationStatus.tentative, true),
+            (ConfirmationStatus.bidForReview, true),
+            (ConfirmationStatus.awaitingConfirmation, true),
+            (ConfirmationStatus.confirmed, false),
+            (ConfirmationStatus.cancelled, false)
+          ])
+    func testIsPendingMethod(status: ConfirmationStatus, expectedResult: Bool) {
+        #expect(status.isPending() == expectedResult, "Expected \(status) to return \(expectedResult) for isPending()")
+    }
+
+    @Test("Only draft status is true for isDraft()",
+          arguments: [
+            (ConfirmationStatus.draft, true),
+            (ConfirmationStatus.tentative, false),
+            (ConfirmationStatus.bidForReview, false),
+            (ConfirmationStatus.awaitingConfirmation, false),
+            (ConfirmationStatus.confirmed, false),
+            (ConfirmationStatus.cancelled, false)
+          ])
+    func testIsDraftMethod(status: ConfirmationStatus, expectedResult: Bool) {
+        #expect(status.isDraft() == expectedResult, "Expected \(status) to return \(expectedResult) for isDraft()")
+    }
+
+    @Test("Only cancelled status is true for isCancelled()",
+          arguments: [
+            (ConfirmationStatus.draft, false),
+            (ConfirmationStatus.tentative, false),
+            (ConfirmationStatus.bidForReview, false),
+            (ConfirmationStatus.awaitingConfirmation, false),
+            (ConfirmationStatus.confirmed, false),
+            (ConfirmationStatus.cancelled, true)
+          ])
+    func testIsCancelledMethod(status: ConfirmationStatus, expectedResult: Bool) {
+        #expect(status.isCancelled() == expectedResult, "Expected \(status) to return \(expectedResult) for isCancelled()")
     }
 }
 

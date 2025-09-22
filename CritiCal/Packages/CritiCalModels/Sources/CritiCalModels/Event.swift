@@ -5,8 +5,8 @@
 //  Created by Scott Matthewman on 18/09/2025.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 
 @Model
 public final class Event {
@@ -18,6 +18,7 @@ public final class Event {
     public var durationMinutes: Int?
     public var festivalName: String = ""
     public var venueName: String = ""
+    public var confirmationStatusRaw: String?
 
     public init(
         identifier: UUID = UUID(),
@@ -25,7 +26,8 @@ public final class Event {
         festivalName: String = "",
         venueName: String = "",
         date: Date = Date.now,
-        durationMinutes: Int? = nil
+        durationMinutes: Int? = nil,
+        confirmationStatusRaw: String? = "draft"
     ) {
         self.identifier = identifier
         self.title = title
@@ -33,5 +35,6 @@ public final class Event {
         self.venueName = venueName
         self.date = date
         self.durationMinutes = durationMinutes
+        self.confirmationStatusRaw = confirmationStatusRaw
     }
 }

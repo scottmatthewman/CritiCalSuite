@@ -30,6 +30,9 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     @Property(title: "Venue Name")
     public var venueName: String
 
+    @Property(title: "Status")
+    public var confirmationStatus: ConfirmationStatusAppEnum
+
     public var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: displayTitle, subtitle: displaySubtitle)
     }
@@ -50,23 +53,6 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         }
     }
 
-//    public init(
-//        id: UUID = UUID(),
-//        title: String,
-//        festivalName: String = "",
-//        date: Date,
-//        endDate: Date? = nil,
-//        venueName: String = ""
-//    ) {
-//        self.id = id
-//        self.title = title
-//        self.festivalName = festivalName
-//        self.date = date
-//        self.endDate = endDate ?? date
-//        self.venueName = venueName
-//
-//    }
-
     public init(from dto: EventDTO) {
         self.id = dto.id
         self.title = dto.title
@@ -74,5 +60,8 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         self.date = dto.date
         self.endDate = dto.endDate
         self.venueName = dto.venueName
+        self.confirmationStatus = ConfirmationStatusAppEnum(
+            dto.confirmationStatus
+        ) ?? .draft
     }
 }

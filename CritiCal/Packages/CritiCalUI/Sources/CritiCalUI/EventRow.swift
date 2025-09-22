@@ -17,7 +17,7 @@ struct EventRow: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(event.title)
                     .font(.headline)
                 if event.festivalName.isEmpty == false {
@@ -26,12 +26,27 @@ struct EventRow: View {
                         .foregroundStyle(.secondary)
                 }
                 Label {
-                    Text(
-                        event.date ..< event.endDate,
-                        format: .interval.weekday().month().day().year().hour().minute()
-                    )
+                    if event.confirmationStatus.isConfirmed() {
+                        Text(
+                            event.date ..< event.endDate,
+                            format: .interval.weekday().month().day().year().hour().minute()
+                        )
+                    } else {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(
+                                event.date,
+                                format: .dateTime
+                                    .weekday().month().day().year()
+                                    .hour().minute()
+                            )
+                            .fixedSize()
+                            Text(event.confirmationStatus.displayName)
+                                .foregroundStyle(.secondary)
+                        }
+                        .lineLimit(1)
+                    }
                 } icon: {
-                    Image(systemName: "calendar")
+                    Image(systemName: event.confirmationStatus.systemImage)
                         .foregroundStyle(.tint)
                 }
                 .font(.footnote)
@@ -50,6 +65,7 @@ struct EventRow: View {
             Spacer()
         }
         .contentShape(.rect)
+        .labelIconToTitleSpacing(8)
     }
 }
 
@@ -59,7 +75,8 @@ struct EventRow: View {
         festivalName: "Lambeth Fringe",
         date: .iso8601("2025-09-21T19:30:00Z"),
         durationMinutes: 90,
-        venueName: "Bridge Theatre"
+        venueName: "Bridge Theatre",
+        confirmationStatus: .awaitingConfirmation
     )
     let reader = FakeReader(events: [dto])
     List {
