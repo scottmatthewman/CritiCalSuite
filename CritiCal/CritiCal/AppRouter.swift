@@ -22,6 +22,8 @@ struct AppRouter: View {
             Tab("Events", systemImage: "theatermasks", value: .events) {
                 NavigationStack(path: $router.eventsPath) {
                     EventListView()
+                        .navigationTitle("Events")
+                        .toolbarTitleDisplayMode(.inlineLarge)
                         .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
                             switch route {
                             case .eventDetails(let id):

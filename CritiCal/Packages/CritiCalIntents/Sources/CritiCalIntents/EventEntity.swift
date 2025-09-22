@@ -33,6 +33,9 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     @Property(title: "Status")
     public var confirmationStatus: ConfirmationStatusAppEnum
 
+    @Property(title: "Genre")
+    public var genre: GenreEntity?
+
     public var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: displayTitle, subtitle: displaySubtitle)
     }
@@ -63,5 +66,6 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         self.confirmationStatus = ConfirmationStatusAppEnum(
             dto.confirmationStatus
         ) ?? .draft
+        self.genre = dto.genre.map { GenreEntity(from: $0) }
     }
 }

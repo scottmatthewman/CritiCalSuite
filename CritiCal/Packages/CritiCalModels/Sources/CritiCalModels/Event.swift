@@ -19,6 +19,8 @@ public final class Event {
     public var festivalName: String = ""
     public var venueName: String = ""
     public var confirmationStatusRaw: String?
+    @Relationship(deleteRule: .nullify, inverse: \Genre.events)
+    public var genre: Genre?
 
     public init(
         identifier: UUID = UUID(),
@@ -27,7 +29,8 @@ public final class Event {
         venueName: String = "",
         date: Date = Date.now,
         durationMinutes: Int? = nil,
-        confirmationStatusRaw: String? = "draft"
+        confirmationStatusRaw: String? = "draft",
+        genre: Genre? = nil
     ) {
         self.identifier = identifier
         self.title = title
@@ -36,5 +39,6 @@ public final class Event {
         self.date = date
         self.durationMinutes = durationMinutes
         self.confirmationStatusRaw = confirmationStatusRaw
+        self.genre = genre
     }
 }

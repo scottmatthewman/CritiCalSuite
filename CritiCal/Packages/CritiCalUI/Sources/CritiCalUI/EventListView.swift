@@ -31,23 +31,12 @@ public struct EventListView: View {
                     Button {
                         router.navigate(toEvent: event.identifier)
                     } label: {
-                        // Convert Event to EventDTO for EventRow
-                        EventRow(event: EventDTO(
-                            id: event.identifier,
-                            title: event.title,
-                            festivalName: event.festivalName,
-                            date: event.date,
-                            venueName: event.venueName,
-                            confirmationStatus: ConfirmationStatus(
-                                rawValue: event.confirmationStatusRaw ?? "draft"
-                            ) ?? .draft
-                        ))
+                        EventRow(event: EventDTO(event: event))
                     }
                 }
                 .buttonStyle(.plain)
             }
         }
-        .navigationTitle("Events")
     }
 }
 

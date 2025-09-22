@@ -6,6 +6,7 @@
 //
 
 import CritiCalDomain
+import CritiCalUI
 import SwiftUI
 import AppIntents
 
@@ -20,6 +21,15 @@ public struct EventSnippetView: View {
 
     public init(event: EventEntity) {
         self.entity = event
+        let genreDTO = event.genre.map { genre in
+            GenreDTO(
+                id: genre.id,
+                name: genre.name,
+                details: genre.details,
+                hexColor: genre.hexColor,
+                isDeactivated: !genre.isActive
+            )
+        }
         // Create DTO from entity for display
         self.dto = EventDTO(
             id: event.id,
@@ -28,65 +38,72 @@ public struct EventSnippetView: View {
             date: event.date,
             durationMinutes: Int(event.endDate.timeIntervalSince(event.date) / 60),
             venueName: event.venueName,
-            confirmationStatus: event.confirmationStatus.confirmationStatus
+            confirmationStatus: event.confirmationStatus.confirmationStatus,
+            genre: genreDTO
         )
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Title and Festival
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
+            HStack(alignment: .bottom) {
+                // image
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(.tint.secondary)
+                    .frame(width: 60, height: 60)
+                    .overlay {
+                        Image(systemName: "theatermasks.fill")
+                            .font(.title)
+                            .foregroundStyle(.tint)
+                    }
+                    .tint(dto.genre?.color ?? .accentColor)
+                // Title and Festival
+                VStack(alignment: .leading, spacing: 4) {
+                    if !dto.festivalName.isEmpty {
+                        Text(dto.festivalName)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                     Text(dto.title)
                         .font(.headline)
                         .foregroundStyle(.primary)
-                    Spacer()
-                    Button(intent: OpenEventIntent(event: entity)) {
-                        Image(systemName: "arrow.up.right.square")
-                            .imageScale(.large)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.tint)
                 }
-                if !dto.festivalName.isEmpty {
-                    Text(dto.festivalName)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                Spacer()
+                Button(intent: OpenEventIntent(event: entity)) {
+                    Image(systemName: "arrow.up.right.square")
+                        .imageScale(.large)
                 }
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
             }
 
             Divider()
 
-            // Date and Venue
-            VStack(alignment: .leading, spacing: 8) {
-                Label {
-                    VStack(alignment: .leading) {
-                        Text(
-                            dto.date ..< dto.endDate,
-                            format: .interval.weekday().month().day().year().hour().minute()
-                        )
-                        if dto.confirmationStatus != .confirmed {
-                            Label(dto.confirmationStatus.displayName, systemImage: "exclamationmark.triangle")
-                                .font(.footnote.bold())
-                                .textCase(.uppercase)
-                                .foregroundStyle(.orange)
-                        }
-                    }
-                } icon: {
-                    Image(systemName: "calendar")
-                        .foregroundStyle(.tint)
-                }
-                .font(.callout)
+            if !dto.venueName.isEmpty {
+                Label(dto.venueName, systemImage: "location")
+                    .labelStyle(.tintedIcon)
+            }
 
-                if !dto.venueName.isEmpty {
-                    Label {
-                        Text(dto.venueName)
-                    } icon: {
-                        Image(systemName: "location")
-                            .foregroundStyle(.tint)
-                    }
-                    .font(.callout)
-                }
+            // Date and Venue
+            Label {
+                Text(dto.date ..< dto.endDate, format: .interval.weekday().month().day().year().hour().minute()
+                )
+            } icon: {
+                Image(systemName: "calendar")
+            }
+            .labelStyle(.tintedIcon)
+
+            if dto.confirmationStatus != .confirmed {
+                Label(
+                    dto.confirmationStatus.displayName,
+                    systemImage: dto.confirmationStatus.systemImage
+                )
+                .foregroundStyle(.secondary)
+            }
+
+            if let genre = entity.genre {
+                Label(genre.name, systemImage: "tag")
+                    .labelStyle(.tag)
+                    .tint(genre.color)
             }
         }
         .padding()
@@ -103,7 +120,14 @@ public struct EventSnippetView: View {
         date: Date.now,
         durationMinutes: 60,
         venueName: "Moscone Center",
-        confirmationStatus: .awaitingConfirmation
+        confirmationStatus: .awaitingConfirmation,
+        genre: GenreDTO(
+            id: UUID(),
+            name: "Workshop",
+            details: "Educational session",
+            hexColor: "#FF5733",
+            isDeactivated: false
+        )
     )
     EventSnippetView(
         event: EventEntity(from: dto)

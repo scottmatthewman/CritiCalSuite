@@ -30,6 +30,10 @@ public struct EventDetailView: View {
                             .font(.headline)
                             .foregroundStyle(.secondary)
                         }
+                        if let genre = event.genre {
+                            Label(genre.name, systemImage: "tag")
+                                .tint(genre.color)
+                        }
                     }
 
                     DisclosureGroup {
@@ -119,7 +123,8 @@ public struct EventDetailView: View {
         date: .iso8601("2025-09-21T19:30:00Z"),
         durationMinutes: 135,
         venueName: "Bridge Theatre",
-        confirmationStatus: .confirmed
+        confirmationStatus: .confirmed,
+        genre: GenreDTO(name: "Musical Theatre")
     )
     let reader = FakeReader(events: [dto])
     EventDetailView(id: dto.id)

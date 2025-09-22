@@ -194,7 +194,14 @@ private extension Event {
             date: date,
             durationMinutes: durationMinutes,
             venueName: venueName,
-            confirmationStatus: ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft
+            confirmationStatus: ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft,
+            genre: genre.map { GenreDTO(
+                id: $0.identifier ?? UUID(),
+                name: $0.name,
+                details: $0.details,
+                hexColor: $0.hexColor,
+                isDeactivated: $0.isDeactivated
+            ) }
         )
     }
 }
