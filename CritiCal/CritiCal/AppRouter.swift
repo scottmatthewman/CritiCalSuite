@@ -39,6 +39,9 @@ struct AppRouter: View {
                     ContentUnavailableView("Reviews", systemImage: "star.bubble")
                 }
             }
+            Tab("Developer", systemImage: "hammer", value: .developer) {
+                DeveloperView()
+            }
             Tab(value: .search, role: .search) {
                 ContentUnavailableView.search
             }

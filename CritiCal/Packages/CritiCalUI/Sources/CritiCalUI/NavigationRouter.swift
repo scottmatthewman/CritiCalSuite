@@ -21,6 +21,7 @@ public class NavigationRouter: Sendable {
         case home
         case events
         case reviews
+        case developer
         case search
     }
 
