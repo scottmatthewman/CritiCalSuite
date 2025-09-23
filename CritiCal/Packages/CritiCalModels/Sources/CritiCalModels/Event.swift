@@ -21,6 +21,8 @@ public final class Event {
     public var confirmationStatusRaw: String?
     @Relationship(deleteRule: .nullify, inverse: \Genre.events)
     public var genre: Genre?
+    public var url: URL?
+    public var details: String = ""
 
     public init(
         identifier: UUID = UUID(),
@@ -30,7 +32,9 @@ public final class Event {
         date: Date = Date.now,
         durationMinutes: Int? = nil,
         confirmationStatusRaw: String? = "draft",
-        genre: Genre? = nil
+        genre: Genre? = nil,
+        url: URL? = nil,
+        details: String = ""
     ) {
         self.identifier = identifier
         self.title = title
@@ -40,5 +44,7 @@ public final class Event {
         self.durationMinutes = durationMinutes
         self.confirmationStatusRaw = confirmationStatusRaw
         self.genre = genre
+        self.url = url
+        self.details = details
     }
 }

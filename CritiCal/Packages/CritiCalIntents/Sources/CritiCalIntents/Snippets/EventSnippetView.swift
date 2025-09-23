@@ -100,10 +100,23 @@ public struct EventSnippetView: View {
                 .foregroundStyle(.secondary)
             }
 
-            if let genre = entity.genre {
+            if let genre = dto.genre {
                 Label(genre.name, systemImage: "tag")
                     .labelStyle(.tag)
                     .tint(genre.color)
+            }
+
+            if let url = dto.url {
+                Link(destination: url) {
+                    Label(url.absoluteString, systemImage: "globe")
+                }
+            }
+
+            if dto.details.isEmpty == false {
+                Text(dto.details)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
         }
         .padding()
@@ -121,6 +134,8 @@ public struct EventSnippetView: View {
         durationMinutes: 60,
         venueName: "Moscone Center",
         confirmationStatus: .awaitingConfirmation,
+        url: URL(string: "https://bbc.co.uk/"),
+        details: "This example event is intended to demonstrate what the Shortcuts snippet will look like for an event that has all its attributes defined.",
         genre: GenreDTO(
             id: UUID(),
             name: "Workshop",

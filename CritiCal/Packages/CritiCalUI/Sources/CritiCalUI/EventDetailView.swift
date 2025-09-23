@@ -93,6 +93,21 @@ public struct EventDetailView: View {
                             Label(event.venueName, systemImage: "location")
                         }
                     }
+
+                    if let url = event.url {
+                        Link(destination: url) {
+                            LabeledContent {
+                                Text(url.absoluteString)
+                            } label: {
+                                Label("Website", systemImage: "globe")
+                            }
+                        }
+                    }
+
+                    if event.details.isEmpty == false {
+                        Text(event.details)
+                            .lineSpacing(4.0)
+                    }
                 }
                 .listStyle(.plain)
             } else {
@@ -124,6 +139,8 @@ public struct EventDetailView: View {
         durationMinutes: 135,
         venueName: "Bridge Theatre",
         confirmationStatus: .confirmed,
+        url: URL(string: "https://bridgetheatre.co.uk/"),
+        details: "An immersive version of Shakespeare's classic. Join Titania, Oberon and the citizens of Athens as they walk around the enchanted forest.",
         genre: GenreDTO(name: "Musical Theatre")
     )
     let reader = FakeReader(events: [dto])

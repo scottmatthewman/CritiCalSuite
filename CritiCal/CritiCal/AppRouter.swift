@@ -8,10 +8,12 @@
 import AppIntents
 import CritiCalUI
 import CritiCalIntents
+import OnboardingFlow
 import SwiftUI
 
 struct AppRouter: View {
     @Environment(NavigationRouter.self) private var router
+    @State private var onboardingSettings = OnboardingSettings()
 
     var body: some View {
         @Bindable var router = router
@@ -46,6 +48,7 @@ struct AppRouter: View {
             router.navigate(toEvent: eventID)
         }
         .tabBarMinimizeBehavior(.onScrollDown)
+        .onboardingFlow(settings: onboardingSettings)
     }
 }
 

@@ -123,7 +123,9 @@ public actor EventRepository: EventReading & EventWriting {
         venueName: String,
         date: Date,
         durationMinutes: Int? = nil,
-        confirmationStatus: ConfirmationStatus = .draft
+        confirmationStatus: ConfirmationStatus = .draft,
+        url: URL? = nil,
+        details: String
     ) async throws -> UUID {
         let newEvent = Event(
             title: title,
@@ -131,7 +133,9 @@ public actor EventRepository: EventReading & EventWriting {
             venueName: venueName,
             date: date,
             durationMinutes: durationMinutes,
-            confirmationStatusRaw: confirmationStatus.rawValue
+            confirmationStatusRaw: confirmationStatus.rawValue,
+            url: url,
+            details: details
         )
         modelContext.insert(newEvent)
         do {
@@ -149,7 +153,9 @@ public actor EventRepository: EventReading & EventWriting {
         venueName: String?,
         date: Date?,
         durationMinutes: Int?,
-        confirmationStatus: ConfirmationStatus?
+        confirmationStatus: ConfirmationStatus?,
+        url: URL?,
+        details: String?
     ) async throws {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == eventID })
         guard let event = try modelContext.fetch(fd).first else {
@@ -162,7 +168,8 @@ public actor EventRepository: EventReading & EventWriting {
         if let venueName { event.venueName = venueName }
         if let durationMinutes { event.durationMinutes = durationMinutes }
         if let confirmationStatus { event.confirmationStatusRaw = confirmationStatus.rawValue }
-
+        if let url { event.url = url }
+        if let details { event.details = details }
         do {
             try modelContext.save()
         } catch {
@@ -195,6 +202,8 @@ private extension Event {
             durationMinutes: durationMinutes,
             venueName: venueName,
             confirmationStatus: ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft,
+            url: url,
+            details: details,
             genre: genre.map { GenreDTO(
                 id: $0.identifier ?? UUID(),
                 name: $0.name,

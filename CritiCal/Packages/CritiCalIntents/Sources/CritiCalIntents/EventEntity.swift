@@ -36,6 +36,12 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     @Property(title: "Genre")
     public var genre: GenreEntity?
 
+    @Property(title: "URL")
+    public var url: URL?
+
+    @Property(title: "Description")
+    public var details: String
+
     public var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: displayTitle, subtitle: displaySubtitle)
     }
@@ -57,6 +63,7 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     }
 
     public init(from dto: EventDTO) {
+        print("Initialising", dto)
         self.id = dto.id
         self.title = dto.title
         self.festivalName = dto.festivalName
@@ -66,6 +73,8 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         self.confirmationStatus = ConfirmationStatusAppEnum(
             dto.confirmationStatus
         ) ?? .draft
+        self.url = dto.url
+        self.details = dto.details
         self.genre = dto.genre.map { GenreEntity(from: $0) }
     }
 }

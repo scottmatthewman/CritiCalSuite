@@ -18,7 +18,7 @@ public struct EventRow: View {
     }
 
     public var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 20) {
             RoundedRectangle(cornerRadius: 18)
                 .fill(.tint.tertiary)
                 .frame(width: 80, height:80)
@@ -59,6 +59,20 @@ public struct EventRow: View {
                         .tint(genre.color)
                         .padding(.top, 8)
                 }
+
+                // icons for more information {
+                HStack(spacing: 12) {
+                    if event.url != nil {
+                        Image(systemName: "globe")
+                            .accessibilityLabel(Text("This event has a website"))
+                    }
+                    if event.details.isEmpty == false {
+                        Image(systemName: "text.page")
+                            .accessibilityLabel(Text("There are text details for this event"))
+                    }
+                }
+                .foregroundStyle(.secondary)
+                .padding(.top, 8)
             }
             Spacer()
         }
@@ -113,6 +127,8 @@ public struct EventRow: View {
         durationMinutes: 90,
         venueName: "Bridge Theatre",
         confirmationStatus: .bidForReview,
+        url: URL(string: "https://bridgetheatre.co.uk/"),
+        details: "I have some details here for you",
         genre: GenreDTO(name: "Musical Theatre", hexColor: "277726")
     )
     let reader = FakeReader(events: [dto])

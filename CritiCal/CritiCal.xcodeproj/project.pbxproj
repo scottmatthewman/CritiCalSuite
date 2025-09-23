@@ -13,6 +13,7 @@
 		D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B362E7C4FDF00013437 /* CritiCalStore */; };
 		D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B382E7C4FDF00013437 /* CritiCalUI */; };
 		D20943092E7F2C0D00298B5B /* AllTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D20943082E7F2C0D00298B5B /* AllTests.xctestplan */; };
+		D2593B7A2E81E6C3005CF19A /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D2593B792E81E6C3005CF19A /* OnboardingFlow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */,
+				D2593B7A2E81E6C3005CF19A /* OnboardingFlow in Frameworks */,
 				D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */,
 				D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */,
 				D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */,
@@ -178,6 +180,7 @@
 				D2073B342E7C4FDF00013437 /* CritiCalModels */,
 				D2073B362E7C4FDF00013437 /* CritiCalStore */,
 				D2073B382E7C4FDF00013437 /* CritiCalUI */,
+				D2593B792E81E6C3005CF19A /* OnboardingFlow */,
 			);
 			productName = CritiCal;
 			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
@@ -704,6 +707,10 @@
 		D2073B382E7C4FDF00013437 /* CritiCalUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CritiCalUI;
+		};
+		D2593B792E81E6C3005CF19A /* OnboardingFlow */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OnboardingFlow;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

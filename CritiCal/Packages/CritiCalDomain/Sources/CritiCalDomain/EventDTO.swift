@@ -15,6 +15,8 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
     public let durationMinutes: Int?
     public let venueName: String
     public let confirmationStatus: ConfirmationStatus
+    public let url: URL?
+    public let details: String
     public let genre: GenreDTO?
 
     public init(
@@ -25,6 +27,8 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
         durationMinutes: Int? = nil,
         venueName: String = "",
         confirmationStatus: ConfirmationStatus = .draft,
+        url: URL? = nil,
+        details: String = "",
         genre: GenreDTO? = nil
     ) {
         self.id = id
@@ -34,6 +38,8 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
         self.durationMinutes = durationMinutes
         self.venueName = venueName
         self.confirmationStatus = confirmationStatus
+        self.url = url
+        self.details = details
         self.genre = genre
     }
 
