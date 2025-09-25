@@ -13,8 +13,7 @@
 		D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B362E7C4FDF00013437 /* CritiCalStore */; };
 		D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B382E7C4FDF00013437 /* CritiCalUI */; };
 		D20943092E7F2C0D00298B5B /* AllTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D20943082E7F2C0D00298B5B /* AllTests.xctestplan */; };
-		D2593B7A2E81E6C3005CF19A /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D2593B792E81E6C3005CF19A /* OnboardingFlow */; };
-		D2D38D122E840D1A00BEE295 /* CritiCalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D2D38D112E840D1A00BEE295 /* CritiCalExtensions */; };
+		D2D38DE02E857CC400BEE295 /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D2D38DDF2E857CC400BEE295 /* OnboardingFlow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,11 +85,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */,
-				D2593B7A2E81E6C3005CF19A /* OnboardingFlow in Frameworks */,
+				D2D38DE02E857CC400BEE295 /* OnboardingFlow in Frameworks */,
 				D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */,
 				D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */,
 				D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */,
-				D2D38D122E840D1A00BEE295 /* CritiCalExtensions in Frameworks */,
 				D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,8 +180,7 @@
 				D2073B342E7C4FDF00013437 /* CritiCalModels */,
 				D2073B362E7C4FDF00013437 /* CritiCalStore */,
 				D2073B382E7C4FDF00013437 /* CritiCalUI */,
-				D2593B792E81E6C3005CF19A /* OnboardingFlow */,
-				D2D38D112E840D1A00BEE295 /* CritiCalExtensions */,
+				D2D38DDF2E857CC400BEE295 /* OnboardingFlow */,
 			);
 			productName = CritiCal;
 			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
@@ -243,7 +240,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2610;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					D2145E7A2E7C23BF00699882 = {
 						CreatedOnToolsVersion = 26.0;
@@ -417,7 +414,6 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -475,7 +471,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -713,13 +708,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = CritiCalUI;
 		};
-		D2593B792E81E6C3005CF19A /* OnboardingFlow */ = {
+		D2D38DDF2E857CC400BEE295 /* OnboardingFlow */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = OnboardingFlow;
-		};
-		D2D38D112E840D1A00BEE295 /* CritiCalExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CritiCalExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
