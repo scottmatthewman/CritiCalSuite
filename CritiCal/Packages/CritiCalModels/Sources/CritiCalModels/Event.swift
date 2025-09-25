@@ -24,6 +24,16 @@ public final class Event {
     public var url: URL?
     public var details: String = ""
 
+    // Computed property for type-safe access to confirmation status
+    public var confirmationStatus: ConfirmationStatus {
+        get {
+            ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft
+        }
+        set {
+            confirmationStatusRaw = newValue.rawValue
+        }
+    }
+
     public init(
         identifier: UUID = UUID(),
         title: String = "",

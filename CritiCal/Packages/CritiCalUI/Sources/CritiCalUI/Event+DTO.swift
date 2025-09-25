@@ -10,7 +10,7 @@ extension EventDTO {
             date: event.date,
             durationMinutes: event.durationMinutes,
             venueName: event.venueName,
-            confirmationStatus: ConfirmationStatus(rawValue: event.confirmationStatusRaw ?? "draft") ?? .draft,
+            confirmationStatus: event.confirmationStatus,
             url: event.url,
             details: event.details,
             genre: event.genre.map { GenreDTO(genre: $0) }
