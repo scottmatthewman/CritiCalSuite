@@ -16,12 +16,14 @@ import SwiftUI
 struct CritiCalApp: App {
     let container: ModelContainer
     let repo: EventRepository
+    let genreRepo: GenreRepository
     let router: NavigationRouter = NavigationRouter()
 
     init() {
         do {
             container = try StoreFactory.makeContainer(cloud: true)
             repo = EventRepository(modelContainer: container)
+            genreRepo = GenreRepository(modelContainer: container)
 
             // Share the container with App Intents
             let containerToShare = container
@@ -40,6 +42,8 @@ struct CritiCalApp: App {
         .environment(router)
         .environment(\.eventReader, repo)
         .environment(\.eventWriter, repo)
+        .environment(\.genreReader, genreRepo)
+        .environment(\.genreWriter, genreRepo)
         .modelContainer(container)
         .handlesExternalEvents(matching: [OpenEventIntent.persistentIdentifier])
     }

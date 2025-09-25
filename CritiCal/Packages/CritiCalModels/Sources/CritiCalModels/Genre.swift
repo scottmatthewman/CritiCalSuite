@@ -15,7 +15,9 @@ public final class Genre {
 
     public var name: String = ""
     public var details: String = ""
+    public var colorName: String = "amber"
     public var hexColor: String = "888888"
+    public var symbolName: String = "theatermasks"
     public var isDeactivated: Bool = false
 
     @Relationship
@@ -25,13 +27,17 @@ public final class Genre {
         identifier: UUID? = UUID(),
         name: String,
         details: String = "",
+        colorName: String = "amber",
         hexColor: String = "888888",
+        symbolName: String = "theatermasks",
         isDeactivated: Bool = false
     ) {
         self.identifier = identifier
         self.name = name
         self.details = details
+        self.colorName = colorName
         self.hexColor = hexColor
+        self.symbolName = symbolName
         self.isDeactivated = isDeactivated
     }
 }

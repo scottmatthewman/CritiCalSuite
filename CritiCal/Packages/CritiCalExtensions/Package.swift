@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CritiCalIntents",
+    name: "CritiCalExtensions",
     platforms: [
         .iOS(.v26),
         .macOS(.v26)
@@ -12,22 +12,15 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CritiCalIntents",
-            targets: ["CritiCalIntents"]
+            name: "CritiCalExtensions",
+            targets: ["CritiCalExtensions"]
         ),
-    ],
-    dependencies: [
-        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
-        .package(name: "CritiCalDomain", path: "../CritiCalDomain"),
-        .package(name: "CritiCalStore", path: "../CritiCalStore"),
-        .package(name: "CritiCalUI", path: "../CritiCalUI")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CritiCalIntents",
-            dependencies: ["CritiCalDomain", "CritiCalExtensions", "CritiCalStore", "CritiCalUI"],
+            name: "CritiCalExtensions",
             swiftSettings: [
                 .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
@@ -35,8 +28,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "CritiCalIntentsTests",
-            dependencies: ["CritiCalIntents"]
+            name: "CritiCalExtensionsTests",
+            dependencies: ["CritiCalExtensions"]
         ),
     ]
 )

@@ -46,7 +46,6 @@ public struct ListEventsIntent: AppIntent {
         let entities = dtos.map {
             EventEntity(from: $0)
         }
-        print("ListEventsIntent: Found \(entities.count) events for timeframe \(timeframe)")
         return .result(value: entities)
     }
 }

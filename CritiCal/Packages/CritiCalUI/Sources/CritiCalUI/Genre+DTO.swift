@@ -9,6 +9,7 @@ extension GenreDTO {
             name: genre.name,
             details: genre.details,
             hexColor: genre.hexColor,
+            symbolName: genre.symbolName,
             isDeactivated: genre.isDeactivated
         )
     }

@@ -19,19 +19,26 @@ struct AppRouter: View {
         @Bindable var router = router
         TabView(selection: $router.selectedTab) {
             Tab("Home", systemImage: "house", value: .home) {
-                ContentUnavailableView("Home", systemImage: "house")
+                HomeView {
+                    router.showSettings()
+                }
             }
             Tab("Events", systemImage: "theatermasks", value: .events) {
                 NavigationStack(path: $router.eventsPath) {
-                    EventListView()
-                        .navigationTitle("Events")
-                        .toolbarTitleDisplayMode(.inlineLarge)
-                        .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
-                            switch route {
-                            case .eventDetails(let id):
-                                EventDetailView(id: id)
-                            }
+                    EventListView { eventID in
+                        router.navigate(toEvent: eventID)
+                    }
+                    .navigationTitle("Events")
+                    .toolbarTitleDisplayMode(.inlineLarge)
+                    .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
+                        switch route {
+                        case .eventDetails(let id):
+                            EventDetailView(id: id)
                         }
+                    }
+                    .sheet(isPresented: $router.isSettingsViewPresented) {
+                        SettingsView()
+                    }
                 }
             }
             Tab("Reviews", systemImage: "star.bubble", value: .reviews) {

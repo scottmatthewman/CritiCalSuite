@@ -29,6 +29,9 @@ public class NavigationRouter: Sendable {
     public var eventsPath: [EventTabRoute] = []
     public var reviewsPath: [ReviewsTabRoute] = []
 
+    // modals
+    public var isSettingsViewPresented: Bool = false
+
     public init() {
         self.selectedTab = .events
         self.eventsPath = []
@@ -42,6 +45,10 @@ public class NavigationRouter: Sendable {
     public func navigate(toEvent eventID: UUID) {
         selectedTab = .events
         eventsPath = [.eventDetails(eventID)]
+    }
+
+    public func showSettings() {
+        self.isSettingsViewPresented = true
     }
 }
 

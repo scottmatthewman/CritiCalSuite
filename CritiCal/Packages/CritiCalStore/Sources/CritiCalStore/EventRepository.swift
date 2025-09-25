@@ -83,11 +83,7 @@ public actor EventRepository: EventReading & EventWriting {
         )
 
         let events = try modelContext.fetch(fetchDescriptor)
-        print("SwiftData returned \(events.count) events")
-        print("Event IDs: \(events.map(\.identifier))")
         let dtos = events.map { $0.dto }
-        print("Converted to \(dtos.count) DTOs")
-        print("DTO IDs: \(dtos.map(\.id))")
         return dtos
     }
 

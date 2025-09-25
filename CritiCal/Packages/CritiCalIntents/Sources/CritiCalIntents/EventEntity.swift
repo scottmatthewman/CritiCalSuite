@@ -63,7 +63,6 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
     }
 
     public init(from dto: EventDTO) {
-        print("Initialising", dto)
         self.id = dto.id
         self.title = dto.title
         self.festivalName = dto.festivalName

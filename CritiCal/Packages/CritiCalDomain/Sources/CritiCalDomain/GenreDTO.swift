@@ -12,6 +12,7 @@ public struct GenreDTO: Identifiable, Equatable, Sendable {
     public let name: String
     public let details: String
     public let hexColor: String
+    public let symbolName: String
     public let isDeactivated: Bool
 
     public init(
@@ -19,12 +20,14 @@ public struct GenreDTO: Identifiable, Equatable, Sendable {
         name: String,
         details: String = "",
         hexColor: String = "888888",
+        symbolName: String = "theatermasks",
         isDeactivated: Bool = false
     ) {
         self.id = id
         self.name = name
         self.details = details
         self.hexColor = hexColor
+        self.symbolName = symbolName
         self.isDeactivated = isDeactivated
     }
 }

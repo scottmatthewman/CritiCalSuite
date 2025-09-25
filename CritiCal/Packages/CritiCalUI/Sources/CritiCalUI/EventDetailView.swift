@@ -97,7 +97,7 @@ public struct EventDetailView: View {
                     if let url = event.url {
                         Link(destination: url) {
                             LabeledContent {
-                                Text(url.absoluteString)
+                                Text(url.trimmedHost ?? url.absoluteString)
                             } label: {
                                 Label("Website", systemImage: "globe")
                             }
@@ -143,7 +143,7 @@ public struct EventDetailView: View {
         details: "An immersive version of Shakespeare's classic. Join Titania, Oberon and the citizens of Athens as they walk around the enchanted forest.",
         genre: GenreDTO(name: "Musical Theatre")
     )
-    let reader = FakeReader(events: [dto])
+    let reader = FakeEventsReader(events: [dto])
     EventDetailView(id: dto.id)
     .environment(\.eventReader, reader)
 }

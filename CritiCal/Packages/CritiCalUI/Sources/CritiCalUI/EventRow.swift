@@ -23,9 +23,10 @@ public struct EventRow: View {
                 .fill(.tint.tertiary)
                 .frame(width: 80, height:80)
                 .overlay(
-                    Image(systemName: "theatermasks.fill")
+                    Image(systemName: event.genre?.symbolName ?? "theatermasks")
                         .font(.title)
                         .foregroundStyle(.tint)
+                        .symbolVariant(.fill)
                 )
                 .tint(event.genre?.color ?? .accentColor)
             VStack(alignment: .leading, spacing: 4) {
@@ -54,7 +55,7 @@ public struct EventRow: View {
                 }
 
                 if let genre = event.genre {
-                    Label(genre.name, systemImage: "tag")
+                    Label(genre.name, systemImage: genre.symbolName)
                         .labelStyle(.tag)
                         .tint(genre.color)
                         .padding(.top, 8)
@@ -129,9 +130,9 @@ public struct EventRow: View {
         confirmationStatus: .bidForReview,
         url: URL(string: "https://bridgetheatre.co.uk/"),
         details: "I have some details here for you",
-        genre: GenreDTO(name: "Musical Theatre", hexColor: "277726")
+        genre: GenreDTO(name: "Musical Theatre", hexColor: "277726", symbolName: "music.note")
     )
-    let reader = FakeReader(events: [dto])
+    let reader = FakeEventsReader(events: [dto])
     List {
         EventRow(event: dto)
     }

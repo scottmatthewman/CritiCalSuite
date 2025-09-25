@@ -39,6 +39,8 @@ public struct EventSnippetView: View {
             durationMinutes: Int(event.endDate.timeIntervalSince(event.date) / 60),
             venueName: event.venueName,
             confirmationStatus: event.confirmationStatus.confirmationStatus,
+            url: event.url,
+            details: event.details,
             genre: genreDTO
         )
     }
@@ -46,6 +48,8 @@ public struct EventSnippetView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
+                let tintColor = dto.genre?.color
+                
                 // image
                 RoundedRectangle(cornerRadius: 16)
                     .fill(.tint.secondary)
@@ -55,7 +59,7 @@ public struct EventSnippetView: View {
                             .font(.title)
                             .foregroundStyle(.tint)
                     }
-                    .tint(dto.genre?.color ?? .accentColor)
+                    .tint((dto.genre?.color) ?? .accentColor)
                 // Title and Festival
                 VStack(alignment: .leading, spacing: 4) {
                     if !dto.festivalName.isEmpty {
@@ -74,6 +78,7 @@ public struct EventSnippetView: View {
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.tint)
+                .tint(tintColor)
             }
 
             Divider()
@@ -100,15 +105,21 @@ public struct EventSnippetView: View {
                 .foregroundStyle(.secondary)
             }
 
-            if let genre = dto.genre {
-                Label(genre.name, systemImage: "tag")
-                    .labelStyle(.tag)
-                    .tint(genre.color)
-            }
+            HStack(alignment: .firstTextBaseline) {
+                if let genre = dto.genre {
+                    Label(genre.name, systemImage: "tag")
+                        .labelStyle(.tag)
+                        .tint(genre.color)
+                }
 
-            if let url = dto.url {
-                Link(destination: url) {
-                    Label(url.absoluteString, systemImage: "globe")
+                if let url = dto.url {
+                    Link(destination: url) {
+                        Label(
+                            url.trimmedHost ?? url.absoluteString,
+                            systemImage: "globe"
+                        )
+                    }
+                    .font(.caption)
                 }
             }
 
@@ -121,7 +132,7 @@ public struct EventSnippetView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.secondary.opacity(0.1))
+        .background(Color.secondary.tertiary)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
@@ -134,7 +145,7 @@ public struct EventSnippetView: View {
         durationMinutes: 60,
         venueName: "Moscone Center",
         confirmationStatus: .awaitingConfirmation,
-        url: URL(string: "https://bbc.co.uk/"),
+        url: URL(string: "https://stratfordeast.com/"),
         details: "This example event is intended to demonstrate what the Shortcuts snippet will look like for an event that has all its attributes defined.",
         genre: GenreDTO(
             id: UUID(),

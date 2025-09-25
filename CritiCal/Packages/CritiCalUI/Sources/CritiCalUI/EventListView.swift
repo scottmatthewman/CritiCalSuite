@@ -11,12 +11,16 @@ import CritiCalDomain
 import CritiCalModels
 
 public struct EventListView: View {
-    @Environment(NavigationRouter.self) private var router
-
     // Use @Query to efficiently load events directly from SwiftData
     @Query(sort: \Event.date, order: .reverse) private var events: [Event]
 
-    public init() {}
+    private var onEventSelected: (UUID) -> Void
+
+    public init(
+        onEventSelected: @escaping (UUID) -> Void
+    ) {
+        self.onEventSelected = onEventSelected
+    }
 
     public var body: some View {
         Group {
@@ -29,7 +33,7 @@ public struct EventListView: View {
             } else {
                 List(events) { event in
                     Button {
-                        router.navigate(toEvent: event.identifier)
+                        onEventSelected(event.identifier)
                     } label: {
                         EventRow(event: EventDTO(event: event))
                     }
@@ -56,11 +60,12 @@ public struct EventListView: View {
         confirmationStatus: .awaitingConfirmation
     )
 
-    let reader = FakeReader(events: [e1, e2])
+    let reader = FakeEventsReader(events: [e1, e2])
 
     NavigationStack {
-        EventListView()
-            .environment(\.eventReader, reader)
-            .environment(NavigationRouter())
+        EventListView {
+            print("ID selected: \($0)")
+        }
+        .environment(\.eventReader, reader)
     }
 }
