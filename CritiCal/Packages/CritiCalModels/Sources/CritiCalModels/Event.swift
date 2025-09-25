@@ -34,6 +34,12 @@ public final class Event {
         }
     }
 
+    // Computed property for event end date
+    public var endDate: Date {
+        guard let durationMinutes else { return date }
+        return Calendar.current.date(byAdding: .minute, value: durationMinutes, to: date) ?? date
+    }
+
     public init(
         identifier: UUID = UUID(),
         title: String = "",

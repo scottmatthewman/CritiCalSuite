@@ -482,3 +482,55 @@ struct EventValueSemanticsTests {
         #expect(type(of: event.identifier) == UUID.self)
     }
 }
+
+@Suite("Event Model - Computed Properties")
+struct EventComputedPropertiesTests {
+
+    @Test("endDate returns same date when durationMinutes is nil")
+    func testEndDateWithNilDuration() {
+        let testDate = Date.now
+        let event = Event(date: testDate, durationMinutes: nil)
+
+        #expect(event.endDate == testDate)
+    }
+
+    @Test("endDate calculates correctly with positive duration")
+    func testEndDateWithPositiveDuration() {
+        let testDate = Date.now
+        let event = Event(date: testDate, durationMinutes: 120) // 2 hours
+
+        let expectedEndDate = Calendar.current.date(byAdding: .minute, value: 120, to: testDate)!
+        #expect(event.endDate == expectedEndDate)
+    }
+
+    @Test("endDate handles zero duration")
+    func testEndDateWithZeroDuration() {
+        let testDate = Date.now
+        let event = Event(date: testDate, durationMinutes: 0)
+
+        #expect(event.endDate == testDate)
+    }
+
+    @Test("endDate handles various duration values",
+          arguments: [30, 60, 90, 120, 180, 240, 360])
+    func testEndDateWithVariousDurations(durationMinutes: Int) {
+        let testDate = Date.now
+        let event = Event(date: testDate, durationMinutes: durationMinutes)
+
+        let expectedEndDate = Calendar.current.date(byAdding: .minute, value: durationMinutes, to: testDate)!
+        #expect(event.endDate == expectedEndDate)
+    }
+
+    @Test("endDate calculation is consistent for multiple accesses")
+    func testEndDateConsistency() {
+        let testDate = Date.now
+        let event = Event(date: testDate, durationMinutes: 60)
+
+        let firstAccess = event.endDate
+        let secondAccess = event.endDate
+        let thirdAccess = event.endDate
+
+        #expect(firstAccess == secondAccess)
+        #expect(secondAccess == thirdAccess)
+    }
+}

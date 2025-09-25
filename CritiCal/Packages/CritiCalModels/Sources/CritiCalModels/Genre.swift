@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
+import CritiCalExtensions
 
 @Model
 public final class Genre {
@@ -22,6 +24,11 @@ public final class Genre {
 
     @Relationship
     public var events: [Event]?
+
+    // Computed property for SwiftUI Color
+    public var color: Color {
+        Color(hex: hexColor)
+    }
 
     public init(
         identifier: UUID? = UUID(),
