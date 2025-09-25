@@ -17,18 +17,16 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
         .package(name: "CritiCalDomain", path: "../CritiCalDomain"),
         .package(name: "CritiCalModels", path: "../CritiCalModels"),
-        .package(name: "CritiCalStore", path: "../CritiCalStore"),
-        .package(name: "CritiCalUI", path: "../CritiCalUI")
+        .package(name: "CritiCalStore", path: "../CritiCalStore")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CritiCalIntents",
-            dependencies: ["CritiCalDomain", "CritiCalExtensions", "CritiCalModels", "CritiCalStore", "CritiCalUI"],
+            dependencies: ["CritiCalDomain", "CritiCalModels", "CritiCalStore"],
             swiftSettings: [
                 .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
