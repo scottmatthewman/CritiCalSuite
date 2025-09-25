@@ -7,12 +7,13 @@
 
 import Foundation
 import CritiCalDomain
+import CritiCalModels
 import CritiCalStore
 @testable import CritiCalIntents
 
 /// Mock repository for testing that implements EventReading & EventWriting protocols
 actor MockEventRepository: EventReading & EventWriting {
-    private var mockEvents: [EventDTO] = []
+    private var mockEvents: [DetachedEvent] = []
     private(set) var recentCalled = false
     private(set) var searchCalled = false
     private(set) var eventByIdCalled = false
@@ -20,12 +21,12 @@ actor MockEventRepository: EventReading & EventWriting {
     private(set) var lastRecentLimit: Int?
 
     /// Add mock event data for testing
-    func addMockEvent(_ event: EventDTO) {
+    func addMockEvent(_ event: DetachedEvent) {
         mockEvents.append(event)
     }
 
     /// Add multiple mock events for testing
-    func addMockEvents(_ events: [EventDTO]) {
+    func addMockEvents(_ events: [DetachedEvent]) {
         mockEvents.append(contentsOf: events)
     }
 
@@ -41,18 +42,18 @@ actor MockEventRepository: EventReading & EventWriting {
 
     // MARK: - EventReading Implementation
 
-    func recent(limit: Int) async throws -> [EventDTO] {
+    func recent(limit: Int) async throws -> [DetachedEvent] {
         recentCalled = true
         lastRecentLimit = limit
         return Array(mockEvents.prefix(limit))
     }
 
-    func event(byIdentifier id: UUID) async throws -> EventDTO? {
+    func event(byIdentifier id: UUID) async throws -> DetachedEvent? {
         eventByIdCalled = true
         return mockEvents.first { $0.id == id }
     }
 
-    func search(text: String, limit: Int) async throws -> [EventDTO] {
+    func search(text: String, limit: Int) async throws -> [DetachedEvent] {
         searchCalled = true
         lastSearchQuery = text
         return mockEvents.filter {
@@ -63,7 +64,7 @@ actor MockEventRepository: EventReading & EventWriting {
 
     // MARK: - Timeframe-based queries
 
-    func eventsToday(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+    func eventsToday(in calendar: Calendar = .current, now: Date = .now) async throws -> [DetachedEvent] {
         let startOfDay = calendar.startOfDay(for: now)
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
 
@@ -72,19 +73,19 @@ actor MockEventRepository: EventReading & EventWriting {
         }
     }
 
-    func eventsBefore(_ cutOff: Date = .now) async throws -> [EventDTO] {
+    func eventsBefore(_ cutOff: Date = .now) async throws -> [DetachedEvent] {
         return mockEvents.filter { event in
             event.date <= cutOff
         }
     }
 
-    func eventsAfter(_ cutOff: Date = .now) async throws -> [EventDTO] {
+    func eventsAfter(_ cutOff: Date = .now) async throws -> [DetachedEvent] {
         return mockEvents.filter { event in
             event.date >= cutOff
         }
     }
 
-    func eventsNext7Days(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+    func eventsNext7Days(in calendar: Calendar = .current, now: Date = .now) async throws -> [DetachedEvent] {
         let startOfToday = calendar.startOfDay(for: now)
         guard let endOf7Days = calendar.date(byAdding: .day, value: 7, to: startOfToday) else {
             return []
@@ -95,7 +96,7 @@ actor MockEventRepository: EventReading & EventWriting {
         }
     }
 
-    func eventsThisMonth(in calendar: Calendar = .current, now: Date = .now) async throws -> [EventDTO] {
+    func eventsThisMonth(in calendar: Calendar = .current, now: Date = .now) async throws -> [DetachedEvent] {
         guard let range = calendar.dateInterval(of: .month, for: now) else {
             return []
         }
@@ -113,18 +114,23 @@ actor MockEventRepository: EventReading & EventWriting {
         festivalName: String,
         venueName: String,
         date: Date,
-        durationMinutes: Int? = nil,
-        confirmationStatus: ConfirmationStatus = .draft
+        durationMinutes: Int?,
+        confirmationStatus: ConfirmationStatus,
+        url: URL?,
+        details: String
     ) async throws -> UUID {
         let id = UUID()
-        let newEvent = EventDTO(
+        let newEvent = DetachedEvent(
             id: id,
             title: title,
             festivalName: festivalName,
             date: date,
             durationMinutes: durationMinutes,
             venueName: venueName,
-            confirmationStatus: confirmationStatus
+            confirmationStatus: confirmationStatus,
+            url: url,
+            details: details,
+            genre: nil
         )
         mockEvents.append(newEvent)
         return id
@@ -137,21 +143,26 @@ actor MockEventRepository: EventReading & EventWriting {
         venueName: String?,
         date: Date?,
         durationMinutes: Int?,
-        confirmationStatus: ConfirmationStatus? = .draft
+        confirmationStatus: ConfirmationStatus?,
+        url: URL?,
+        details: String?
     ) async throws {
         guard let index = mockEvents.firstIndex(where: { $0.id == eventID }) else {
             throw EventStoreError.notFound
         }
 
         let existingEvent = mockEvents[index]
-        let updatedEvent = EventDTO(
+        let updatedEvent = DetachedEvent(
             id: eventID,
             title: title ?? existingEvent.title,
             festivalName: festivalName ?? existingEvent.festivalName,
             date: date ?? existingEvent.date,
             durationMinutes: durationMinutes ?? existingEvent.durationMinutes,
             venueName: venueName ?? existingEvent.venueName,
-            confirmationStatus: confirmationStatus ?? existingEvent.confirmationStatus
+            confirmationStatus: confirmationStatus ?? existingEvent.confirmationStatus,
+            url: url ?? existingEvent.url,
+            details: details ?? existingEvent.details,
+            genre: existingEvent.genre
         )
         mockEvents[index] = updatedEvent
     }
@@ -210,13 +221,13 @@ public struct MockRepositoryProvider: EventRepositoryProviding, Sendable {
     }
 
     /// Helper to add mock data
-    public func addMockEvent(_ event: EventDTO) async {
+    public func addMockEvent(_ event: DetachedEvent) async {
         let repository = await getOrCreateRepository()
         await repository.addMockEvent(event)
     }
 
     /// Helper to add multiple mock events
-    public func addMockEvents(_ events: [EventDTO]) async {
+    public func addMockEvents(_ events: [DetachedEvent]) async {
         let repository = await getOrCreateRepository()
         await repository.addMockEvents(events)
     }

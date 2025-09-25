@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CritiCalModels
 
 public struct EventDTO: Identifiable, Equatable, Sendable {
     public let id: UUID

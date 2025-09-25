@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 @Suite("EventTimeframe - Enum Cases")
@@ -267,7 +268,7 @@ struct EventTimeframeUsageTests {
             date: Date.now,
             venueName: "Test Venue"
         )
-        await mockProvider.addMockEvent(testEvent)
+        await mockProvider.addMockEvent(DetachedEvent(from: testEvent))
 
         // Verify each timeframe case works with ListEventsIntent
         // This confirms the correspondence: .today -> eventsToday(), .past -> eventsBefore(), .future -> eventsAfter()

@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 @Suite("Intent Integration - GetEventIntent perform()")
@@ -26,7 +27,7 @@ struct GetEventIntentPerformTests {
             confirmationStatus: .confirmed
         )
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvent(repositoryEvent)
+        await mockProvider.addMockEvent(DetachedEvent(from: repositoryEvent))
 
         // Create intent and configure it with test data
         let intent = GetEventIntent(repositoryProvider: mockProvider)
@@ -113,7 +114,7 @@ struct ListEventsIntentPerformTests {
                 venueName: "Today Venue 2"
             )
         ]
-        await mockProvider.addMockEvents(todayEvents)
+        await mockProvider.addMockEvents(todayEvents.detached())
 
         // Create intent with mock repository and .today timeframe
         let intent = ListEventsIntent(repositoryProvider: mockProvider)
@@ -176,7 +177,7 @@ struct ListEventsIntentPerformTests {
             date: now.addingTimeInterval(3600),
             venueName: "Future Venue"
         )
-        await mockProvider.addMockEvents(pastEvents + [futureEvent])
+        await mockProvider.addMockEvents((pastEvents + [futureEvent]).detached())
 
         // Create intent with .past timeframe
         let intent = ListEventsIntent(repositoryProvider: mockProvider)
@@ -222,7 +223,7 @@ struct ListEventsIntentPerformTests {
             date: now.addingTimeInterval(-3600),
             venueName: "Past Venue"
         )
-        await mockProvider.addMockEvents(futureEvents + [pastEvent])
+        await mockProvider.addMockEvents((futureEvents + [pastEvent]).detached())
 
         // Create intent with .future timeframe
         let intent = ListEventsIntent(repositoryProvider: mockProvider)

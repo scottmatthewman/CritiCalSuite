@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 @Suite("GenreEntity - Initialization from DTO")

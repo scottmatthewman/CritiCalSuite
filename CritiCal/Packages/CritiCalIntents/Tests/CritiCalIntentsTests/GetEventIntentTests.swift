@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 @Suite("GetEventIntent - Initialization")
@@ -80,7 +81,7 @@ struct GetEventIntentRepositoryTests {
         // Setup mock repository with test data
         let mockProvider = MockRepositoryProvider()
         let testDTO = createTestEvent()
-        await mockProvider.addMockEvent(testDTO)
+        await mockProvider.addMockEvent(DetachedEvent(from: testDTO))
 
         // Create intent with mock repository and test event entity
         let intent = GetEventIntent(repositoryProvider: mockProvider)

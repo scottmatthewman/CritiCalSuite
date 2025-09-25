@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 func createMockEvents(itemCount: Int = 5) -> [EventDTO] {
@@ -78,7 +79,7 @@ struct EventQuerySuggestedEntitiesTests {
         // Setup mock provider and data
         let mockProvider = MockRepositoryProvider()
         let mockEvents = createMockEvents(itemCount: itemCount)
-        await mockProvider.addMockEvents(mockEvents)
+        await mockProvider.addMockEvents(mockEvents.detached())
 
         // Create query with mock provider
         let query = EventQuery(repositoryProvider: mockProvider)
@@ -109,7 +110,7 @@ struct EventQuerySuggestedEntitiesTests {
         // Setup mock with many events
         let mockProvider = MockRepositoryProvider()
         let manyEvents = createMockEvents(itemCount: 15)
-        await mockProvider.addMockEvents(manyEvents)
+        await mockProvider.addMockEvents(manyEvents.detached())
 
         let query = EventQuery(repositoryProvider: mockProvider)
         let entities = try await query.suggestedEntities()
@@ -140,7 +141,7 @@ struct EventQuerySuggestedEntitiesTests {
                 venueName: "Swift Building"
             )
         ]
-        await mockProvider.addMockEvents(searchableEvents)
+        await mockProvider.addMockEvents(searchableEvents.detached())
 
         let query = EventQuery(repositoryProvider: mockProvider)
 
@@ -157,7 +158,7 @@ struct EventQuerySuggestedEntitiesTests {
     @Test("suggestedEntities search handles empty results")
     func testSuggestedEntitiesEmptySearch() async throws {
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents())
+        await mockProvider.addMockEvents(createMockEvents().detached())
 
         let query = EventQuery(repositoryProvider: mockProvider)
         let results = try await query.suggestedEntities(for: "NonexistentEvent")
@@ -184,7 +185,7 @@ struct EventQueryEntityResolutionTests {
             date: Date.now,
             venueName: "Venue 2"
         )
-        await mockProvider.addMockEvents([event1, event2])
+        await mockProvider.addMockEvents([event1, event2].detached())
 
         let query = EventQuery(repositoryProvider: mockProvider)
 
@@ -204,7 +205,7 @@ struct EventQueryEntityResolutionTests {
             date: Date.now,
             venueName: "Venue"
         )
-        await mockProvider.addMockEvent(existingEvent)
+        await mockProvider.addMockEvent(DetachedEvent(from: existingEvent))
 
         let query = EventQuery(repositoryProvider: mockProvider)
 
@@ -247,7 +248,7 @@ struct EventQueryEntityResolutionTests {
             venueName: "Venue 3"
         )
 
-        await mockProvider.addMockEvents([event1, event2, event3])
+        await mockProvider.addMockEvents([event1, event2, event3].detached())
 
         let query = EventQuery(repositoryProvider: mockProvider)
 

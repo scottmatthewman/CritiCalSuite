@@ -7,6 +7,7 @@
 
 import Foundation
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 extension EventEntity {

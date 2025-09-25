@@ -9,6 +9,7 @@ import Testing
 import Foundation
 import AppIntents
 import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 @Suite("ListEventsIntent - Initialization")
@@ -133,7 +134,7 @@ struct ListEventsIntentRepositoryTests {
     func testTodayTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents())
+        await mockProvider.addMockEvents(createMockEvents().detached())
 
         // Create intent with .today timeframe
         let intent = ListEventsIntent()
@@ -150,7 +151,7 @@ struct ListEventsIntentRepositoryTests {
     func testPastTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents())
+        await mockProvider.addMockEvents(createMockEvents().detached())
 
         // Create intent with .past timeframe
         let intent = ListEventsIntent()
@@ -168,7 +169,7 @@ struct ListEventsIntentRepositoryTests {
     func testFutureTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents())
+        await mockProvider.addMockEvents(createMockEvents().detached())
 
         // Create intent with .future timeframe
         let intent = ListEventsIntent()
@@ -332,7 +333,7 @@ struct ListEventsIntentBusinessLogicTests {
             date: Date.now,
             venueName: "Test Venue"
         )
-        await mockProvider.addMockEvent(testEvent)
+        await mockProvider.addMockEvent(DetachedEvent(from: testEvent))
 
         // Test .today timeframe calls eventsToday()
         let todayIntent = ListEventsIntent(repositoryProvider: mockProvider)
