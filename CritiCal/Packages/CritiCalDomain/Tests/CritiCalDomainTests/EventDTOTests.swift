@@ -27,6 +27,7 @@ struct EventDTOInitializationTests {
         #expect(dto.date == date)
         #expect(dto.venueName == "Test Venue")
         #expect(dto.id != UUID())
+        #expect(dto.genre == nil)
     }
 
     @Test("EventDTO initializes with a custom ID")
@@ -42,6 +43,29 @@ struct EventDTOInitializationTests {
         )
 
         #expect(dto.id == customID)
+        #expect(dto.genre == nil)
+    }
+
+    @Test("EventDTO initializes with a genre")
+    func testInitializationWithGenre() {
+        let date = Date.now
+        let genre = GenreDTO(
+            name: "Comedy",
+            details: "Stand-up comedy shows",
+            hexColor: "FF6B6B"
+        )
+        let dto = EventDTO(
+            title: "Comedy Night",
+            festivalName: "Laugh Festival",
+            date: date,
+            venueName: "Comedy Club",
+            genre: genre
+        )
+
+        #expect(dto.genre == genre)
+        #expect(dto.genre?.name == "Comedy")
+        #expect(dto.genre?.details == "Stand-up comedy shows")
+        #expect(dto.genre?.hexColor == "FF6B6B")
     }
 }
 
@@ -52,12 +76,16 @@ struct EventDTOEquatableTests {
         let id = UUID()
         let date = Date.now
 
+        let genre = GenreDTO(name: "Music", hexColor: "123456")
+
         let dto1 = EventDTO(
             id: id,
             title: "Event",
             festivalName: "Festival",
             date: date,
-            venueName: "Venue"
+            venueName: "Venue",
+            confirmationStatus: .cancelled,
+            genre: genre
         )
 
         let dto2 = EventDTO(
@@ -65,7 +93,9 @@ struct EventDTOEquatableTests {
             title: "Event",
             festivalName: "Festival",
             date: date,
-            venueName: "Venue"
+            venueName: "Venue",
+            confirmationStatus: .cancelled,
+            genre: genre
         )
 
         #expect(dto1 == dto2)
@@ -161,11 +191,13 @@ struct EventDTOSendableTests {
     @Test("EventDTO conforms to sendable and can be safely shared across concurrent contexts")
     func testSendableConformance() async {
         // Create a single EventDTO instance to share across concurrent tasks
+        let genre = GenreDTO(name: "Theater", hexColor: "987654")
         let dto = EventDTO(
             title: "Concurrent Event",
             festivalName: "Concurrent Festival",
             date: Date.now,
-            venueName: "Concurrent Venue"
+            venueName: "Concurrent Venue",
+            genre: genre
         )
 
         // Use TaskGroup to create multiple concurrent tasks

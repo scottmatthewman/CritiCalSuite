@@ -392,6 +392,34 @@ struct EventEntityIntegrationTests {
         #expect(entity.festivalName == dto.festivalName)
         #expect(entity.date == dto.date)
         #expect(entity.venueName == dto.venueName)
+        #expect(entity.genre == nil)
+    }
+
+    @Test("EventEntity can be created from DTO with genre")
+    func testDTOInitializationWithGenre() {
+        let genreDTO = GenreDTO(
+            name: "Comedy",
+            details: "Stand-up comedy performances",
+            hexColor: "FF6B6B"
+        )
+
+        let dto = EventDTO(
+            id: UUID(),
+            title: "Comedy Night",
+            festivalName: "Laugh Festival",
+            date: Date.now,
+            venueName: "Comedy Club",
+            genre: genreDTO
+        )
+
+        let entity = EventEntity(from: dto)
+
+        #expect(entity.id == dto.id)
+        #expect(entity.title == dto.title)
+        #expect(entity.genre != nil)
+        #expect(entity.genre?.name == "Comedy")
+        #expect(entity.genre?.details == "Stand-up comedy performances")
+        #expect(entity.genre?.hexColor == "FF6B6B")
     }
 
     @Test("Multiple EventEntities can be created in batch")

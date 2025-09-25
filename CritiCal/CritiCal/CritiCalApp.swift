@@ -14,17 +14,36 @@ import SwiftUI
 
 @main
 struct CritiCalApp: App {
-    @State private var container = try! StoreFactory.makeContainer(cloud: true)
-    private var repo: EventRepository {
-        EventRepository(modelContainer: container)
+    let container: ModelContainer
+    let repo: EventRepository
+    let genreRepo: GenreRepository
+    let router: NavigationRouter = NavigationRouter()
+
+    init() {
+        do {
+            container = try StoreFactory.makeContainer(cloud: true)
+            repo = EventRepository(modelContainer: container)
+            genreRepo = GenreRepository(modelContainer: container)
+
+            // Share the container with App Intents
+            let containerToShare = container
+            Task {
+                await SharedStoresActor.shared.setContainer(containerToShare)
+            }
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
     }
 
     var body: some Scene {
         WindowGroup {
             AppRouter()
         }
+        .environment(router)
         .environment(\.eventReader, repo)
         .environment(\.eventWriter, repo)
+        .environment(\.genreReader, genreRepo)
+        .environment(\.genreWriter, genreRepo)
         .modelContainer(container)
         .handlesExternalEvents(matching: [OpenEventIntent.persistentIdentifier])
     }

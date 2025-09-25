@@ -14,6 +14,10 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
     public let date: Date
     public let durationMinutes: Int?
     public let venueName: String
+    public let confirmationStatus: ConfirmationStatus
+    public let url: URL?
+    public let details: String
+    public let genre: GenreDTO?
 
     public init(
         id: UUID = UUID(),
@@ -21,7 +25,11 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
         festivalName: String = "",
         date: Date,
         durationMinutes: Int? = nil,
-        venueName: String = ""
+        venueName: String = "",
+        confirmationStatus: ConfirmationStatus = .draft,
+        url: URL? = nil,
+        details: String = "",
+        genre: GenreDTO? = nil
     ) {
         self.id = id
         self.title = title
@@ -29,6 +37,10 @@ public struct EventDTO: Identifiable, Equatable, Sendable {
         self.date = date
         self.durationMinutes = durationMinutes
         self.venueName = venueName
+        self.confirmationStatus = confirmationStatus
+        self.url = url
+        self.details = details
+        self.genre = genre
     }
 
     /// The calculated end date of the event, based on date + durationMinutes

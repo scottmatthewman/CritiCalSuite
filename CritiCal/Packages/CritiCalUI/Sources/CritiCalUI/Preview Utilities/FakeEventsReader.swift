@@ -16,34 +16,34 @@ extension Date {
     }
 }
 
-struct FakeReader: EventReading {
+struct FakeEventsReader: EventReading {
     let events: [EventDTO]
 
-    func event(byIdentifier id: UUID) async throws -> CritiCalDomain.EventDTO? {
+    func event(byIdentifier id: UUID) async throws -> EventDTO? {
         events.first { $0.id == id }
     }
 
-    func search(text: String, limit: Int) async throws -> [CritiCalDomain.EventDTO] {
+    func search(text: String, limit: Int) async throws -> [EventDTO] {
         Array(events.prefix(limit))
     }
 
-    func eventsToday(in calendar: Calendar, now: Date) async throws -> [CritiCalDomain.EventDTO] {
+    func eventsToday(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
         []
     }
 
-    func eventsBefore(_ cutOff: Date) async throws -> [CritiCalDomain.EventDTO] {
+    func eventsBefore(_ cutOff: Date) async throws -> [EventDTO] {
         []
     }
 
-    func eventsAfter(_ cutOff: Date) async throws -> [CritiCalDomain.EventDTO] {
+    func eventsAfter(_ cutOff: Date) async throws -> [EventDTO] {
         []
     }
 
-    func eventsNext7Days(in calendar: Calendar, now: Date) async throws -> [CritiCalDomain.EventDTO] {
+    func eventsNext7Days(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
         []
     }
 
-    func eventsThisMonth(in calendar: Calendar, now: Date) async throws -> [CritiCalDomain.EventDTO] {
+    func eventsThisMonth(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
         []
     }
 

@@ -11,7 +11,7 @@ import CritiCalModels
 
 public enum StoreFactory {
     public static func makeContainer(cloud: Bool = true, inMemory: Bool = false) throws -> ModelContainer {
-        let schema = Schema([Event.self])
+        let schema = Schema([Event.self, Genre.self])
         let config = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: inMemory,

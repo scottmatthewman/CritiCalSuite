@@ -16,7 +16,7 @@ public struct EventQuery: EntityQuery, Sendable {
     private let repositoryProvider: EventRepositoryProviding
 
     public init() {
-        // Use the default provider factory method
+        // Use the default provider from CritiCalStore
         self.repositoryProvider = SharedStores.defaultProvider()
     }
 

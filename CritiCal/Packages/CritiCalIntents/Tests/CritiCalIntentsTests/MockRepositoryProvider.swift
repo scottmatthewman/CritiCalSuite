@@ -7,12 +7,13 @@
 
 import Foundation
 import CritiCalDomain
+import CritiCalStore
 @testable import CritiCalIntents
 
 /// Mock repository for testing that implements EventReading & EventWriting protocols
 actor MockEventRepository: EventReading & EventWriting {
     private var mockEvents: [EventDTO] = []
-private(set) var recentCalled = false
+    private(set) var recentCalled = false
     private(set) var searchCalled = false
     private(set) var eventByIdCalled = false
     private(set) var lastSearchQuery: String?
@@ -112,7 +113,8 @@ private(set) var recentCalled = false
         festivalName: String,
         venueName: String,
         date: Date,
-        durationMinutes: Int? = nil
+        durationMinutes: Int? = nil,
+        confirmationStatus: ConfirmationStatus = .draft
     ) async throws -> UUID {
         let id = UUID()
         let newEvent = EventDTO(
@@ -121,7 +123,8 @@ private(set) var recentCalled = false
             festivalName: festivalName,
             date: date,
             durationMinutes: durationMinutes,
-            venueName: venueName
+            venueName: venueName,
+            confirmationStatus: confirmationStatus
         )
         mockEvents.append(newEvent)
         return id
@@ -133,7 +136,8 @@ private(set) var recentCalled = false
         festivalName: String?,
         venueName: String?,
         date: Date?,
-        durationMinutes: Int?
+        durationMinutes: Int?,
+        confirmationStatus: ConfirmationStatus? = .draft
     ) async throws {
         guard let index = mockEvents.firstIndex(where: { $0.id == eventID }) else {
             throw EventStoreError.notFound
@@ -146,7 +150,8 @@ private(set) var recentCalled = false
             festivalName: festivalName ?? existingEvent.festivalName,
             date: date ?? existingEvent.date,
             durationMinutes: durationMinutes ?? existingEvent.durationMinutes,
-            venueName: venueName ?? existingEvent.venueName
+            venueName: venueName ?? existingEvent.venueName,
+            confirmationStatus: confirmationStatus ?? existingEvent.confirmationStatus
         )
         mockEvents[index] = updatedEvent
     }

@@ -81,7 +81,10 @@ public actor EventRepository: EventReading & EventWriting {
             predicate: predicate,
             sortBy: [SortDescriptor(\.date, order: order)]
         )
-        return try modelContext.fetch(fetchDescriptor).map { $0.dto }
+
+        let events = try modelContext.fetch(fetchDescriptor)
+        let dtos = events.map { $0.dto }
+        return dtos
     }
 
     public func eventsNext7Days(
@@ -115,14 +118,20 @@ public actor EventRepository: EventReading & EventWriting {
         festivalName: String,
         venueName: String,
         date: Date,
-        durationMinutes: Int? = nil
+        durationMinutes: Int? = nil,
+        confirmationStatus: ConfirmationStatus = .draft,
+        url: URL? = nil,
+        details: String
     ) async throws -> UUID {
         let newEvent = Event(
             title: title,
             festivalName: festivalName,
             venueName: venueName,
             date: date,
-            durationMinutes: durationMinutes
+            durationMinutes: durationMinutes,
+            confirmationStatusRaw: confirmationStatus.rawValue,
+            url: url,
+            details: details
         )
         modelContext.insert(newEvent)
         do {
@@ -139,7 +148,10 @@ public actor EventRepository: EventReading & EventWriting {
         festivalName: String?,
         venueName: String?,
         date: Date?,
-        durationMinutes: Int?
+        durationMinutes: Int?,
+        confirmationStatus: ConfirmationStatus?,
+        url: URL?,
+        details: String?
     ) async throws {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == eventID })
         guard let event = try modelContext.fetch(fd).first else {
@@ -151,7 +163,9 @@ public actor EventRepository: EventReading & EventWriting {
         if let date { event.date = date }
         if let venueName { event.venueName = venueName }
         if let durationMinutes { event.durationMinutes = durationMinutes }
-
+        if let confirmationStatus { event.confirmationStatusRaw = confirmationStatus.rawValue }
+        if let url { event.url = url }
+        if let details { event.details = details }
         do {
             try modelContext.save()
         } catch {
@@ -176,13 +190,23 @@ public actor EventRepository: EventReading & EventWriting {
 
 private extension Event {
     var dto: EventDTO {
-        .init(
+        EventDTO(
             id: identifier,
             title: title,
             festivalName: festivalName,
             date: date,
             durationMinutes: durationMinutes,
-            venueName: venueName
+            venueName: venueName,
+            confirmationStatus: ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft,
+            url: url,
+            details: details,
+            genre: genre.map { GenreDTO(
+                id: $0.identifier ?? UUID(),
+                name: $0.name,
+                details: $0.details,
+                hexColor: $0.hexColor,
+                isDeactivated: $0.isDeactivated
+            ) }
         )
     }
 }

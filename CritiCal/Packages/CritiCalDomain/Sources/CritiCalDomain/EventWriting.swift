@@ -14,7 +14,10 @@ public protocol EventWriting: Sendable {
         festivalName: String,
         venueName: String,
         date: Date,
-        durationMinutes: Int?
+        durationMinutes: Int?,
+        confirmationStatus: ConfirmationStatus,
+        url: URL?,
+        details: String
     ) async throws -> UUID
 
     /// Update an existing event identified by its unique identifier with the provided details.
@@ -24,7 +27,10 @@ public protocol EventWriting: Sendable {
         festivalName: String?,
         venueName: String?,
         date: Date?,
-        durationMinutes: Int?
+        durationMinutes: Int?,
+        confirmationStatus: ConfirmationStatus?,
+        url: URL?,
+        details: String?
     ) async throws
 
     /// Delete the event identified by its unique identifier.

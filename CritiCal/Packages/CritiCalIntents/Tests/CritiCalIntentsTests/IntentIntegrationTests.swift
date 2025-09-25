@@ -22,7 +22,8 @@ struct GetEventIntentPerformTests {
             title: "Repository Event Title",
             festivalName: "Repository Festival",
             date: Date.now,
-            venueName: "Repository Venue"
+            venueName: "Repository Venue",
+            confirmationStatus: .confirmed
         )
         let mockProvider = MockRepositoryProvider()
         await mockProvider.addMockEvent(repositoryEvent)
@@ -34,7 +35,8 @@ struct GetEventIntentPerformTests {
             title: "Input Event Title", // Different title
             festivalName: "Input Festival", // Different festival
             date: Date.now.addingTimeInterval(3600), // Different date
-            venueName: "Input Venue" // Different venue
+            venueName: "Input Venue", // Different venue
+            confirmationStatus: ConfirmationStatusAppEnum.draft // Different status
         )
 
         // Call perform() method - should return repository data, not input data

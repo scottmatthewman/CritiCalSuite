@@ -11,4 +11,6 @@ import CritiCalDomain
 public extension EnvironmentValues {
     @Entry var eventReader: EventReading? = nil
     @Entry var eventWriter: EventWriting? = nil
+    @Entry var genreReader: GenreReading? = nil
+    @Entry var genreWriter: GenreWriting? = nil
 }

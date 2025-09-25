@@ -8,30 +8,61 @@
 import AppIntents
 import CritiCalUI
 import CritiCalIntents
+import OnboardingFlow
 import SwiftUI
 
 struct AppRouter: View {
-    enum Route: Hashable {
-        case eventDetails(UUID)
-    }
-
-    @State private var path: [Route] = []
+    @Environment(NavigationRouter.self) private var router
+    @State private var onboardingSettings = OnboardingSettings()
 
     var body: some View {
-        NavigationStack(path: $path) {
-            EventListView {
-                path.append(.eventDetails($0))
-            }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .eventDetails(let id):
-                    EventDetailView(id: id)
+        @Bindable var router = router
+        TabView(selection: $router.selectedTab) {
+            Tab("Home", systemImage: "house", value: .home) {
+                HomeView {
+                    router.showSettings()
                 }
+            }
+            Tab("Events", systemImage: "theatermasks", value: .events) {
+                NavigationStack(path: $router.eventsPath) {
+                    EventListView { eventID in
+                        router.navigate(toEvent: eventID)
+                    }
+                    .navigationTitle("Events")
+                    .toolbarTitleDisplayMode(.inlineLarge)
+                    .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
+                        switch route {
+                        case .eventDetails(let id):
+                            EventDetailView(id: id)
+                        }
+                    }
+                    .sheet(isPresented: $router.isSettingsViewPresented) {
+                        SettingsView()
+                    }
+                }
+            }
+            Tab("Reviews", systemImage: "star.bubble", value: .reviews) {
+                NavigationStack(path: $router.reviewsPath) {
+                    ContentUnavailableView("Reviews", systemImage: "star.bubble")
+                }
+            }
+            Tab("Developer", systemImage: "hammer", value: .developer) {
+                DeveloperView()
+            }
+            Tab(value: .search, role: .search) {
+                ContentUnavailableView.search
             }
         }
         .onAppIntentExecution(OpenEventIntent.self) { intent in
             let eventID = intent.target.id
-            path = [.eventDetails(eventID)]
+            router.navigate(toEvent: eventID)
         }
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .onboardingFlow(settings: onboardingSettings)
     }
+}
+
+#Preview {
+    AppRouter()
+        .environment(NavigationRouter())
 }

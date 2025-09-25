@@ -2,17 +2,13 @@
 //  SharedStores.swift
 //  CritiCalStore
 //
-//  Created by Scott Matthewman on 18/09/2025.
+//  Manages shared ModelContainer instances for the app and extensions
 //
 
 import SwiftData
-import CritiCalStore
+import Foundation
 import CritiCalDomain
-
-/// Protocol for providing event repository instances
-public protocol EventRepositoryProviding: Sendable {
-    nonisolated func eventRepo() async throws -> any EventReading & EventWriting
-}
+import CritiCalModels
 
 /// Global actor to manage shared ModelContainer safely
 @globalActor
@@ -23,11 +19,18 @@ public actor SharedStoresActor {
 
     private init() {}
 
+    /// Set the container from the main app
+    public func setContainer(_ container: ModelContainer) {
+        self.container = container
+    }
+
     /// Get or create the shared ModelContainer
     public func getContainer() async throws -> ModelContainer {
         if let container = container {
             return container
         }
+        // Fallback: create container if not set by main app
+        // This happens when App Intents run without the main app
         let newContainer = try StoreFactory.makeContainer(cloud: true)
         self.container = newContainer
         return newContainer
@@ -37,6 +40,11 @@ public actor SharedStoresActor {
     public func resetContainer() async {
         self.container = nil
     }
+}
+
+/// Protocol for providing event repository instances
+public protocol EventRepositoryProviding: Sendable {
+    nonisolated func eventRepo() async throws -> any EventReading & EventWriting
 }
 
 /// Thread-safe repository provider using actor-based container management

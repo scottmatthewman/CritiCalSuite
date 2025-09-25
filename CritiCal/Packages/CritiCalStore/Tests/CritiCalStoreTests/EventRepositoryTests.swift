@@ -462,7 +462,8 @@ struct EventRepositoryWritingTests {
             festivalName: "Updated Festival",
             venueName: "Updated Venue",
             date: newDate,
-            durationMinutes: 90
+            durationMinutes: 90,
+            confirmationStatus: .confirmed
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
@@ -471,6 +472,7 @@ struct EventRepositoryWritingTests {
         #expect(updatedEvent?.venueName == "Updated Venue")
         #expect(updatedEvent?.date == newDate)
         #expect(updatedEvent?.durationMinutes == 90)
+        #expect(updatedEvent?.confirmationStatus == .confirmed)
     }
 
     @Test("EventRepository update() allows partial updates")
@@ -492,7 +494,8 @@ struct EventRepositoryWritingTests {
             festivalName: nil,
             venueName: nil,
             date: nil,
-            durationMinutes: nil
+            durationMinutes: nil,
+            confirmationStatus: nil
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
@@ -515,7 +518,8 @@ struct EventRepositoryWritingTests {
                 festivalName: nil,
                 venueName: nil,
                 date: nil,
-                durationMinutes: nil
+                durationMinutes: nil,
+                confirmationStatus: nil
             )
             #expect(Bool(false), "Should have thrown EventStoreError.notFound")
         } catch let error as EventStoreError {
