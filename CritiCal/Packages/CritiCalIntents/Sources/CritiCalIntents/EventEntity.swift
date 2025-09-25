@@ -8,6 +8,7 @@
 import AppIntents
 import Foundation
 import CritiCalDomain
+import CritiCalModels
 
 public struct EventEntity: AppEntity, Identifiable, Sendable {
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "Event"
@@ -75,5 +76,20 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         self.url = dto.url
         self.details = dto.details
         self.genre = dto.genre.map { GenreEntity(from: $0) }
+    }
+
+    public init(from event: DetachedEvent) {
+        self.id = event.id
+        self.title = event.title
+        self.festivalName = event.festivalName
+        self.date = event.date
+        self.endDate = event.endDate
+        self.venueName = event.venueName
+        self.confirmationStatus = ConfirmationStatusAppEnum(
+            event.confirmationStatus
+        ) ?? .draft
+        self.url = event.url
+        self.details = event.details
+        self.genre = event.genre.map { GenreEntity(from: $0) }
     }
 }

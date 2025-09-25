@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import CritiCalModels
 
 public protocol GenreReading: Sendable {
-    func allGenres() async throws -> [GenreDTO]
-    func activeGenres() async throws -> [GenreDTO]
-    func genre(byIdentifier id: UUID) async throws -> GenreDTO?
+    func allGenres() async throws -> [DetachedGenre]
+    func activeGenres() async throws -> [DetachedGenre]
+    func genre(byIdentifier id: UUID) async throws -> DetachedGenre?
 }

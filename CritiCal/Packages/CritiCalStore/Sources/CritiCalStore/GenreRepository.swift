@@ -15,25 +15,25 @@ public actor GenreRepository: GenreReading & GenreWriting {
 
     // MARK: - GenreReading
 
-    public func allGenres() async throws -> [GenreDTO] {
+    public func allGenres() async throws -> [DetachedGenre] {
         let fd = FetchDescriptor<Genre>(sortBy: [SortDescriptor(\.name)])
         let genres = try modelContext.fetch(fd)
-        return genres.map { $0.dto }
+        return genres.map { $0.detached() }
     }
 
-    public func activeGenres() async throws -> [GenreDTO] {
+    public func activeGenres() async throws -> [DetachedGenre] {
         let fd = FetchDescriptor<Genre>(
             predicate: #Predicate { !$0.isDeactivated },
             sortBy: [SortDescriptor(\.name)]
         )
         let genres = try modelContext.fetch(fd)
-        return genres.map { $0.dto }
+        return genres.map { $0.detached() }
     }
 
-    public func genre(byIdentifier id: UUID) async throws -> GenreDTO? {
+    public func genre(byIdentifier id: UUID) async throws -> DetachedGenre? {
         let fd = FetchDescriptor<Genre>(predicate: #Predicate { $0.identifier == id })
         if let genre = try modelContext.fetch(fd).first {
-            return genre.dto
+            return genre.detached()
         } else {
             return nil
         }
@@ -99,14 +99,3 @@ public actor GenreRepository: GenreReading & GenreWriting {
     }
 }
 
-private extension Genre {
-    var dto: GenreDTO {
-        GenreDTO(
-            id: identifier ?? UUID(),
-            name: name,
-            details: details,
-            hexColor: hexColor,
-            isDeactivated: isDeactivated
-        )
-    }
-}

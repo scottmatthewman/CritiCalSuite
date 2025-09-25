@@ -9,6 +9,7 @@ import AppIntents
 import Foundation
 import CritiCalStore
 import CritiCalDomain
+import CritiCalModels
 
 public struct ListEventsIntent: AppIntent {
     public static let title: LocalizedStringResource = "List Events"
@@ -29,21 +30,21 @@ public struct ListEventsIntent: AppIntent {
     public func perform() async throws -> some IntentResult & ReturnsValue<[EventEntity]> {
         let repo = try await repositoryProvider.eventRepo()
 
-        let dtos: [EventDTO]
+        let events: [DetachedEvent]
         switch timeframe {
         case .today:
-            dtos = try await repo.eventsToday(in: .current, now: .now)
+            events = try await repo.eventsToday(in: .current, now: .now)
         case .past:
-            dtos = try await repo.eventsBefore(.now)
+            events = try await repo.eventsBefore(.now)
         case .future:
-            dtos = try await repo.eventsAfter(.now)
+            events = try await repo.eventsAfter(.now)
         case .next7Days:
-            dtos = try await repo.eventsNext7Days(in: .current, now: .now)
+            events = try await repo.eventsNext7Days(in: .current, now: .now)
         case .thisMonth:
-            dtos = try await repo.eventsThisMonth(in: .current, now: .now)
+            events = try await repo.eventsThisMonth(in: .current, now: .now)
         }
 
-        let entities = dtos.map {
+        let entities = events.map {
             EventEntity(from: $0)
         }
         return .result(value: entities)

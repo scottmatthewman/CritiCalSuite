@@ -35,7 +35,7 @@ public struct EventListView: View {
                     Button {
                         onEventSelected(event.identifier)
                     } label: {
-                        EventRow(event: EventDTO(event: event))
+                        EventRow(event: event.detached())
                     }
                 }
                 .buttonStyle(.plain)
@@ -60,7 +60,7 @@ public struct EventListView: View {
         confirmationStatus: .awaitingConfirmation
     )
 
-    let reader = FakeEventsReader(events: [e1, e2])
+    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: e1), DetachedEvent(eventDTO: e2)])
 
     NavigationStack {
         EventListView {

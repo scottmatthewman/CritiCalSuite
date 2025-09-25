@@ -35,11 +35,13 @@ public struct SettingsView: View {
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(role: .close) { }
+                    Button(role: .close, action: close)
                 }
             }
         }
     }
+
+    private func close() { dismiss() }
 }
 
 #Preview(traits: .sampleData) {

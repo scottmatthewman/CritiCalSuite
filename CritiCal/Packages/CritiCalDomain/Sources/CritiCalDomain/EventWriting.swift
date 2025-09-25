@@ -5,6 +5,7 @@
 //  Created by Scott Matthewman on 21/09/2025.
 //
 import Foundation
+import CritiCalModels
 
 public protocol EventWriting: Sendable {
     /// Create a new event with the specified details, returning its unique identifier.

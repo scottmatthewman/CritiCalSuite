@@ -7,12 +7,13 @@
 
 import SwiftUI
 import CritiCalDomain
+import CritiCalModels
 
 public struct EventDetailView: View {
     @Environment(\.eventReader) private var reader
     public let id: UUID
 
-    @State private var event: EventDTO?
+    @State private var event: DetachedEvent?
 
     public init(id: UUID) {
         self.id = id
@@ -143,7 +144,7 @@ public struct EventDetailView: View {
         details: "An immersive version of Shakespeare's classic. Join Titania, Oberon and the citizens of Athens as they walk around the enchanted forest.",
         genre: GenreDTO(name: "Musical Theatre")
     )
-    let reader = FakeEventsReader(events: [dto])
+    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: dto)])
     EventDetailView(id: dto.id)
     .environment(\.eventReader, reader)
 }

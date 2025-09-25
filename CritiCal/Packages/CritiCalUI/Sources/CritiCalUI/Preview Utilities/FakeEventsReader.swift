@@ -6,6 +6,7 @@
 //
 
 import CritiCalDomain
+import CritiCalModels
 import Foundation
 
 extension Date {
@@ -17,37 +18,37 @@ extension Date {
 }
 
 struct FakeEventsReader: EventReading {
-    let events: [EventDTO]
+    let events: [DetachedEvent]
 
-    func event(byIdentifier id: UUID) async throws -> EventDTO? {
+    func event(byIdentifier id: UUID) async throws -> DetachedEvent? {
         events.first { $0.id == id }
     }
 
-    func search(text: String, limit: Int) async throws -> [EventDTO] {
+    func search(text: String, limit: Int) async throws -> [DetachedEvent] {
         Array(events.prefix(limit))
     }
 
-    func eventsToday(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
+    func eventsToday(in calendar: Calendar, now: Date) async throws -> [DetachedEvent] {
         []
     }
 
-    func eventsBefore(_ cutOff: Date) async throws -> [EventDTO] {
+    func eventsBefore(_ cutOff: Date) async throws -> [DetachedEvent] {
         []
     }
 
-    func eventsAfter(_ cutOff: Date) async throws -> [EventDTO] {
+    func eventsAfter(_ cutOff: Date) async throws -> [DetachedEvent] {
         []
     }
 
-    func eventsNext7Days(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
+    func eventsNext7Days(in calendar: Calendar, now: Date) async throws -> [DetachedEvent] {
         []
     }
 
-    func eventsThisMonth(in calendar: Calendar, now: Date) async throws -> [EventDTO] {
+    func eventsThisMonth(in calendar: Calendar, now: Date) async throws -> [DetachedEvent] {
         []
     }
 
-    func recent(limit: Int) async throws -> [EventDTO] {
+    func recent(limit: Int) async throws -> [DetachedEvent] {
         Array(events.prefix(limit))
     }
 }

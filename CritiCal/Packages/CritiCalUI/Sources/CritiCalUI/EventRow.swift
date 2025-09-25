@@ -6,14 +6,15 @@
 
 import SwiftUI
 import CritiCalDomain
+import CritiCalModels
 
 public struct EventRow: View {
-    private let event: EventDTO
+    private let event: DetachedEvent
 
     @Environment(\.calendar) private var calendar
     @State private var showConfirmationStatus = false
 
-    public init(event: EventDTO) {
+    public init(event: DetachedEvent) {
         self.event = event
     }
 
@@ -132,9 +133,9 @@ public struct EventRow: View {
         details: "I have some details here for you",
         genre: GenreDTO(name: "Musical Theatre", hexColor: "277726", symbolName: "music.note")
     )
-    let reader = FakeEventsReader(events: [dto])
+    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: dto)])
     List {
-        EventRow(event: dto)
+        EventRow(event: DetachedEvent(eventDTO: dto))
     }
     .environment(\.eventReader, reader)
 }
