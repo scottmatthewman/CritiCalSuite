@@ -45,22 +45,32 @@ public struct EventListView: View {
 }
 
 #Preview {
-    let e1 = EventDTO(
+    let e1 = DetachedEvent(
+        id: UUID(),
         title: "Tech Rehearsal",
         festivalName: "",
         date: .iso8601("2025-09-21T19:30:00Z"),
+        durationMinutes: nil,
         venueName: "Donmar Warehouse",
-        confirmationStatus: .confirmed
+        confirmationStatus: .confirmed,
+        url: nil,
+        details: "",
+        genre: nil
     )
-    let e2 = EventDTO(
+    let e2 = DetachedEvent(
+        id: UUID(),
         title: "Press Night",
         festivalName: "Camden Fringe 2025",
         date: .iso8601("2025-09-22T19:30:00Z"),
+        durationMinutes: nil,
         venueName: "National Theatre",
-        confirmationStatus: .awaitingConfirmation
+        confirmationStatus: .awaitingConfirmation,
+        url: nil,
+        details: "",
+        genre: nil
     )
 
-    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: e1), DetachedEvent(eventDTO: e2)])
+    let reader = FakeEventsReader(events: [e1, e2])
 
     NavigationStack {
         EventListView {

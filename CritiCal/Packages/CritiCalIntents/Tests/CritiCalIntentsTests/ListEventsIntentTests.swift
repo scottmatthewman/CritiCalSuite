@@ -77,55 +77,85 @@ struct ListEventsIntentParameterTests {
 @Suite("ListEventsIntent - Repository Integration")
 struct ListEventsIntentRepositoryTests {
 
-    func createMockEvents() -> [EventDTO] {
+    func createMockEvents() -> [DetachedEvent] {
         let now = Date.now
         return [
             // Today's events
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Today Event 1",
                 festivalName: "Today Fest 1",
                 date: now,
-                venueName: "Today Venue 1"
+                durationMinutes: nil,
+                venueName: "Today Venue 1",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Today Event 2",
                 festivalName: "Today Fest 2",
                 date: now.addingTimeInterval(3600),
-                venueName: "Today Venue 2"
+                durationMinutes: nil,
+                venueName: "Today Venue 2",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
 
             // Past events
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Past Event 1",
                 festivalName: "Past fest 1",
                 date: now.addingTimeInterval(-86400),
-                venueName: "Past Venue 1"
+                durationMinutes: nil,
+                venueName: "Past Venue 1",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Past Event 2",
                 festivalName: "Past Fest 2",
                 date: now.addingTimeInterval(-86400 * 2),
-                venueName: "Past Venue 2"
+                durationMinutes: nil,
+                venueName: "Past Venue 2",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
 
             // Future events
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Future Event 1",
                 festivalName: "Future Fest 1",
                 date: now.addingTimeInterval(86400),
-                venueName: "Future Venue 1"
+                durationMinutes: nil,
+                venueName: "Future Venue 1",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Future Event 2",
                 festivalName: "Future Fest 2",
                 date: now.addingTimeInterval(86400 * 2),
-                venueName: "Future Venue 2"
+                durationMinutes: nil,
+                venueName: "Future Venue 2",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             )
         ]
     }
@@ -134,7 +164,7 @@ struct ListEventsIntentRepositoryTests {
     func testTodayTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents().detached())
+        await mockProvider.addMockEvents(createMockEvents())
 
         // Create intent with .today timeframe
         let intent = ListEventsIntent()
@@ -151,7 +181,7 @@ struct ListEventsIntentRepositoryTests {
     func testPastTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents().detached())
+        await mockProvider.addMockEvents(createMockEvents())
 
         // Create intent with .past timeframe
         let intent = ListEventsIntent()
@@ -169,7 +199,7 @@ struct ListEventsIntentRepositoryTests {
     func testFutureTimeframeRepositoryCall() async throws {
         // Setup mock repository
         let mockProvider = MockRepositoryProvider()
-        await mockProvider.addMockEvents(createMockEvents().detached())
+        await mockProvider.addMockEvents(createMockEvents())
 
         // Create intent with .future timeframe
         let intent = ListEventsIntent()
@@ -184,88 +214,83 @@ struct ListEventsIntentRepositoryTests {
     }
 }
 
-@Suite("ListEventsIntent - DTO to Entity Conversion")
+@Suite("ListEventsIntent - DetachedEvent to Entity Conversion")
 struct ListEventsIntentConversionTests {
 
-    @Test("ListEventsIntent correctly converts DTOs to entities")
-    func testDTOToEntityConversion() {
-        // Create test DTOs
-        let dto1 = EventDTO(
+    @Test("ListEventsIntent correctly converts DetachedEvents to entities")
+    func testDetachedEventToEntityConversion() {
+        // Create test DetachedEvents
+        let event1 = DetachedEvent(
             id: UUID(),
             title: "Convert Test 1",
             festivalName: "Convert Fest 1",
             date: Date.now,
-            venueName: "Convert Venue 1"
+            durationMinutes: nil,
+            venueName: "Convert Venue 1",
+            confirmationStatus: .draft,
+            url: nil,
+            details: "",
+            genre: nil
         )
-        let dto2 = EventDTO(
+        let event2 = DetachedEvent(
             id: UUID(),
             title: "Convert Test 2",
             festivalName: "Convert Fest 2",
             date: Date.now,
-            venueName: "Convert Venue 2"
+            durationMinutes: nil,
+            venueName: "Convert Venue 2",
+            confirmationStatus: .draft,
+            url: nil,
+            details: "",
+            genre: nil
         )
-        let dtos = [dto1, dto2]
+        let events = [event1, event2]
 
         // Test the conversion logic used in ListEventsIntent
-        let entities = dtos.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
-        }
+        let entities = events.map { EventEntity(from: $0) }
 
         #expect(entities.count == 2)
-        #expect(entities[0].id == dto1.id)
-        #expect(entities[0].title == dto1.title)
-        #expect(entities[0].festivalName == dto1.festivalName)
-        #expect(entities[1].id == dto2.id)
-        #expect(entities[1].title == dto2.title)
-        #expect(entities[1].festivalName == dto2.festivalName)
+        #expect(entities[0].id == event1.id)
+        #expect(entities[0].title == event1.title)
+        #expect(entities[0].festivalName == event1.festivalName)
+        #expect(entities[1].id == event2.id)
+        #expect(entities[1].title == event2.title)
+        #expect(entities[1].festivalName == event2.festivalName)
     }
 
     @Test("ListEventsIntent handles empty repository results")
     func testEmptyRepositoryResults() {
         // Test conversion with empty array
-        let dtos: [EventDTO] = []
-        let entities = dtos.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
-        }
+        let events: [DetachedEvent] = []
+        let entities = events.map { EventEntity(from: $0) }
 
         #expect(entities.isEmpty)
     }
 
-    @Test("ListEventsIntent preserves all DTO properties in entity conversion")
+    @Test("ListEventsIntent preserves all DetachedEvent properties in entity conversion")
     func testCompletePropertyConversion() {
         let specificDate = Date.now.addingTimeInterval(12345)
-        let dto = EventDTO(
+        let event = DetachedEvent(
             id: UUID(),
             title: "Property Test Event",
             festivalName: "Property Test Festival",
             date: specificDate,
-            venueName: "Property Test Venue"
+            durationMinutes: 90,
+            venueName: "Property Test Venue",
+            confirmationStatus: .confirmed,
+            url: URL(string: "https://example.com"),
+            details: "Test details",
+            genre: nil
         )
 
-        let entity = EventEntity(
-            id: dto.id,
-            title: dto.title,
-            festivalName: dto.festivalName,
-            date: dto.date,
-            venueName: dto.venueName
-        )
+        let entity = EventEntity(from: event)
 
-        #expect(entity.id == dto.id)
-        #expect(entity.title == dto.title)
-        #expect(entity.date == dto.date)
-        #expect(entity.venueName == dto.venueName)
+        #expect(entity.id == event.id)
+        #expect(entity.title == event.title)
+        #expect(entity.date == event.date)
+        #expect(entity.venueName == event.venueName)
+        #expect(entity.details == event.details)
+        #expect(entity.url == event.url)
     }
 }
 
@@ -326,14 +351,19 @@ struct ListEventsIntentBusinessLogicTests {
         let mockProvider = MockRepositoryProvider()
 
         // Add test data to avoid empty results
-        let testEvent = EventDTO(
+        let testEvent = DetachedEvent(
             id: UUID(),
             title: "Test Event",
             festivalName: "Test Festival",
             date: Date.now,
-            venueName: "Test Venue"
+            durationMinutes: nil,
+            venueName: "Test Venue",
+            confirmationStatus: .draft,
+            url: nil,
+            details: "",
+            genre: nil
         )
-        await mockProvider.addMockEvent(DetachedEvent(from: testEvent))
+        await mockProvider.addMockEvent(testEvent)
 
         // Test .today timeframe calls eventsToday()
         let todayIntent = ListEventsIntent(repositoryProvider: mockProvider)
@@ -363,25 +393,22 @@ struct ListEventsIntentEdgeCaseTests {
     func testLargeResultSets() {
         // Create many events for testing
         let manyEvents = (0..<100).map { index in
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Event \(index)",
                 festivalName: "Festival \(index)",
                 date: Date.now.addingTimeInterval(Double(index) * 3600),
-                venueName: "Venue \(index)"
+                durationMinutes: nil,
+                venueName: "Venue \(index)",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             )
         }
 
         // Test conversion performance and correctness
-        let entities = manyEvents.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
-        }
+        let entities = manyEvents.map { EventEntity(from: $0) }
 
         #expect(entities.count == 100)
         #expect(entities.first?.title == "Event 0")
@@ -391,38 +418,45 @@ struct ListEventsIntentEdgeCaseTests {
     @Test("ListEventsIntent handles events with special characters")
     func testSpecialCharactersInEvents() {
         let specialEvents = [
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Café Concert 🎵",
                 festivalName: "Fête de l'été",
                 date: Date.now,
-                venueName: "Le Café"
+                durationMinutes: nil,
+                venueName: "Le Café",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "中文活動",
                 festivalName: "國際節",
                 date: Date.now,
-                venueName: "北京会场"
+                durationMinutes: nil,
+                venueName: "北京会场",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Event & Show",
                 festivalName: "Music & Arts",
                 date: Date.now,
-                venueName: "R&D Center"
+                durationMinutes: nil,
+                venueName: "R&D Center",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             )
         ]
 
-        let entities = specialEvents.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
-        }
+        let entities = specialEvents.map { EventEntity(from: $0) }
 
         #expect(entities.count == 3)
         #expect(entities[0].title.contains("🎵"))
@@ -437,38 +471,45 @@ struct ListEventsIntentEdgeCaseTests {
         let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!.addingTimeInterval(-1)
 
         let boundaryEvents = [
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Start of Day",
                 festivalName: "",
                 date: startOfDay,
-                venueName: "Boundary Venue"
+                durationMinutes: nil,
+                venueName: "Boundary Venue",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "End of Day",
                 festivalName: "",
                 date: endOfDay,
-                venueName: "Boundary Venue"
+                durationMinutes: nil,
+                venueName: "Boundary Venue",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             ),
-            EventDTO(
+            DetachedEvent(
                 id: UUID(),
                 title: "Just Past Midnight",
                 festivalName: "",
                 date: endOfDay.addingTimeInterval(2),
-                venueName: "Boundary Venue"
+                durationMinutes: nil,
+                venueName: "Boundary Venue",
+                confirmationStatus: .draft,
+                url: nil,
+                details: "",
+                genre: nil
             )
         ]
 
-        let entities = boundaryEvents.map {
-            EventEntity(
-                id: $0.id,
-                title: $0.title,
-                festivalName: $0.festivalName,
-                date: $0.date,
-                venueName: $0.venueName
-            )
-        }
+        let entities = boundaryEvents.map { EventEntity(from: $0) }
 
         #expect(entities.count == 3)
         #expect(entities[0].title == "Start of Day")

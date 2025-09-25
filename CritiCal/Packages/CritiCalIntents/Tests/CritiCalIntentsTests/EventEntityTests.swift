@@ -352,71 +352,84 @@ struct EventEntitySendableTests {
 @Suite("EventEntity - Integration")
 struct EventEntityIntegrationTests {
 
-    @Test("EventEntity can be created from typical DTO values")
-    func testDTOConversion() {
-        // Simulate creating an EventEntity from EventDTO values
-        let dtoId = UUID()
-        let dtoTitle = "DTO Event"
-        let dtoFestivalName = "DTO Festival"
-        let dtoDate = Date.now
-        let dtoVenueName = "DTO Venue"
+    @Test("EventEntity can be created from typical DetachedEvent values")
+    func testDetachedEventConversion() {
+        // Simulate creating an EventEntity from DetachedEvent values
+        let eventId = UUID()
+        let eventTitle = "Test Event"
+        let eventFestivalName = "Test Festival"
+        let eventDate = Date.now
+        let eventVenueName = "Test Venue"
 
         let entity = EventEntity(
-            id: dtoId,
-            title: dtoTitle,
-            festivalName: dtoFestivalName,
-            date: dtoDate,
-            venueName: dtoVenueName
+            id: eventId,
+            title: eventTitle,
+            festivalName: eventFestivalName,
+            date: eventDate,
+            venueName: eventVenueName
         )
 
-        #expect(entity.id == dtoId)
-        #expect(entity.title == dtoTitle)
-        #expect(entity.festivalName == dtoFestivalName)
-        #expect(entity.date == dtoDate)
-        #expect(entity.venueName == dtoVenueName)
+        #expect(entity.id == eventId)
+        #expect(entity.title == eventTitle)
+        #expect(entity.festivalName == eventFestivalName)
+        #expect(entity.date == eventDate)
+        #expect(entity.venueName == eventVenueName)
     }
 
-    @Test("EventEntity can be created directly from a DTO")
-    func testDTOInitialization() {
-        let dto = EventDTO(
+    @Test("EventEntity can be created directly from a DetachedEvent")
+    func testDetachedEventInitialization() {
+        let event = DetachedEvent(
             id: UUID(),
             title: "Event",
             festivalName: "Festival",
             date: Date.now,
-            venueName: "Venue"
+            durationMinutes: nil,
+            venueName: "Venue",
+            confirmationStatus: .draft,
+            url: nil,
+            details: "",
+            genre: nil
         )
 
-        let entity = EventEntity(from: dto)
+        let entity = EventEntity(from: event)
 
-        #expect(entity.id == dto.id)
-        #expect(entity.title == dto.title)
-        #expect(entity.festivalName == dto.festivalName)
-        #expect(entity.date == dto.date)
-        #expect(entity.venueName == dto.venueName)
+        #expect(entity.id == event.id)
+        #expect(entity.title == event.title)
+        #expect(entity.festivalName == event.festivalName)
+        #expect(entity.date == event.date)
+        #expect(entity.venueName == event.venueName)
         #expect(entity.genre == nil)
     }
 
-    @Test("EventEntity can be created from DTO with genre")
-    func testDTOInitializationWithGenre() {
-        let genreDTO = GenreDTO(
+    @Test("EventEntity can be created from DetachedEvent with genre")
+    func testDetachedEventInitializationWithGenre() {
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Comedy",
             details: "Stand-up comedy performances",
-            hexColor: "FF6B6B"
+            colorName: "Comedy",
+            hexColor: "FF6B6B",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let dto = EventDTO(
+        let event = DetachedEvent(
             id: UUID(),
             title: "Comedy Night",
             festivalName: "Laugh Festival",
             date: Date.now,
+            durationMinutes: nil,
             venueName: "Comedy Club",
-            genre: genreDTO
+            confirmationStatus: .draft,
+            url: nil,
+            details: "",
+            genre: genre
         )
 
-        let entity = EventEntity(from: dto)
+        let entity = EventEntity(from: event)
 
-        #expect(entity.id == dto.id)
-        #expect(entity.title == dto.title)
+        #expect(entity.id == event.id)
+        #expect(entity.title == event.title)
         #expect(entity.genre != nil)
         #expect(entity.genre?.name == "Comedy")
         #expect(entity.genre?.details == "Stand-up comedy performances")
