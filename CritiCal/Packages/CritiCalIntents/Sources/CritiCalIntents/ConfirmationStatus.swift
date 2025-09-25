@@ -9,9 +9,6 @@ import AppIntents
 import CritiCalDomain
 import Foundation
 
-import AppIntents
-import CritiCalDomain
-
 public enum ConfirmationStatusAppEnum: String, CaseIterable, AppEnum {
     case draft = "draft"
     case tentative = "tentative"
