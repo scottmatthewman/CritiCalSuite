@@ -63,22 +63,7 @@ public struct EventEntity: AppEntity, Identifiable, Sendable {
         }
     }
 
-    public init(from dto: EventDTO) {
-        self.id = dto.id
-        self.title = dto.title
-        self.festivalName = dto.festivalName
-        self.date = dto.date
-        self.endDate = dto.endDate
-        self.venueName = dto.venueName
-        self.confirmationStatus = ConfirmationStatusAppEnum(
-            dto.confirmationStatus
-        ) ?? .draft
-        self.url = dto.url
-        self.details = dto.details
-        self.genre = dto.genre.map { GenreEntity(from: $0) }
-    }
-
-    public init(from event: DetachedEvent) {
+public init(from event: DetachedEvent) {
         self.id = event.id
         self.title = event.title
         self.festivalName = event.festivalName

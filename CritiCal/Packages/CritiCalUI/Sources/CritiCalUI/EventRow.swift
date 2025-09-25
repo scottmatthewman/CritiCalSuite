@@ -122,8 +122,9 @@ public struct EventRow: View {
 }
 
 #Preview {
-    let dto = EventDTO(
-        title: "A Midsummer Night’s Dream",
+    let event = DetachedEvent(
+        id: UUID(),
+        title: "A Midsummer Night's Dream",
         festivalName: "Lambeth Fringe",
         date: .iso8601("2025-09-21T19:30:00Z"),
         durationMinutes: 90,
@@ -131,11 +132,11 @@ public struct EventRow: View {
         confirmationStatus: .bidForReview,
         url: URL(string: "https://bridgetheatre.co.uk/"),
         details: "I have some details here for you",
-        genre: GenreDTO(name: "Musical Theatre", hexColor: "277726", symbolName: "music.note")
+        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "277726", symbolName: "music.note", isDeactivated: false)
     )
-    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: dto)])
+    let reader = FakeEventsReader(events: [event])
     List {
-        EventRow(event: DetachedEvent(eventDTO: dto))
+        EventRow(event: event)
     }
     .environment(\.eventReader, reader)
 }

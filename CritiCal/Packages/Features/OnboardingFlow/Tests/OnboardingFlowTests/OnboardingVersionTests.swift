@@ -9,7 +9,7 @@ import Testing
 import Foundation
 @testable import OnboardingFlow
 
-@Suite("OnboardingVersion")
+@Suite("OnboardingVersion") @MainActor
 struct OnboardingVersionTests {
 
     @Test("Version comparison works correctly")
@@ -43,10 +43,11 @@ struct OnboardingVersionTests {
     @Test("Version is Sendable")
     func testVersionSendable() async {
         let version = OnboardingVersion(version: 1)
+        let versionValue = version.version  // Capture the value before the task group
 
         await withTaskGroup(of: Int.self) { group in
-            group.addTask { version.version }
-            group.addTask { version.version }
+            group.addTask { versionValue }
+            group.addTask { versionValue }
 
             var results: [Int] = []
             for await result in group {

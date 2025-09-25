@@ -9,7 +9,7 @@ import Testing
 import Foundation
 @testable import OnboardingFlow
 
-@Suite("OnboardingSettings")
+@Suite("OnboardingSettings") @MainActor
 struct OnboardingSettingsTests {
 
     @Test("Should show onboarding for first time users")

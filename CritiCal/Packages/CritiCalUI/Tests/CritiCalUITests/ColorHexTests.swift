@@ -7,6 +7,7 @@
 
 import Testing
 import SwiftUI
+import CritiCalDomain // Provides Color+hex extension via CritiCalExtensions
 @testable import CritiCalUI
 
 @Suite("Color+Hex - Initialization")

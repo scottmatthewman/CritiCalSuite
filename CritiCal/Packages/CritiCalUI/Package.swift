@@ -34,7 +34,7 @@ let package = Package(
         ),
         .testTarget(
             name: "CritiCalUITests",
-            dependencies: ["CritiCalUI"]
+            dependencies: ["CritiCalUI", "CritiCalDomain"]
         ),
     ]
 )

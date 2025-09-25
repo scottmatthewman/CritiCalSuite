@@ -5,28 +5,32 @@
 //  Created by Scott Matthewman on 22/09/2025.
 //
 
-import Testing
-import Foundation
 import AppIntents
-import CritiCalDomain
+import Foundation
+import CritiCalModels
+import Testing
+
 @testable import CritiCalIntents
 
 @Suite("GenreEntity - Initialization from DTO")
 struct GenreEntityInitializationTests {
 
-    @Test("GenreEntity initializes correctly from GenreDTO")
-    func testBasicInitializationFromDTO() {
-        let genreDTO = GenreDTO(
-            id: UUID(),
+    @Test("GenreEntity initializes correctly from DetachedGenre")
+    func testBasicInitializationFromDetachedGenre() {
+        let genreId = UUID()
+        let detachedGenre = DetachedGenre(
+            id: genreId,
             name: "Music",
             details: "Live music performances",
+            colorName: "Music",
             hexColor: "FF5500",
+            symbolName: "music.note",
             isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: detachedGenre)
 
-        #expect(entity.id == genreDTO.id)
+        #expect(entity.id == genreId)
         #expect(entity.name == "Music")
         #expect(entity.details == "Live music performances")
         #expect(entity.hexColor == "FF5500")
@@ -35,28 +39,46 @@ struct GenreEntityInitializationTests {
 
     @Test("GenreEntity correctly inverts isDeactivated to isActive")
     func testIsActiveInversion() {
-        let activeGenreDTO = GenreDTO(
+        let activeGenre = DetachedGenre(
+            id: UUID(),
             name: "Active Genre",
+            details: "",
+            colorName: "Active Genre",
+            hexColor: "888888",
+            symbolName: "tag",
             isDeactivated: false
         )
 
-        let activeEntity = GenreEntity(from: activeGenreDTO)
+        let activeEntity = GenreEntity(from: activeGenre)
         #expect(activeEntity.isActive == true)
 
-        let inactiveGenreDTO = GenreDTO(
+        let inactiveGenre = DetachedGenre(
+            id: UUID(),
             name: "Inactive Genre",
+            details: "",
+            colorName: "Inactive Genre",
+            hexColor: "888888",
+            symbolName: "tag",
             isDeactivated: true
         )
 
-        let inactiveEntity = GenreEntity(from: inactiveGenreDTO)
+        let inactiveEntity = GenreEntity(from: inactiveGenre)
         #expect(inactiveEntity.isActive == false)
     }
 
-    @Test("GenreEntity handles default DTO values")
+    @Test("GenreEntity handles default values")
     func testDefaultValues() {
-        let genreDTO = GenreDTO(name: "Theater")
+        let genre = DetachedGenre(
+            id: UUID(),
+            name: "Theater",
+            details: "",
+            colorName: "Theater",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
+        )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
 
         #expect(entity.name == "Theater")
         #expect(entity.details == "")
@@ -70,12 +92,17 @@ struct GenreEntityDisplayTests {
 
     @Test("Display representation shows name as title")
     func testDisplayRepresentationTitle() {
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Comedy",
-            details: "Stand-up and sketch comedy"
+            details: "Stand-up and sketch comedy",
+            colorName: "Comedy",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
         let displayRep = entity.displayRepresentation
 
         let titleString = String(localized: displayRep.title)
@@ -84,12 +111,17 @@ struct GenreEntityDisplayTests {
 
     @Test("Display representation includes details as subtitle when present")
     func testDisplayRepresentationWithDetails() {
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Drama",
-            details: "Dramatic theatrical performances"
+            details: "Dramatic theatrical performances",
+            colorName: "Drama",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
         let displayRep = entity.displayRepresentation
 
         #expect(displayRep.subtitle != nil)
@@ -99,12 +131,17 @@ struct GenreEntityDisplayTests {
 
     @Test("Display representation has nil subtitle when details are empty")
     func testDisplayRepresentationEmptyDetails() {
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Dance",
-            details: ""
+            details: "",
+            colorName: "Dance",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
         let displayRep = entity.displayRepresentation
 
         #expect(displayRep.subtitle == nil)
@@ -122,13 +159,17 @@ struct GenreEntityAppEntityTests {
 
     @Test("Property wrappers are configured correctly")
     func testPropertyConfiguration() {
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Opera",
             details: "Classical opera performances",
-            hexColor: "AA33FF"
+            colorName: "Opera",
+            hexColor: "AA33FF",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
 
         #expect(entity.name == "Opera")
         #expect(entity.details == "Classical opera performances")
@@ -140,25 +181,46 @@ struct GenreEntityAppEntityTests {
 @Suite("GenreEntity - Identifiable")
 struct GenreEntityIdentifiableTests {
 
-    @Test("GenreEntity uses UUID from DTO as identifier")
+    @Test("GenreEntity uses UUID as identifier")
     func testIdentifiableConformance() {
         let customID = UUID()
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
             id: customID,
-            name: "Jazz"
+            name: "Jazz",
+            details: "",
+            colorName: "Jazz",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
         #expect(entity.id == customID)
     }
 
     @Test("Different GenreEntity instances have different ids")
     func testUniqueIdentifiers() {
-        let dto1 = GenreDTO(name: "Rock")
-        let dto2 = GenreDTO(name: "Pop")
+        let genre1 = DetachedGenre(
+            id: UUID(),
+            name: "Rock",
+            details: "",
+            colorName: "Rock",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
+        )
+        let genre2 = DetachedGenre(
+            id: UUID(),
+            name: "Pop",
+            details: "",
+            colorName: "Pop",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
+        )
 
-        let entity1 = GenreEntity(from: dto1)
-        let entity2 = GenreEntity(from: dto2)
+        let entity1 = GenreEntity(from: genre1)
+        let entity2 = GenreEntity(from: genre2)
 
         #expect(entity1.id != entity2.id)
     }
@@ -169,12 +231,17 @@ struct GenreEntitySendableTests {
 
     @Test("GenreEntity conforms to Sendable for concurrent access")
     func testSendableConformance() async {
-        let genreDTO = GenreDTO(
+        let genre = DetachedGenre(
+            id: UUID(),
             name: "Classical",
-            details: "Classical music performances"
+            details: "Classical music performances",
+            colorName: "Classical",
+            hexColor: "888888",
+            symbolName: "tag",
+            isDeactivated: false
         )
 
-        let entity = GenreEntity(from: genreDTO)
+        let entity = GenreEntity(from: genre)
 
         await withTaskGroup(of: GenreEntity.self) { group in
             group.addTask { entity }

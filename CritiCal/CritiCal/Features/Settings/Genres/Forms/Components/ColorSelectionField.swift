@@ -6,6 +6,7 @@
 //
 
 import CritiCalDomain
+import CritiCalExtensions
 import CritiCalUI
 import SwiftUI
 

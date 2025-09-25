@@ -6,9 +6,8 @@
 //
 
 import AppIntents
-import Foundation
-import CritiCalDomain
 import CritiCalStore
+import Foundation
 
 public struct GenreQuery: EntityQuery {
     public init() {}

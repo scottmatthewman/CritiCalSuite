@@ -5,50 +5,22 @@
 //  Created by Claude on 21/09/2025.
 //
 
-import CritiCalDomain
+import AppIntents
+import CritiCalModels
 import CritiCalUI
 import SwiftUI
-import AppIntents
 
 public struct EventSnippetView: View {
-    let dto: EventDTO
-    let entity: EventEntity
-
-    public init(event: EventEntity, dto: EventDTO) {
-        self.entity = event
-        self.dto = dto
-    }
+    let event: EventEntity
 
     public init(event: EventEntity) {
-        self.entity = event
-        let genreDTO = event.genre.map { genre in
-            GenreDTO(
-                id: genre.id,
-                name: genre.name,
-                details: genre.details,
-                hexColor: genre.hexColor,
-                isDeactivated: !genre.isActive
-            )
-        }
-        // Create DTO from entity for display
-        self.dto = EventDTO(
-            id: event.id,
-            title: event.title,
-            festivalName: event.festivalName,
-            date: event.date,
-            durationMinutes: Int(event.endDate.timeIntervalSince(event.date) / 60),
-            venueName: event.venueName,
-            confirmationStatus: event.confirmationStatus.confirmationStatus,
-            url: event.url,
-            details: event.details,
-            genre: genreDTO
-        )
+        self.event = event
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                let tintColor = dto.genre?.color
+                let tintColor = event.genre?.color
                 
                 // image
                 RoundedRectangle(cornerRadius: 16)
@@ -59,20 +31,20 @@ public struct EventSnippetView: View {
                             .font(.title)
                             .foregroundStyle(.tint)
                     }
-                    .tint((dto.genre?.color) ?? .accentColor)
+                    .tint((event.genre?.color) ?? .accentColor)
                 // Title and Festival
                 VStack(alignment: .leading, spacing: 4) {
-                    if !dto.festivalName.isEmpty {
-                        Text(dto.festivalName)
+                    if !event.festivalName.isEmpty {
+                        Text(event.festivalName)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
-                    Text(dto.title)
+                    Text(event.title)
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
                 Spacer()
-                Button(intent: OpenEventIntent(event: entity)) {
+                Button(intent: OpenEventIntent(event: event)) {
                     Image(systemName: "arrow.up.right.square")
                         .imageScale(.large)
                 }
@@ -83,36 +55,37 @@ public struct EventSnippetView: View {
 
             Divider()
 
-            if !dto.venueName.isEmpty {
-                Label(dto.venueName, systemImage: "location")
+            if !event.venueName.isEmpty {
+                Label(event.venueName, systemImage: "location")
                     .labelStyle(.tintedIcon)
             }
 
             // Date and Venue
             Label {
-                Text(dto.date ..< dto.endDate, format: .interval.weekday().month().day().year().hour().minute()
+                Text(event.date ..< event.endDate, format: .interval.weekday().month().day().year().hour().minute()
                 )
             } icon: {
                 Image(systemName: "calendar")
             }
             .labelStyle(.tintedIcon)
 
-            if dto.confirmationStatus != .confirmed {
+            if event.confirmationStatus != .confirmed {
+                let displayRep = ConfirmationStatusAppEnum.caseDisplayRepresentations[event.confirmationStatus]!
                 Label(
-                    dto.confirmationStatus.displayName,
-                    systemImage: dto.confirmationStatus.systemImage
+                    displayRep.title,
+                    systemImage: "questionmark.circle" // Default system image
                 )
                 .foregroundStyle(.secondary)
             }
 
             HStack(alignment: .firstTextBaseline) {
-                if let genre = dto.genre {
+                if let genre = event.genre {
                     Label(genre.name, systemImage: "tag")
                         .labelStyle(.tag)
                         .tint(genre.color)
                 }
 
-                if let url = dto.url {
+                if let url = event.url {
                     Link(destination: url) {
                         Label(
                             url.trimmedHost ?? url.absoluteString,
@@ -123,8 +96,8 @@ public struct EventSnippetView: View {
                 }
             }
 
-            if dto.details.isEmpty == false {
-                Text(dto.details)
+            if event.details.isEmpty == false {
+                Text(event.details)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
@@ -138,7 +111,8 @@ public struct EventSnippetView: View {
 }
 
 #Preview("Event Snippet", traits: .sizeThatFitsLayout) {
-    let dto = EventDTO(
+    let event = DetachedEvent(
+        id: UUID(),
         title: "SwiftUI Workshop",
         festivalName: "WWDC 2025",
         date: Date.now,
@@ -147,16 +121,18 @@ public struct EventSnippetView: View {
         confirmationStatus: .awaitingConfirmation,
         url: URL(string: "https://stratfordeast.com/"),
         details: "This example event is intended to demonstrate what the Shortcuts snippet will look like for an event that has all its attributes defined.",
-        genre: GenreDTO(
+        genre: DetachedGenre(
             id: UUID(),
             name: "Workshop",
             details: "Educational session",
+            colorName: "Workshop",
             hexColor: "#FF5733",
+            symbolName: "wand.and.stars",
             isDeactivated: false
         )
     )
     EventSnippetView(
-        event: EventEntity(from: dto)
+        event: EventEntity(from: event)
     )
     .padding()
 }

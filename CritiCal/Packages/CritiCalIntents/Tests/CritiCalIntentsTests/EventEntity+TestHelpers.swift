@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CritiCalDomain
+import CritiCalModels
 @testable import CritiCalIntents
 
 extension EventEntity {
@@ -20,16 +20,19 @@ extension EventEntity {
         venueName: String = "",
         confirmationStatus: ConfirmationStatusAppEnum = .draft
     ) {
-        // Create a DTO and use the existing initializer
-        let dto = EventDTO(
+        // Create a DetachedEvent and use the existing initializer
+        let event = DetachedEvent(
             id: id,
             title: title,
             festivalName: festivalName,
             date: date,
             durationMinutes: endDate.map { Int($0.timeIntervalSince(date) / 60) },
             venueName: venueName,
-            confirmationStatus: confirmationStatus.confirmationStatus
+            confirmationStatus: confirmationStatus.confirmationStatus,
+            url: nil,
+            details: "",
+            genre: nil
         )
-        self.init(from: dto)
+        self.init(from: event)
     }
 }

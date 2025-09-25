@@ -1,12 +1,12 @@
 //
-//  File 2.swift
+//  ConfirmationStatus.swift
 //  CritiCalIntents
 //
 //  Created by Scott Matthewman on 21/09/2025.
 //
 
 import AppIntents
-import CritiCalDomain
+import CritiCalModels
 import Foundation
 
 public enum ConfirmationStatusAppEnum: String, CaseIterable, AppEnum {
@@ -56,11 +56,8 @@ public enum ConfirmationStatusAppEnum: String, CaseIterable, AppEnum {
 extension ConfirmationStatusAppEnum {
     // Conversion helpers
     public init?(_ status: ConfirmationStatus?) {
-        guard let status = status,
-              let appEnum = ConfirmationStatusAppEnum(rawValue: status.rawValue) else {
-            return nil
-        }
-        self = appEnum
+        guard let status = status else { return nil }
+        self.init(rawValue: status.rawValue)
     }
 
     public var confirmationStatus: ConfirmationStatus {

@@ -133,8 +133,10 @@ public struct EventDetailView: View {
 }
 
 #Preview {
-    let dto = EventDTO(
-        title: "A Midsummer Night’s Dream",
+    let eventId = UUID()
+    let event = DetachedEvent(
+        id: eventId,
+        title: "A Midsummer Night's Dream",
         festivalName: "London Theatre Festival",
         date: .iso8601("2025-09-21T19:30:00Z"),
         durationMinutes: 135,
@@ -142,9 +144,9 @@ public struct EventDetailView: View {
         confirmationStatus: .confirmed,
         url: URL(string: "https://bridgetheatre.co.uk/"),
         details: "An immersive version of Shakespeare's classic. Join Titania, Oberon and the citizens of Athens as they walk around the enchanted forest.",
-        genre: GenreDTO(name: "Musical Theatre")
+        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "888888", symbolName: "theatermasks", isDeactivated: false)
     )
-    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: dto)])
-    EventDetailView(id: dto.id)
+    let reader = FakeEventsReader(events: [event])
+    EventDetailView(id: eventId)
     .environment(\.eventReader, reader)
 }
