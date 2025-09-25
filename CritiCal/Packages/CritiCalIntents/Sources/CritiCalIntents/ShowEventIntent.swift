@@ -6,8 +6,6 @@
 //
 
 import AppIntents
-import CritiCalStore
-import CritiCalDomain
 
 public struct ShowEventIntent: AppIntent {
     public static let title: LocalizedStringResource = "Show Event"

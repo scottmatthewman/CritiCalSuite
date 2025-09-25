@@ -6,9 +6,8 @@
 //
 
 import AppIntents
-import Foundation
-import CritiCalDomain
 import CritiCalStore
+import Foundation
 
 public struct EventQuery: EntityQuery, Sendable {
     public typealias Entity = EventEntity

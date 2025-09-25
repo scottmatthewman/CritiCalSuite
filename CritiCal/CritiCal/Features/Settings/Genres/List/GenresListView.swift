@@ -6,9 +6,9 @@
 //
 
 import CritiCalDomain
+import CritiCalExtensions
 import CritiCalModels
 import CritiCalStore
-import CritiCalUI
 import SwiftData
 import SwiftUI
 

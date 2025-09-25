@@ -6,9 +6,8 @@
 //
 
 import AppIntents
-import Foundation
-import CritiCalDomain
 import CritiCalModels
+import Foundation
 
 public struct GenreEntity: AppEntity, Identifiable, Sendable {
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "Genre"

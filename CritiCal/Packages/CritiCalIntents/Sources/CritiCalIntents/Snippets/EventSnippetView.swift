@@ -5,11 +5,10 @@
 //  Created by Claude on 21/09/2025.
 //
 
-import CritiCalDomain
+import AppIntents
 import CritiCalModels
 import CritiCalUI
 import SwiftUI
-import AppIntents
 
 public struct EventSnippetView: View {
     let event: EventEntity
@@ -73,7 +72,7 @@ public struct EventSnippetView: View {
             if event.confirmationStatus != .confirmed {
                 let displayRep = ConfirmationStatusAppEnum.caseDisplayRepresentations[event.confirmationStatus]!
                 Label(
-                    displayRep.title ?? "",
+                    displayRep.title,
                     systemImage: "questionmark.circle" // Default system image
                 )
                 .foregroundStyle(.secondary)

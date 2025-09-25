@@ -5,11 +5,11 @@
 //  Created by Claude on 20/09/2025.
 //
 
-import Testing
-import Foundation
 import AppIntents
-import CritiCalDomain
+import Foundation
 import CritiCalModels
+import Testing
+
 @testable import CritiCalIntents
 
 @Suite("EventEntity - Initialization")

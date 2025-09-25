@@ -6,10 +6,9 @@
 //
 
 import AppIntents
-import Foundation
 import CritiCalStore
-import CritiCalDomain
 import CritiCalModels
+import Foundation
 
 public struct ListEventsIntent: AppIntent {
     public static let title: LocalizedStringResource = "List Events"

@@ -5,11 +5,10 @@
 //  Created by Claude on 20/09/2025.
 //
 
-import Testing
-import Foundation
 import AppIntents
-import CritiCalDomain
 import CritiCalModels
+import Foundation
+import Testing
 @testable import CritiCalIntents
 
 @Suite("ListEventsIntent - Initialization")

@@ -6,7 +6,6 @@
 //
 
 import AppIntents
-import CritiCalDomain
 import CritiCalStore
 
 public struct GetEventIntent: AppIntent {

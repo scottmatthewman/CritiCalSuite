@@ -6,7 +6,6 @@
 //
 
 import AppIntents
-import CritiCalStore
 
 public enum EventTimeframe: String, AppEnum, Sendable {
     case today, past, future, next7Days, thisMonth

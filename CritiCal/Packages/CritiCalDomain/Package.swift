@@ -17,7 +17,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
         .package(name: "CritiCalModels", path: "../CritiCalModels")
     ],
     targets: [
@@ -25,7 +24,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CritiCalDomain",
-            dependencies: ["CritiCalExtensions", "CritiCalModels"]
+            dependencies: ["CritiCalModels"]
         ),
         .testTarget(
             name: "CritiCalDomainTests",
