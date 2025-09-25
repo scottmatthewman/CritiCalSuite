@@ -8,6 +8,7 @@
 import AppIntents
 import Foundation
 import CritiCalDomain
+import CritiCalModels
 
 public struct GenreEntity: AppEntity, Identifiable, Sendable {
     public static let typeDisplayRepresentation: TypeDisplayRepresentation = "Genre"
@@ -40,5 +41,13 @@ public struct GenreEntity: AppEntity, Identifiable, Sendable {
         self.details = dto.details
         self.hexColor = dto.hexColor
         self.isActive = !dto.isDeactivated
+    }
+
+    public init(from genre: DetachedGenre) {
+        self.id = genre.id
+        self.name = genre.name
+        self.details = genre.details
+        self.hexColor = genre.hexColor
+        self.isActive = !genre.isDeactivated
     }
 }

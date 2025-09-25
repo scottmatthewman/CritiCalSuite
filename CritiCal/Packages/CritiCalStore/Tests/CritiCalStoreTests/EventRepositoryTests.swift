@@ -51,7 +51,7 @@ struct EventRepositoryReadingTests {
                 details: ""
             )
 
-        let recent = try await repository.recent(limit: 10)
+        let recent: [DetachedEvent] = try await repository.recent(limit: 10)
 
         #expect(recent.count == 3)
         #expect(recent[0].title == "New Event") // Most recent first

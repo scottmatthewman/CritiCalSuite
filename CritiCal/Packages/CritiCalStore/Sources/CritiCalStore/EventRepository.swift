@@ -15,24 +15,24 @@ public actor EventRepository: EventReading & EventWriting {
 
     // MARK: - EventReading
 
-    public func recent(limit: Int) async throws -> [EventDTO] {
+    public func recent(limit: Int) async throws -> [DetachedEvent] {
         var fd = FetchDescriptor<Event>(sortBy: [SortDescriptor(\.date, order: .reverse)])
         fd.fetchLimit = limit
 
         let entries = try modelContext.fetch(fd)
-        return entries.map { $0.dto }
+        return entries.map { $0.detached() }
     }
 
-    public func event(byIdentifier id: UUID) async throws -> EventDTO? {
+    public func event(byIdentifier id: UUID) async throws -> DetachedEvent? {
         let fd = FetchDescriptor<Event>(predicate: #Predicate { $0.identifier == id })
         if let event = try modelContext.fetch(fd).first {
-            return event.dto
+            return event.detached()
         } else {
             return nil
         }
     }
 
-    public func search(text: String, limit: Int) async throws -> [EventDTO] {
+    public func search(text: String, limit: Int) async throws -> [DetachedEvent] {
         var fd = FetchDescriptor(predicate: #Predicate<Event> {
             $0.title.localizedStandardContains(text) ||
             $0.venueName.localizedStandardContains(text)
@@ -40,14 +40,14 @@ public actor EventRepository: EventReading & EventWriting {
         fd.fetchLimit = limit
 
         let entries = try modelContext.fetch(fd)
-        return entries.map { $0.dto }
+        return entries.map { $0.detached() }
     }
 
     // MARK: Time-based querying
     public func eventsToday(
         in calendar: Calendar = .current,
         now: Date = .now
-    ) async throws -> [EventDTO] {
+    ) async throws -> [DetachedEvent] {
         guard
             let range = calendar.dateInterval(of: .day, for: now)
         else { return [] }
@@ -55,25 +55,25 @@ public actor EventRepository: EventReading & EventWriting {
         return try await eventsIn(interval: range)
     }
 
-    public func eventsBefore(_ cutOff: Date = .now) async throws -> [EventDTO] {
+    public func eventsBefore(_ cutOff: Date = .now) async throws -> [DetachedEvent] {
         let predicate = #Predicate<Event> { $0.date <= cutOff }
         let fetchDescriptor = FetchDescriptor<Event>(
             predicate: predicate,
             sortBy: [SortDescriptor(\.date, order: .reverse)]
         )
-        return try modelContext.fetch(fetchDescriptor).map { $0.dto }
+        return try modelContext.fetch(fetchDescriptor).map { $0.detached() }
     }
 
-    public func eventsAfter(_ cutOff: Date = .now) async throws -> [EventDTO] {
+    public func eventsAfter(_ cutOff: Date = .now) async throws -> [DetachedEvent] {
         let predicate = #Predicate<Event> { $0.date >= cutOff }
         let fetchDescriptor = FetchDescriptor<Event>(
             predicate: predicate,
             sortBy: [SortDescriptor(\.date, order: .forward)]
         )
-        return try modelContext.fetch(fetchDescriptor).map { $0.dto }
+        return try modelContext.fetch(fetchDescriptor).map { $0.detached() }
     }
 
-    public func eventsIn(interval: DateInterval, order: SortOrder = .forward) async throws -> [EventDTO] {
+    public func eventsIn(interval: DateInterval, order: SortOrder = .forward) async throws -> [DetachedEvent] {
         let predicate = #Predicate<Event> {
             $0.date >= interval.start && $0.date <= interval.end
         }
@@ -83,14 +83,14 @@ public actor EventRepository: EventReading & EventWriting {
         )
 
         let events = try modelContext.fetch(fetchDescriptor)
-        let dtos = events.map { $0.dto }
+        let dtos = events.map { $0.detached() }
         return dtos
     }
 
     public func eventsNext7Days(
         in calendar: Calendar = .current,
         now: Date = .now
-    ) async throws -> [EventDTO] {
+    ) async throws -> [DetachedEvent] {
         guard
             let startOfToday = calendar.dateInterval(of: .day, for: now)?.start,
             let endOf7Days = calendar.date(byAdding: .day, value: 7, to: startOfToday)
@@ -103,7 +103,7 @@ public actor EventRepository: EventReading & EventWriting {
     public func eventsThisMonth(
         in calendar: Calendar = .current,
         now: Date = .now
-    ) async throws -> [EventDTO] {
+    ) async throws -> [DetachedEvent] {
         guard
             let range = calendar.dateInterval(of: .month, for: now)
         else { return [] }
@@ -188,25 +188,3 @@ public actor EventRepository: EventReading & EventWriting {
     }
 }
 
-private extension Event {
-    var dto: EventDTO {
-        EventDTO(
-            id: identifier,
-            title: title,
-            festivalName: festivalName,
-            date: date,
-            durationMinutes: durationMinutes,
-            venueName: venueName,
-            confirmationStatus: confirmationStatus,
-            url: url,
-            details: details,
-            genre: genre.map { GenreDTO(
-                id: $0.identifier ?? UUID(),
-                name: $0.name,
-                details: $0.details,
-                hexColor: $0.hexColor,
-                isDeactivated: $0.isDeactivated
-            ) }
-        )
-    }
-}

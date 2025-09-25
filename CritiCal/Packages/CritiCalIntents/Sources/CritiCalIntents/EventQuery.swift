@@ -31,7 +31,7 @@ public struct EventQuery: EntityQuery, Sendable {
         return recent.map { EventEntity(from: $0) }
     }
 
-    // Resolve a specific ID saved in a Shortcut.
+    // Resolve a specific ID saved in a Sh  ortcut.
     public func entities(for identifiers: [UUID]) async throws -> [EventEntity] {
         let repo = try await repositoryProvider.eventRepo()
         var results: [EventEntity] = []
