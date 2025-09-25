@@ -19,7 +19,7 @@ struct StoreFactoryContainerTests {
     func testInMemoryContainerCreation() throws {
         let container = try StoreFactory.makeContainer(cloud: false, inMemory: true)
 
-        #expect(container.schema.entities.count == 1)
+        #expect(container.schema.entities.count == 2)
         #expect(container.schema.entities.contains { $0.name == "Event" })
     }
 
@@ -27,7 +27,7 @@ struct StoreFactoryContainerTests {
     func testContainerWithCloudKit() throws {
         let container = try StoreFactory.makeContainer(cloud: true, inMemory: true)
 
-        #expect(container.schema.entities.count == 1)
+        #expect(container.schema.entities.count == 2)
         #expect(container.schema.entities.contains { $0.name == "Event" })
     }
 
@@ -35,7 +35,7 @@ struct StoreFactoryContainerTests {
     func testContainerWithoutCloudKit() throws {
         let container = try StoreFactory.makeContainer(cloud: false, inMemory: true)
 
-        #expect(container.schema.entities.count == 1)
+        #expect(container.schema.entities.count == 2)
         #expect(container.schema.entities.contains { $0.name == "Event" })
     }
 
@@ -43,7 +43,7 @@ struct StoreFactoryContainerTests {
     func testContainerWithDefaultCloudKit() throws {
         let container = try StoreFactory.makeContainer(inMemory: true)
 
-        #expect(container.schema.entities.count == 1)
+        #expect(container.schema.entities.count == 2)
         #expect(container.schema.entities.contains { $0.name == "Event" })
     }
 
@@ -224,7 +224,7 @@ struct StoreFactoryErrorTests {
         // All should have the same schema
         let containers = [cloudMemory, cloudDisk, localMemory, localDisk]
         for container in containers {
-            #expect(container.schema.entities.count == 1)
+            #expect(container.schema.entities.count == 2)
             #expect(container.schema.entities.first?.name == "Event")
         }
     }
@@ -242,7 +242,8 @@ struct StoreFactoryIntegrationTests {
             title: "Factory Test Event",
             festivalName: "Factory Test Festival",
             venueName: "Factory Test Venue",
-            date: Date.now
+            date: Date.now,
+            details: ""
         )
 
         // Retrieve the event
@@ -264,13 +265,15 @@ struct StoreFactoryIntegrationTests {
             title: "Event 1",
             festivalName: "",
             venueName: "Venue 1",
-            date: Date.now
+            date: Date.now,
+            details: ""
         )
         let event2ID = try await repository.create(
             title: "Event 2",
             festivalName: "",
             venueName: "Venue 2",
-            date: Date.now.addingTimeInterval(3600)
+            date: Date.now.addingTimeInterval(3600),
+            details: ""
         )
 
         // Verify both events exist
@@ -297,7 +300,8 @@ struct StoreFactoryIntegrationTests {
                         title: "Concurrent Event \(i)",
                         festivalName: "Concurrent Festival",
                         venueName: "Venue \(i)",
-                        date: Date.now.addingTimeInterval(Double(i) * 3600)
+                        date: Date.now.addingTimeInterval(Double(i) * 3600),
+                        details: ""
                     )
                 }
             }
@@ -328,7 +332,8 @@ struct StoreFactoryIntegrationTests {
             title: "Repository 1 Event",
             festivalName: "Festival 1",
             venueName: "Venue 1",
-            date: Date.now
+            date: Date.now,
+            details: ""
         )
 
         // Add event to repository2
@@ -336,7 +341,8 @@ struct StoreFactoryIntegrationTests {
             title: "Repository 2 Event",
             festivalName: "Festival 2",
             venueName: "Venue 2",
-            date: Date.now
+            date: Date.now,
+            details: ""
         )
 
         // Each repository should only see its own events
@@ -365,7 +371,8 @@ struct StoreFactoryIntegrationTests {
             title: "CRUD Test Event",
             festivalName: "CRUD Festival",
             venueName: "CRUD Venue",
-            date: Date.now
+            date: Date.now,
+            details: ""
         )
 
         // Read
@@ -380,7 +387,9 @@ struct StoreFactoryIntegrationTests {
             venueName: "Updated CRUD Venue",
             date: nil,
             durationMinutes: nil,
-            confirmationStatus: nil
+            confirmationStatus: nil,
+            url: nil,
+            details: nil
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)

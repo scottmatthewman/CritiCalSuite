@@ -31,21 +31,24 @@ struct EventRepositoryReadingTests {
                 title: "Middle Event",
                 festivalName: "Middle Fest",
                 venueName: "Venue",
-                date: now
+                date: now,
+                details: ""
             )
         _ = try await repository
             .create(
                 title: "Old Event",
                 festivalName: "Old Fest",
                 venueName: "Venue",
-                date: yesterday
+                date: yesterday,
+                details: ""
             )
         _ = try await repository
             .create(
                 title: "New Event",
                 festivalName: "New Fest",
                 venueName: "Venue",
-                date: tomorrow
+                date: tomorrow,
+                details: ""
             )
 
         let recent = try await repository.recent(limit: 10)
@@ -67,7 +70,8 @@ struct EventRepositoryReadingTests {
                     title: "Event \(i)",
                     festivalName: "festival \(i)",
                     venueName: "Venue",
-                    date: Date.now.addingTimeInterval(Double(i) * 3600)
+                    date: Date.now.addingTimeInterval(Double(i) * 3600),
+                    details: ""
                 )
         }
 
@@ -86,14 +90,16 @@ struct EventRepositoryReadingTests {
             title: "Target Event",
             festivalName: "Target Festival",
             venueName: "Target Venue",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
         _ = try await repository
             .create(
                 title: "Other Event",
                 festivalName: "Other Festival",
                 venueName: "Other Venue",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
 
         let foundEvent = try await repository.event(byIdentifier: eventID)
@@ -123,21 +129,24 @@ struct EventRepositoryReadingTests {
                 title: "Concert Event",
                 festivalName: "",
                 venueName: "Hall",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
         _ = try await repository
             .create(
                 title: "Theater Show",
                 festivalName: "",
                 venueName: "Theater",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
         _ = try await repository
             .create(
                 title: "Music Concert",
                 festivalName: "",
                 venueName: "Arena",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
 
         let results = try await repository.search(text: "concert", limit: 10)
@@ -156,19 +165,22 @@ struct EventRepositoryReadingTests {
                 title: "Event A",
                 festivalName: "",
                 venueName: "Madison Square Garden",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
         _ = try await repository.create(
             title: "Event B",
             festivalName: "",
             venueName: "Central Park",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
         _ = try await repository.create(
             title: "Event C",
             festivalName: "",
             venueName: "Madison Hall",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         let results = try await repository.search(text: "madison", limit: 10)
@@ -189,7 +201,8 @@ struct EventRepositoryReadingTests {
                     title: "Test Event \(i)",
                     festivalName: "test Festival \(i)",
                     venueName: "Venue",
-                    date: Date.now
+                    date: Date.now,
+                details: ""
                 )
         }
 
@@ -209,7 +222,8 @@ struct EventRepositoryReadingTests {
                 title: "Concert",
                 festivalName: "Festival",
                 venueName: "Hall",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
 
         let results = try await repository.search(text: "nonexistent", limit: 10)
@@ -238,25 +252,29 @@ struct EventRepositoryTimeBasedTests {
             title: "Today Morning",
             festivalName: "Festival",
             venueName: "Venue",
-            date: startOfToday.addingTimeInterval(3600)
+            date: startOfToday.addingTimeInterval(3600),
+            details: ""
         )
         _ = try await repository.create(
             title: "Today Evening",
             festivalName: "Festival",
             venueName: "Venue",
-            date: endOfToday.addingTimeInterval(-3600)
+            date: endOfToday.addingTimeInterval(-3600),
+            details: ""
         )
         _ = try await repository.create(
             title: "Yesterday",
             festivalName: "Festival",
             venueName: "Venue",
-            date: yesterday
+            date: yesterday,
+            details: ""
         )
         _ = try await repository.create(
             title: "Tomorrow",
             festivalName: "Festival",
             venueName: "Venue",
-            date: tomorrow
+            date: tomorrow,
+            details: ""
         )
 
         let todayEvents = try await repository.eventsToday(in: calendar, now: now)
@@ -279,19 +297,22 @@ struct EventRepositoryTimeBasedTests {
             title: "Before",
             festivalName: "Festival",
             venueName: "Venue",
-            date: beforeTime
+            date: beforeTime,
+            details: ""
         )
         _ = try await repository.create(
             title: "At Cutoff",
             festivalName: "Festival",
             venueName: "Venue",
-            date: atCutoff
+            date: atCutoff,
+            details: ""
         )
         _ = try await repository.create(
             title: "After",
             festivalName: "Festival",
             venueName: "Venue",
-            date: afterTime
+            date: afterTime,
+            details: ""
         )
 
         let beforeEvents = try await repository.eventsBefore(cutoff)
@@ -314,19 +335,22 @@ struct EventRepositoryTimeBasedTests {
             title: "Before",
             festivalName: "Festival",
             venueName: "Venue",
-            date: beforeTime
+            date: beforeTime,
+            details: ""
         )
         _ = try await repository.create(
             title: "At Cutoff",
             festivalName: "Festival",
             venueName: "Venue",
-            date: atCutoff
+            date: atCutoff,
+            details: ""
         )
         _ = try await repository.create(
             title: "After",
             festivalName: "Festival",
             venueName: "Venue",
-            date: afterTime
+            date: afterTime,
+            details: ""
         )
 
         let afterEvents = try await repository.eventsAfter(cutoff)
@@ -352,19 +376,22 @@ struct EventRepositoryTimeBasedTests {
             title: "Before",
             festivalName: "Festival",
             venueName: "Venue",
-            date: beforeStart
+            date: beforeStart,
+            details: ""
         )
         _ = try await repository.create(
             title: "Within",
             festivalName: "Festival",
             venueName: "Venue",
-            date: withinInterval
+            date: withinInterval,
+            details: ""
         )
         _ = try await repository.create(
             title: "After",
             festivalName: "Festival",
             venueName: "Venue",
-            date: afterEnd
+            date: afterEnd,
+            details: ""
         )
 
         let intervalEvents = try await repository.eventsIn(interval: interval)
@@ -390,19 +417,22 @@ struct EventRepositoryTimeBasedTests {
             title: "Middle",
             festivalName: "Festival",
             venueName: "Venue",
-            date: middle
+            date: middle,
+            details: ""
         )
         _ = try await repository.create(
             title: "Late",
             festivalName: "Festival",
             venueName: "Venue",
-            date: late
+            date: late,
+            details: ""
         )
         _ = try await repository.create(
             title: "Early",
             festivalName: "Festival",
             venueName: "Venue",
-            date: early
+            date: early,
+            details: ""
         )
 
         let forwardEvents = try await repository.eventsIn(interval: interval, order: .forward)
@@ -432,7 +462,8 @@ struct EventRepositoryWritingTests {
             title: "New Event",
             festivalName: "New Festival",
             venueName: "New Venue",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         #expect(type(of: eventID) == UUID.self)
@@ -452,7 +483,8 @@ struct EventRepositoryWritingTests {
             title: "Original Title",
             festivalName: "Original Festival",
             venueName: "Original Venue",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         let newDate = Date.now.addingTimeInterval(3600)
@@ -463,7 +495,9 @@ struct EventRepositoryWritingTests {
             venueName: "Updated Venue",
             date: newDate,
             durationMinutes: 90,
-            confirmationStatus: .confirmed
+            confirmationStatus: .confirmed,
+            url: nil,
+            details: "Updated details"
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
@@ -484,7 +518,8 @@ struct EventRepositoryWritingTests {
             title: "Original Title",
             festivalName: "Original Festival",
             venueName: "Original Venue",
-            date: originalDate
+            date: originalDate,
+            details: ""
         )
 
         // Update only title
@@ -495,7 +530,9 @@ struct EventRepositoryWritingTests {
             venueName: nil,
             date: nil,
             durationMinutes: nil,
-            confirmationStatus: nil
+            confirmationStatus: nil,
+            url: nil,
+            details: nil
         )
 
         let updatedEvent = try await repository.event(byIdentifier: eventID)
@@ -519,7 +556,9 @@ struct EventRepositoryWritingTests {
                 venueName: nil,
                 date: nil,
                 durationMinutes: nil,
-                confirmationStatus: nil
+                confirmationStatus: nil,
+                url: nil,
+                details: nil
             )
             #expect(Bool(false), "Should have thrown EventStoreError.notFound")
         } catch let error as EventStoreError {
@@ -541,7 +580,8 @@ struct EventRepositoryWritingTests {
             title: "To Delete",
             festivalName: "Delete Festival",
             venueName: "Delete Venue",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         // Verify event exists
@@ -591,7 +631,8 @@ struct EventDTOConversionTests {
             title: "Conversion Test",
             festivalName: "Conversion Festival",
             venueName: "Conversion Venue",
-            date: testDate
+            date: testDate,
+            details: ""
         )
 
         let dto = try await repository.event(byIdentifier: eventID)
@@ -615,7 +656,8 @@ struct EventDTOConversionTests {
             title: specialTitle,
             festivalName: specialFestival,
             venueName: specialVenue,
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         let dto = try await repository.event(byIdentifier: eventID)
@@ -633,7 +675,8 @@ struct EventDTOConversionTests {
             title: "",
             festivalName: "",
             venueName: "",
-            date: Date.now
+            date: Date.now,
+                details: ""
         )
 
         let dto = try await repository.event(byIdentifier: eventID)
@@ -653,7 +696,8 @@ struct EventDTOConversionTests {
                 title: "Event \(i)",
                 festivalName: "Festival \(i)",
                 venueName: "Venue \(i)",
-                date: Date.now.addingTimeInterval(Double(i) * 3600)
+                date: Date.now.addingTimeInterval(Double(i) * 3600),
+                details: ""
             )
         }
 
@@ -697,7 +741,8 @@ struct EventRepositoryErrorTests {
                 title: "Test",
                 festivalName: "Test",
                 venueName: "Test",
-                date: Date.now
+                date: Date.now,
+                details: ""
             )
 
         // Note: SwiftData may not strictly enforce limit: 0, so we test that it returns a reasonable result
@@ -719,7 +764,8 @@ struct EventRepositoryErrorTests {
                 title: "Event \(i)",
                 festivalName: "Festival \(i)",
                 venueName: "Venue \(i)",
-                date: Date.now.addingTimeInterval(Double(i) * 60)
+                date: Date.now.addingTimeInterval(Double(i) * 60),
+                details: ""
             )
         }
 
@@ -745,7 +791,8 @@ struct EventRepositoryErrorTests {
                         title: "Concurrent Event \(i)",
                         festivalName: "Festival \(i)",
                         venueName: "Venue \(i)",
-                        date: Date.now.addingTimeInterval(Double(i) * 60)
+                        date: Date.now.addingTimeInterval(Double(i) * 60),
+                details: ""
                     )
                 }
             }
@@ -775,14 +822,16 @@ struct EventRepositoryErrorTests {
             title: "Past Event",
             festivalName: "Past Festival",
             venueName: "Past Venue",
-            date: distantPast
+            date: distantPast,
+            details: ""
         )
 
         let futureID = try await repository.create(
             title: "Future Event",
             festivalName: "Future Festival",
             venueName: "Future Venue",
-            date: distantFuture
+            date: distantFuture,
+            details: ""
         )
 
         let pastEvent = try await repository.event(byIdentifier: pastID)

@@ -129,10 +129,10 @@ public actor EventRepository: EventReading & EventWriting {
             venueName: venueName,
             date: date,
             durationMinutes: durationMinutes,
-            confirmationStatusRaw: confirmationStatus.rawValue,
             url: url,
             details: details
         )
+        newEvent.confirmationStatus = confirmationStatus
         modelContext.insert(newEvent)
         do {
             try modelContext.save()
@@ -163,7 +163,7 @@ public actor EventRepository: EventReading & EventWriting {
         if let date { event.date = date }
         if let venueName { event.venueName = venueName }
         if let durationMinutes { event.durationMinutes = durationMinutes }
-        if let confirmationStatus { event.confirmationStatusRaw = confirmationStatus.rawValue }
+        if let confirmationStatus { event.confirmationStatus = confirmationStatus }
         if let url { event.url = url }
         if let details { event.details = details }
         do {
@@ -197,7 +197,7 @@ private extension Event {
             date: date,
             durationMinutes: durationMinutes,
             venueName: venueName,
-            confirmationStatus: ConfirmationStatus(rawValue: confirmationStatusRaw ?? "draft") ?? .draft,
+            confirmationStatus: confirmationStatus,
             url: url,
             details: details,
             genre: genre.map { GenreDTO(
