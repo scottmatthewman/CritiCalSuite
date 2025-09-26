@@ -6,6 +6,7 @@
 //
 
 import CritiCalDomain
+import CritiCalStore
 import CritiCalUI
 import SwiftUI
 
@@ -42,6 +43,6 @@ struct NewGenreView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     NewGenreView()
 }

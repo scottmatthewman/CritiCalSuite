@@ -25,9 +25,9 @@ public struct SampleDataProvider: PreviewModifier {
 
     private static func prepareSampleData(into context: ModelContext) {
         // TODO: Update with other forms of sample data
-        let genres = Genre.sampleData
+        let events = Event.sampleData
 
-        genres.forEach { context.insert($0) }
+        events.forEach { context.insert($0) }
 
         do {
             try context.save()

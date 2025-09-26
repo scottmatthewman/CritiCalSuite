@@ -8,6 +8,7 @@
 import AppIntents
 import CritiCalUI
 import CritiCalIntents
+import CritiCalStore
 import OnboardingFlow
 import SwiftUI
 
@@ -19,9 +20,7 @@ struct AppRouter: View {
         @Bindable var router = router
         TabView(selection: $router.selectedTab) {
             Tab("Home", systemImage: "house", value: .home) {
-                HomeView {
-                    router.showSettings()
-                }
+                HomeView()
             }
             Tab("Events", systemImage: "theatermasks", value: .events) {
                 NavigationStack(path: $router.eventsPath) {
@@ -35,9 +34,6 @@ struct AppRouter: View {
                         case .eventDetails(let id):
                             EventDetailView(id: id)
                         }
-                    }
-                    .sheet(isPresented: $router.isSettingsViewPresented) {
-                        SettingsView()
                     }
                 }
             }
@@ -57,12 +53,15 @@ struct AppRouter: View {
             let eventID = intent.target.id
             router.navigate(toEvent: eventID)
         }
+        .sheet(isPresented: $router.isSettingsViewPresented) {
+            SettingsView()
+        }
         .tabBarMinimizeBehavior(.onScrollDown)
         .onboardingFlow(settings: onboardingSettings)
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     AppRouter()
         .environment(NavigationRouter())
 }

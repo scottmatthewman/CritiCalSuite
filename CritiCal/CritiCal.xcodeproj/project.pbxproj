@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B302E7C4FDF00013437 /* CritiCalDomain */; };
-		D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B322E7C4FDF00013437 /* CritiCalIntents */; };
-		D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B342E7C4FDF00013437 /* CritiCalModels */; };
-		D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B362E7C4FDF00013437 /* CritiCalStore */; };
-		D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D2073B382E7C4FDF00013437 /* CritiCalUI */; };
 		D20943092E7F2C0D00298B5B /* AllTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D20943082E7F2C0D00298B5B /* AllTests.xctestplan */; };
-		D2D38DE02E857CC400BEE295 /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D2D38DDF2E857CC400BEE295 /* OnboardingFlow */; };
+		D28E37DB2E86B44200F9C62C /* CritiCalDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DA2E86B44200F9C62C /* CritiCalDomain */; };
+		D28E37DD2E86B44200F9C62C /* CritiCalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DC2E86B44200F9C62C /* CritiCalExtensions */; };
+		D28E37DF2E86B44200F9C62C /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DE2E86B44200F9C62C /* CritiCalIntents */; };
+		D28E37E12E86B44200F9C62C /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E02E86B44200F9C62C /* CritiCalStore */; };
+		D28E37E32E86B44200F9C62C /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E22E86B44200F9C62C /* CritiCalModels */; };
+		D28E37E52E86B44200F9C62C /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E42E86B44200F9C62C /* CritiCalUI */; };
+		D28E37E72E86B44200F9C62C /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E62E86B44200F9C62C /* OnboardingFlow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,12 +85,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2073B312E7C4FDF00013437 /* CritiCalDomain in Frameworks */,
-				D2D38DE02E857CC400BEE295 /* OnboardingFlow in Frameworks */,
-				D2073B372E7C4FDF00013437 /* CritiCalStore in Frameworks */,
-				D2073B352E7C4FDF00013437 /* CritiCalModels in Frameworks */,
-				D2073B332E7C4FDF00013437 /* CritiCalIntents in Frameworks */,
-				D2073B392E7C4FDF00013437 /* CritiCalUI in Frameworks */,
+				D28E37DF2E86B44200F9C62C /* CritiCalIntents in Frameworks */,
+				D28E37E12E86B44200F9C62C /* CritiCalStore in Frameworks */,
+				D28E37DB2E86B44200F9C62C /* CritiCalDomain in Frameworks */,
+				D28E37E32E86B44200F9C62C /* CritiCalModels in Frameworks */,
+				D28E37DD2E86B44200F9C62C /* CritiCalExtensions in Frameworks */,
+				D28E37E72E86B44200F9C62C /* OnboardingFlow in Frameworks */,
+				D28E37E52E86B44200F9C62C /* CritiCalUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,12 +177,13 @@
 			);
 			name = CritiCal;
 			packageProductDependencies = (
-				D2073B302E7C4FDF00013437 /* CritiCalDomain */,
-				D2073B322E7C4FDF00013437 /* CritiCalIntents */,
-				D2073B342E7C4FDF00013437 /* CritiCalModels */,
-				D2073B362E7C4FDF00013437 /* CritiCalStore */,
-				D2073B382E7C4FDF00013437 /* CritiCalUI */,
-				D2D38DDF2E857CC400BEE295 /* OnboardingFlow */,
+				D28E37DA2E86B44200F9C62C /* CritiCalDomain */,
+				D28E37DC2E86B44200F9C62C /* CritiCalExtensions */,
+				D28E37DE2E86B44200F9C62C /* CritiCalIntents */,
+				D28E37E02E86B44200F9C62C /* CritiCalStore */,
+				D28E37E22E86B44200F9C62C /* CritiCalModels */,
+				D28E37E42E86B44200F9C62C /* CritiCalUI */,
+				D28E37E62E86B44200F9C62C /* OnboardingFlow */,
 			);
 			productName = CritiCal;
 			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
@@ -265,6 +268,13 @@
 			mainGroup = D2145E722E7C23BF00699882;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */,
+				D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */,
+				D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */,
+				D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */,
+				D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */,
+				D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */,
+				D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D2145E7C2E7C23BF00699882 /* Products */;
@@ -687,29 +697,71 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalDomain;
+		};
+		D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalExtensions;
+		};
+		D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalIntents;
+		};
+		D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalStore;
+		};
+		D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalModels;
+		};
+		D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/CritiCalUI;
+		};
+		D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Features/OnboardingFlow;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		D2073B302E7C4FDF00013437 /* CritiCalDomain */ = {
+		D28E37DA2E86B44200F9C62C /* CritiCalDomain */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */;
 			productName = CritiCalDomain;
 		};
-		D2073B322E7C4FDF00013437 /* CritiCalIntents */ = {
+		D28E37DC2E86B44200F9C62C /* CritiCalExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */;
+			productName = CritiCalExtensions;
+		};
+		D28E37DE2E86B44200F9C62C /* CritiCalIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */;
 			productName = CritiCalIntents;
 		};
-		D2073B342E7C4FDF00013437 /* CritiCalModels */ = {
+		D28E37E02E86B44200F9C62C /* CritiCalStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CritiCalModels;
-		};
-		D2073B362E7C4FDF00013437 /* CritiCalStore */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */;
 			productName = CritiCalStore;
 		};
-		D2073B382E7C4FDF00013437 /* CritiCalUI */ = {
+		D28E37E22E86B44200F9C62C /* CritiCalModels */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */;
+			productName = CritiCalModels;
+		};
+		D28E37E42E86B44200F9C62C /* CritiCalUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */;
 			productName = CritiCalUI;
 		};
-		D2D38DDF2E857CC400BEE295 /* OnboardingFlow */ = {
+		D28E37E62E86B44200F9C62C /* OnboardingFlow */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */;
 			productName = OnboardingFlow;
 		};
 /* End XCSwiftPackageProductDependency section */
