@@ -1,6 +1,6 @@
 //
 //  GenreWriting.swift
-//  CritiCalDomain
+//  CritiCalStore
 //
 //  Created by Scott Matthewman on 22/09/2025.
 //

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import CritiCalDomain
 import CritiCalModels
 
 public struct EventListView: View {

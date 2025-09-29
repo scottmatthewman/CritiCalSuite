@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CritiCalDomain",
+    name: "CritiCalCore",
     platforms: [
         .iOS(.v26),
         .macOS(.v26)
@@ -12,23 +12,22 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CritiCalDomain",
-            targets: ["CritiCalDomain"]
+            name: "CritiCalCore",
+            targets: ["CritiCalCore"]
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalModels", path: "../CritiCalModels")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CritiCalDomain",
-            dependencies: ["CritiCalModels"]
+            name: "CritiCalCore",
+            dependencies: []
         ),
         .testTarget(
-            name: "CritiCalDomainTests",
-            dependencies: ["CritiCalDomain"]
+            name: "CritiCalCoreTests",
+            dependencies: ["CritiCalCore"]
         ),
     ]
 )

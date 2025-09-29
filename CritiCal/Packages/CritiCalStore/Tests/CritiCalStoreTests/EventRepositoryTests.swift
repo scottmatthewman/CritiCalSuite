@@ -8,7 +8,6 @@
 import Testing
 import SwiftData
 import Foundation
-import CritiCalDomain
 import CritiCalModels
 @testable import CritiCalStore
 

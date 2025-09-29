@@ -1,6 +1,6 @@
 //
 // CuratedSymbols.swift
-// CritiCalDomain
+// CritiCalCore
 //
 // Created by Scott Matthewman on 24/09/2025.
 //

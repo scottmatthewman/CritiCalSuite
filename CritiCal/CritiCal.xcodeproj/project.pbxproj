@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D20943092E7F2C0D00298B5B /* AllTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D20943082E7F2C0D00298B5B /* AllTests.xctestplan */; };
-		D28E37DB2E86B44200F9C62C /* CritiCalDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DA2E86B44200F9C62C /* CritiCalDomain */; };
-		D28E37DD2E86B44200F9C62C /* CritiCalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DC2E86B44200F9C62C /* CritiCalExtensions */; };
-		D28E37DF2E86B44200F9C62C /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37DE2E86B44200F9C62C /* CritiCalIntents */; };
-		D28E37E12E86B44200F9C62C /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E02E86B44200F9C62C /* CritiCalStore */; };
-		D28E37E32E86B44200F9C62C /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E22E86B44200F9C62C /* CritiCalModels */; };
-		D28E37E52E86B44200F9C62C /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E42E86B44200F9C62C /* CritiCalUI */; };
-		D28E37E72E86B44200F9C62C /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D28E37E62E86B44200F9C62C /* OnboardingFlow */; };
+		D272B6302E8A73C700613A39 /* CritiCalCore in Frameworks */ = {isa = PBXBuildFile; productRef = D272B62F2E8A73C700613A39 /* CritiCalCore */; };
+		D272B6322E8A73C700613A39 /* CritiCalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6312E8A73C700613A39 /* CritiCalExtensions */; };
+		D272B6342E8A73C700613A39 /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6332E8A73C700613A39 /* CritiCalIntents */; };
+		D272B6362E8A73C700613A39 /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6352E8A73C700613A39 /* CritiCalModels */; };
+		D272B6382E8A73C700613A39 /* CritiCalStore in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6372E8A73C700613A39 /* CritiCalStore */; };
+		D272B63A2E8A73C700613A39 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6392E8A73C700613A39 /* CritiCalUI */; };
+		D272B63C2E8A73C700613A39 /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D272B63B2E8A73C700613A39 /* OnboardingFlow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,13 +85,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D28E37DF2E86B44200F9C62C /* CritiCalIntents in Frameworks */,
-				D28E37E12E86B44200F9C62C /* CritiCalStore in Frameworks */,
-				D28E37DB2E86B44200F9C62C /* CritiCalDomain in Frameworks */,
-				D28E37E32E86B44200F9C62C /* CritiCalModels in Frameworks */,
-				D28E37DD2E86B44200F9C62C /* CritiCalExtensions in Frameworks */,
-				D28E37E72E86B44200F9C62C /* OnboardingFlow in Frameworks */,
-				D28E37E52E86B44200F9C62C /* CritiCalUI in Frameworks */,
+				D272B6342E8A73C700613A39 /* CritiCalIntents in Frameworks */,
+				D272B6362E8A73C700613A39 /* CritiCalModels in Frameworks */,
+				D272B6302E8A73C700613A39 /* CritiCalCore in Frameworks */,
+				D272B6382E8A73C700613A39 /* CritiCalStore in Frameworks */,
+				D272B6322E8A73C700613A39 /* CritiCalExtensions in Frameworks */,
+				D272B63C2E8A73C700613A39 /* OnboardingFlow in Frameworks */,
+				D272B63A2E8A73C700613A39 /* CritiCalUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,13 +177,13 @@
 			);
 			name = CritiCal;
 			packageProductDependencies = (
-				D28E37DA2E86B44200F9C62C /* CritiCalDomain */,
-				D28E37DC2E86B44200F9C62C /* CritiCalExtensions */,
-				D28E37DE2E86B44200F9C62C /* CritiCalIntents */,
-				D28E37E02E86B44200F9C62C /* CritiCalStore */,
-				D28E37E22E86B44200F9C62C /* CritiCalModels */,
-				D28E37E42E86B44200F9C62C /* CritiCalUI */,
-				D28E37E62E86B44200F9C62C /* OnboardingFlow */,
+				D272B62F2E8A73C700613A39 /* CritiCalCore */,
+				D272B6312E8A73C700613A39 /* CritiCalExtensions */,
+				D272B6332E8A73C700613A39 /* CritiCalIntents */,
+				D272B6352E8A73C700613A39 /* CritiCalModels */,
+				D272B6372E8A73C700613A39 /* CritiCalStore */,
+				D272B6392E8A73C700613A39 /* CritiCalUI */,
+				D272B63B2E8A73C700613A39 /* OnboardingFlow */,
 			);
 			productName = CritiCal;
 			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
@@ -268,13 +268,6 @@
 			mainGroup = D2145E722E7C23BF00699882;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */,
-				D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */,
-				D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */,
-				D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */,
-				D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */,
-				D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */,
-				D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D2145E7C2E7C23BF00699882 /* Products */;
@@ -697,71 +690,33 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalDomain;
-		};
-		D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalExtensions;
-		};
-		D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalIntents;
-		};
-		D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalStore;
-		};
-		D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalModels;
-		};
-		D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/CritiCalUI;
-		};
-		D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/Features/OnboardingFlow;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		D28E37DA2E86B44200F9C62C /* CritiCalDomain */ = {
+		D272B62F2E8A73C700613A39 /* CritiCalCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37C32E86A24A00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalDomain" */;
-			productName = CritiCalDomain;
+			productName = CritiCalCore;
 		};
-		D28E37DC2E86B44200F9C62C /* CritiCalExtensions */ = {
+		D272B6312E8A73C700613A39 /* CritiCalExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37C62E86A26E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalExtensions" */;
 			productName = CritiCalExtensions;
 		};
-		D28E37DE2E86B44200F9C62C /* CritiCalIntents */ = {
+		D272B6332E8A73C700613A39 /* CritiCalIntents */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37C92E86A28E00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalIntents" */;
 			productName = CritiCalIntents;
 		};
-		D28E37E02E86B44200F9C62C /* CritiCalStore */ = {
+		D272B6352E8A73C700613A39 /* CritiCalModels */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37CD2E86A2C600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalStore" */;
-			productName = CritiCalStore;
-		};
-		D28E37E22E86B44200F9C62C /* CritiCalModels */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D28E37D12E86A30600F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalModels" */;
 			productName = CritiCalModels;
 		};
-		D28E37E42E86B44200F9C62C /* CritiCalUI */ = {
+		D272B6372E8A73C700613A39 /* CritiCalStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37D42E86A32F00F9C62C /* XCLocalSwiftPackageReference "Packages/CritiCalUI" */;
+			productName = CritiCalStore;
+		};
+		D272B6392E8A73C700613A39 /* CritiCalUI */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = CritiCalUI;
 		};
-		D28E37E62E86B44200F9C62C /* OnboardingFlow */ = {
+		D272B63B2E8A73C700613A39 /* OnboardingFlow */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D28E37D72E86A34A00F9C62C /* XCLocalSwiftPackageReference "Packages/Features/OnboardingFlow" */;
 			productName = OnboardingFlow;
 		};
 /* End XCSwiftPackageProductDependency section */

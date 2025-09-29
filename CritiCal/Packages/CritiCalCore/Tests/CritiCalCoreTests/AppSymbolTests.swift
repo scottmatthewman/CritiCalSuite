@@ -1,13 +1,13 @@
 //
 //  AppSymbolTests.swift
-//  CritiCalDomain
+//  CritiCalCore
 //
 //  Created by Scott Matthewman on 25/09/2025.
 //
 
 import Testing
 import Foundation
-@testable import CritiCalDomain
+@testable import CritiCalCore
 
 @Suite("AppSymbol")
 struct AppSymbolTests {

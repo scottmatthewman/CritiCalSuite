@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CritiCalDomain
 import CritiCalModels
 
 public struct EventDetailView: View {

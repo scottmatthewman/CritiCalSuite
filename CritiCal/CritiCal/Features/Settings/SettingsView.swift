@@ -5,7 +5,6 @@
 //  Created by Scott Matthewman on 23/09/2025.
 //
 
-import CritiCalDomain
 import CritiCalUI
 import CritiCalStore
 import SwiftUI

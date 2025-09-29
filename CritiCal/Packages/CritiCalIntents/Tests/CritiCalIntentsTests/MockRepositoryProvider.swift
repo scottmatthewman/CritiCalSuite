@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CritiCalDomain
 import CritiCalModels
 import CritiCalStore
 @testable import CritiCalIntents

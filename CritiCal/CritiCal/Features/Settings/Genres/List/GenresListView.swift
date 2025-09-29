@@ -5,7 +5,7 @@
 //  Created by Scott Matthewman on 24/09/2025.
 //
 
-import CritiCalDomain
+import CritiCalCore
 import CritiCalExtensions
 import CritiCalModels
 import CritiCalStore

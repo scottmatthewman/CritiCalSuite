@@ -5,9 +5,8 @@
 //  Created by Scott Matthewman on 25/09/2025.
 //
 
-import CritiCalDomain
+import CritiCalCore
 import CritiCalExtensions
-import CritiCalUI
 import SwiftUI
 
 struct ColorSelectionField: View {
@@ -33,3 +32,4 @@ extension ColorToken {
         Color(hex: rawValue)
     }
 }
+

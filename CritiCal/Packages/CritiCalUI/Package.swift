@@ -17,7 +17,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalDomain", path: "../CritiCalDomain"),
+        .package(name: "CritiCalCore", path: "../CritiCalCore"),
+        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
+        .package(name: "CritiCalStore", path: "../CritiCalStore"),
         .package(name: "CritiCalModels", path: "../CritiCalModels")
     ],
     targets: [
@@ -25,7 +27,12 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CritiCalUI",
-            dependencies: ["CritiCalDomain", "CritiCalModels"],
+            dependencies: [
+                "CritiCalCore",
+                "CritiCalExtensions",
+                "CritiCalStore",
+                "CritiCalModels"
+            ],
             swiftSettings: [
                 .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
@@ -34,7 +41,7 @@ let package = Package(
         ),
         .testTarget(
             name: "CritiCalUITests",
-            dependencies: ["CritiCalUI", "CritiCalDomain"]
+            dependencies: ["CritiCalUI", "CritiCalStore"]
         ),
     ]
 )

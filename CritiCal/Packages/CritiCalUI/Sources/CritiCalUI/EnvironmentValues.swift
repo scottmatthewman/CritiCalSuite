@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CritiCalDomain
+import CritiCalStore
 
 public extension EnvironmentValues {
     @Entry var eventReader: EventReading? = nil
