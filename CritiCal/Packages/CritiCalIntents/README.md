@@ -35,13 +35,11 @@ CritiCalIntents provides system-level integration for the CritiCal application t
 
 ```
 CritiCalIntents
-├── CritiCalDomain (Repository protocols, legacy DTOs)
-├── CritiCalModels (DetachedEvent, DetachedGenre, ConfirmationStatus)
+├── CritiCalModels (Repository protocols, DetachedEvent, DetachedGenre, ConfirmationStatus)
 └── CritiCalStore (SharedStores for repository access)
 ```
 
-- **CritiCalDomain**: Uses repository protocols for data access and EventDTO for backward compatibility
-- **CritiCalModels**: Consumes DetachedEvent/DetachedGenre types from repositories
+- **CritiCalModels**: Uses repository protocols for data access; consumes DetachedEvent/DetachedGenre types from repositories
 - **CritiCalStore**: Accesses SharedStores.defaultProvider() for repository instances
 
 ## Architecture Role
@@ -52,12 +50,15 @@ CritiCalIntents serves as the system integration layer:
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │   Siri/Shortcuts│────▶│  CritiCalIntents │────▶│  CritiCalStore  │
 │   (System UI)   │     │   (App Intents)  │     │ (Data Access)   │
-└─────────────────┘     └─────────┬────────┘     └─────────────────┘
+└─────────────────┘     └─────────┬────────┘     └─────────┬───────┘
                                   │                        │
-                          ┌───────▼────────┐      ┌────────▼────────┐
-                          │ CritiCalDomain │      │  CritiCalModels │
-                          │  (Protocols)   │      │  (Data Types)   │
-                          └────────────────┘      └─────────────────┘
+                                  └────────┬───────────────┘
+                                           │
+                                  ┌────────▼────────┐
+                                  │  CritiCalModels │
+                                  │ (Protocols +    │
+                                  │  Data Types)    │
+                                  └─────────────────┘
 ```
 
 ## Usage Patterns
@@ -76,13 +77,9 @@ public struct ListEventsIntent: AppIntent {
 ```
 
 ### Entity Conversion
-EventEntity supports both DetachedEvent and legacy EventDTO:
+EventEntity uses DetachedEvent for direct conversion:
 ```swift
-// Modern DetachedEvent conversion
 let entity = EventEntity(from: detachedEvent)
-
-// Legacy DTO support for backward compatibility
-let entity = EventEntity(from: eventDTO)
 ```
 
 ### Repository Integration
@@ -106,4 +103,4 @@ The package includes comprehensive test coverage (47 tests) validating:
 ### Swift Concurrency Integration
 All intents and entities are Sendable-compliant and use modern Swift concurrency patterns with MainActor isolation where appropriate, ensuring safe operation within the App Intents framework.
 
-This design provides seamless system integration while maintaining the clean architecture established by the repository pattern and DetachedEvent types.
+This design provides seamless system integration using DetachedEvent types for efficient, type-safe data passing without conversion overhead.

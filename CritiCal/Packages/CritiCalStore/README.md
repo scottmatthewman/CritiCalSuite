@@ -27,27 +27,30 @@ CritiCalStore implements the data access layer for the CritiCal application. It 
 
 ```
 CritiCalStore
-├── CritiCalDomain (Repository protocols)
-└── CritiCalModels (Event, Genre, DetachedEvent, DetachedGenre)
+└── CritiCalModels (Repository protocols, Event, Genre, DetachedEvent, DetachedGenre)
 ```
 
-- **CritiCalDomain**: Implements EventReading/EventWriting and GenreReading/GenreWriting protocols
-- **CritiCalModels**: Uses Event/Genre SwiftData models and returns DetachedEvent/DetachedGenre types
+- **CritiCalModels**: Implements EventReading/EventWriting and GenreReading/GenreWriting protocols; uses Event/Genre SwiftData models and returns DetachedEvent/DetachedGenre types
 
 ## Architecture Role
 
 CritiCalStore serves as the data persistence implementation:
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   UI/Intents    │────▶│  CritiCalDomain  │────▶│  CritiCalStore  │
-│   (Consumers)   │     │   (Protocols)    │     │ (Implementation)│
-└─────────────────┘     └──────────────────┘     └─────────┬───────┘
-                                                            │
-                                                   ┌────────▼────────┐
-                                                   │   SwiftData     │
-                                                   │ + CloudKit Sync │
-                                                   └─────────────────┘
+┌─────────────────┐     ┌─────────────────┐
+│   UI/Intents    │────▶│  CritiCalStore  │
+│   (Consumers)   │     │ (Implementation)│
+└─────────────────┘     └─────────┬───────┘
+                                  │
+                         ┌────────▼────────┐
+                         │ CritiCalModels  │
+                         │   (Protocols)   │
+                         └────────┬────────┘
+                                  │
+                         ┌────────▼────────┐
+                         │   SwiftData     │
+                         │ + CloudKit Sync │
+                         └─────────────────┘
 ```
 
 ## Usage Patterns

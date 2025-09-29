@@ -9,7 +9,7 @@ The CritiCal application is built using a clean architecture pattern with separa
 ```
 CritiCal App
 ├── CritiCalModels     (Core data models and detached types)
-├── CritiCalDomain     (Repository protocols and contracts)
+├── CritiCalCore       (Shared utilities and UI-agnostic helpers)
 ├── CritiCalStore      (SwiftData persistence implementation)
 ├── CritiCalUI         (SwiftUI presentation layer)
 └── CritiCalIntents    (App Intents for system integration)
@@ -23,15 +23,20 @@ CritiCal App
 │  (Main Target)  │────▶│  (Presentation) │     │ (System Intents)│
 └─────────────────┘     └─────────┬───────┘     └─────────┬───────┘
                                   │                       │
-                        ┌─────────▼───────┐     ┌─────────▼───────┐
-                        │ CritiCalDomain  │◀────│  CritiCalStore  │
-                        │  (Protocols)    │     │ (Data Access)   │
-                        └─────────┬───────┘     └─────────┬───────┘
+                                  │             ┌─────────▼───────┐
+                                  │             │  CritiCalStore  │
+                                  │             │ (Data Access)   │
+                                  │             └─────────┬───────┘
                                   │                       │
                             ┌─────▼─────────────────────▼─────┐
                             │        CritiCalModels           │
                             │    (Core Data Models)           │
-                            └─────────────────────────────────┘
+                            └──────────────┬──────────────────┘
+                                           │
+                                  ┌────────▼────────┐
+                                  │  CritiCalCore   │
+                                  │   (Utilities)   │
+                                  └─────────────────┘
 ```
 
 ## Package Responsibilities
@@ -41,14 +46,16 @@ CritiCal App
 - SwiftData models (`Event`, `Genre`) for persistence
 - Detached types (`DetachedEvent`, `DetachedGenre`) for actor boundary crossing
 - Core enums (`ConfirmationStatus`) used across the application
+- Repository protocols (`EventReading`, `EventWriting`, `GenreReading`, `GenreWriting`)
 - **Dependencies**: CritiCalExtensions (for color utilities)
 
-### CritiCalDomain
-**Contract Layer**
-- Repository protocols (`EventReading`, `EventWriting`, `GenreReading`, `GenreWriting`)
-- Legacy DTOs for backward compatibility during migration
-- Defines contracts between UI/Intents and data persistence
-- **Dependencies**: CritiCalModels, CritiCalExtensions
+### CritiCalCore
+**Utilities Layer**
+- UI-agnostic helper types and utilities
+- AppSymbol and CuratedSymbols for SF Symbol management
+- ColorToken enumeration for consistent color palette
+- Shared components used across multiple packages
+- **Dependencies**: None (leaf package)
 
 ### CritiCalStore
 **Data Persistence Layer**
@@ -56,7 +63,7 @@ CritiCal App
 - CloudKit sync integration for data synchronization
 - Time-based querying and search capabilities
 - Thread-safe concurrent access patterns
-- **Dependencies**: CritiCalDomain (protocols), CritiCalModels (data types)
+- **Dependencies**: CritiCalModels (protocols and data types)
 
 ### CritiCalUI
 **Presentation Layer**
@@ -64,7 +71,7 @@ CritiCal App
 - Styling utilities and custom label styles
 - Preview support with mock repositories
 - Direct SwiftData integration via `@Query`
-- **Dependencies**: CritiCalDomain (protocols), CritiCalModels (data types)
+- **Dependencies**: CritiCalModels (protocols and data types)
 
 ### CritiCalIntents
 **System Integration Layer**
@@ -72,12 +79,12 @@ CritiCal App
 - Entity representations (`EventEntity`, `GenreEntity`)
 - System-level event querying and display
 - SwiftUI snippet views for intent results
-- **Dependencies**: CritiCalDomain, CritiCalModels, CritiCalStore
+- **Dependencies**: CritiCalModels, CritiCalStore
 
 ## Key Architecture Patterns
 
 ### Repository Pattern
-Clean separation between business logic and data access:
+Protocols defined in CritiCalModels provide clean separation between business logic and data access:
 ```swift
 protocol EventReading {
     func recent(limit: Int) async throws -> [DetachedEvent]
@@ -85,7 +92,7 @@ protocol EventReading {
 
 @ModelActor
 class EventRepository: EventReading {
-    // SwiftData implementation
+    // SwiftData implementation in CritiCalStore
 }
 ```
 
@@ -107,13 +114,14 @@ Repository access via environment and protocols:
 let events = try await reader.recent(limit: 10)
 ```
 
-## Migration Strategy
+## Architecture Benefits
 
-The architecture supports gradual migration from DTOs to DetachedEvent types:
+This streamlined architecture provides:
 
-- **Legacy**: EventDTO ↔ EventEntity conversion for backward compatibility
-- **Modern**: DetachedEvent ↔ EventEntity direct conversion
-- **Preview Support**: Both patterns supported in SwiftUI previews
+- **Direct data flow**: DetachedEvent types used throughout, eliminating DTO conversion overhead
+- **Type safety**: SwiftData models and detached types provide compile-time guarantees
+- **Concurrency compliance**: Full Swift 6.2 strict concurrency checking
+- **Actor safety**: Detached types safely cross actor boundaries
 
 ## Testing Architecture
 
