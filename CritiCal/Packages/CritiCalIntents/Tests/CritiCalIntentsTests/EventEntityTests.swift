@@ -388,6 +388,12 @@ struct EventEntityIntegrationTests {
             confirmationStatus: .draft,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
 
@@ -423,6 +429,12 @@ struct EventEntityIntegrationTests {
             confirmationStatus: .draft,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: genre
         )
 

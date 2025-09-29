@@ -31,6 +31,12 @@ extension EventEntity {
             confirmationStatus: confirmationStatus.confirmationStatus,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
         self.init(from: event)

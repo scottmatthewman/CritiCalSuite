@@ -131,7 +131,21 @@ public struct EventRow: View {
         confirmationStatus: .bidForReview,
         url: URL(string: "https://bridgetheatre.co.uk/"),
         details: "I have some details here for you",
-        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "277726", symbolName: "music.note", isDeactivated: false)
+        needsReview: true,
+        wordCount: 550,
+        fee: 85,
+        reviewCompleted: true,
+        reviewUrl: URL(string: "https://theguardian.com/stage/foo"),
+        rating: 4.5,
+        genre: DetachedGenre(
+            id: UUID(),
+            name: "Musical Theatre",
+            details: "",
+            colorName: "Musical Theatre",
+            hexColor: "277726",
+            symbolName: "music.note",
+            isDeactivated: false
+        )
     )
     let reader = FakeEventsReader(events: [event])
     List {

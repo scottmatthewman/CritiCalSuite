@@ -90,6 +90,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -102,6 +108,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
 
@@ -116,6 +128,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -128,6 +146,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
 
@@ -142,6 +166,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -154,6 +184,12 @@ struct ListEventsIntentRepositoryTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             )
         ]
@@ -229,6 +265,12 @@ struct ListEventsIntentConversionTests {
             confirmationStatus: .draft,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
         let event2 = DetachedEvent(
@@ -241,6 +283,12 @@ struct ListEventsIntentConversionTests {
             confirmationStatus: .draft,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
         let events = [event1, event2]
@@ -279,6 +327,12 @@ struct ListEventsIntentConversionTests {
             confirmationStatus: .confirmed,
             url: URL(string: "https://example.com"),
             details: "Test details",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
 
@@ -360,6 +414,12 @@ struct ListEventsIntentBusinessLogicTests {
             confirmationStatus: .draft,
             url: nil,
             details: "",
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
         await mockProvider.addMockEvent(testEvent)
@@ -402,6 +462,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             )
         }
@@ -427,6 +493,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -439,6 +511,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -451,6 +529,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             )
         ]
@@ -480,6 +564,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -492,6 +582,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             ),
             DetachedEvent(
@@ -504,6 +600,12 @@ struct ListEventsIntentEdgeCaseTests {
                 confirmationStatus: .draft,
                 url: nil,
                 details: "",
+                needsReview: false,
+                wordCount: nil,
+                fee: nil,
+                reviewCompleted: false,
+                reviewUrl: nil,
+                rating: nil,
                 genre: nil
             )
         ]

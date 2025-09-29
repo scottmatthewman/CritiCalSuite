@@ -19,7 +19,14 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
     nonisolated public let confirmationStatus: ConfirmationStatus
     nonisolated public let url: URL?
     nonisolated public let details: String
+    nonisolated public let needsReview: Bool
+    nonisolated public let wordCount: Int?
+    nonisolated public let fee: Int?
+    nonisolated public let reviewCompleted: Bool
+    nonisolated public let reviewUrl: URL?
+    nonisolated public let rating: Double?
     nonisolated public let genre: DetachedGenre?
+
 
     nonisolated public init(
         id: UUID,
@@ -31,6 +38,12 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
         confirmationStatus: ConfirmationStatus,
         url: URL?,
         details: String,
+        needsReview: Bool,
+        wordCount: Int?,
+        fee: Int?,
+        reviewCompleted: Bool,
+        reviewUrl: URL?,
+        rating: Double?,
         genre: DetachedGenre?
     ) {
         self.id = id
@@ -42,6 +55,12 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
         self.confirmationStatus = confirmationStatus
         self.url = url
         self.details = details
+        self.needsReview = needsReview
+        self.wordCount = wordCount
+        self.fee = fee
+        self.reviewCompleted = reviewCompleted
+        self.reviewUrl = reviewUrl
+        self.rating = rating
         self.genre = genre
     }
 
@@ -65,6 +84,12 @@ public extension Event {
             confirmationStatus: confirmationStatus,
             url: url,
             details: details,
+            needsReview: needsReview,
+            wordCount: wordCount,
+            fee: fee,
+            reviewCompleted: reviewCompleted,
+            reviewUrl: reviewUrl,
+            rating: rating,
             genre: genre?.detached()
         )
     }

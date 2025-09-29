@@ -54,6 +54,12 @@ public struct EventListView: View {
         confirmationStatus: .confirmed,
         url: nil,
         details: "",
+        needsReview: true,
+        wordCount: 550,
+        fee: 85,
+        reviewCompleted: true,
+        reviewUrl: URL(string: "https://theguardian.com/stage/foo"),
+        rating: 4.5,
         genre: nil
     )
     let e2 = DetachedEvent(
@@ -66,6 +72,12 @@ public struct EventListView: View {
         confirmationStatus: .awaitingConfirmation,
         url: nil,
         details: "",
+        needsReview: false,
+        wordCount: 550,
+        fee: nil,
+        reviewCompleted: false,
+        reviewUrl: nil,
+        rating: nil,
         genre: nil
     )
 

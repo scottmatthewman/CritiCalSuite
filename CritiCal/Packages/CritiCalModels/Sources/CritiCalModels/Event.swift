@@ -19,10 +19,18 @@ public final class Event {
     public var festivalName: String = ""
     public var venueName: String = ""
     public var confirmationStatusRaw: String?
-    @Relationship(deleteRule: .nullify, inverse: \Genre.events)
-    public var genre: Genre?
     public var url: URL?
     public var details: String = ""
+
+    public var needsReview: Bool = false
+    public var wordCount: Int?
+    public var fee: Int?
+    public var reviewCompleted: Bool = false
+    public var reviewUrl: URL?
+    public var rating: Double?
+
+    @Relationship(deleteRule: .nullify, inverse: \Genre.events)
+    public var genre: Genre?
 
     // Computed property for type-safe access to confirmation status
     public var confirmationStatus: ConfirmationStatus {
@@ -50,7 +58,13 @@ public final class Event {
         confirmationStatusRaw: String? = "draft",
         genre: Genre? = nil,
         url: URL? = nil,
-        details: String = ""
+        details: String = "",
+        needsReview: Bool = false,
+        wordCount: Int? = nil,
+        fee: Int? = nil,
+        reviewCompleted: Bool = false,
+        reviwUrl: URL? = nil,
+        rating: Double? = nil
     ) {
         self.identifier = identifier
         self.title = title
@@ -62,5 +76,11 @@ public final class Event {
         self.genre = genre
         self.url = url
         self.details = details
+        self.needsReview = needsReview
+        self.wordCount = wordCount
+        self.fee = fee
+        self.reviewCompleted = reviewCompleted
+        self.reviewUrl = reviewUrl
+        self.rating = rating
     }
 }

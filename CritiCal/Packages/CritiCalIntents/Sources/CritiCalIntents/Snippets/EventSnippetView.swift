@@ -121,6 +121,12 @@ public struct EventSnippetView: View {
         confirmationStatus: .awaitingConfirmation,
         url: URL(string: "https://stratfordeast.com/"),
         details: "This example event is intended to demonstrate what the Shortcuts snippet will look like for an event that has all its attributes defined.",
+        needsReview: true,
+        wordCount: 550,
+        fee: 85,
+        reviewCompleted: true,
+        reviewUrl: URL(string: "https://theguardian.com/stage/foo"),
+        rating: 4.5,
         genre: DetachedGenre(
             id: UUID(),
             name: "Workshop",

@@ -129,6 +129,12 @@ actor MockEventRepository: EventReading & EventWriting {
             confirmationStatus: confirmationStatus,
             url: url,
             details: details,
+            needsReview: false,
+            wordCount: nil,
+            fee: nil,
+            reviewCompleted: false,
+            reviewUrl: nil,
+            rating: nil,
             genre: nil
         )
         mockEvents.append(newEvent)
@@ -161,6 +167,12 @@ actor MockEventRepository: EventReading & EventWriting {
             confirmationStatus: confirmationStatus ?? existingEvent.confirmationStatus,
             url: url ?? existingEvent.url,
             details: details ?? existingEvent.details,
+            needsReview: existingEvent.needsReview,
+            wordCount: existingEvent.wordCount,
+            fee: existingEvent.fee,
+            reviewCompleted: existingEvent.reviewCompleted,
+            reviewUrl: existingEvent.reviewUrl,
+            rating: existingEvent.rating,
             genre: existingEvent.genre
         )
         mockEvents[index] = updatedEvent
