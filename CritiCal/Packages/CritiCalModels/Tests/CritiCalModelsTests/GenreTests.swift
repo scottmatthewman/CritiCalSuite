@@ -17,9 +17,8 @@ struct GenreComputedPropertiesTests {
         let genre = Genre(name: "Test Genre", hexColor: "ff0000")
 
         let color = genre.color
-        #expect(color is Color)
-
-        // We can't easily test the exact color value, but we can ensure it's created without crashing
+        // Verify the color was created correctly by checking hex round-trip
+        #expect(color.hexColorCGOnly == "#FF0000")
         #expect(genre.hexColor == "ff0000")
     }
 
@@ -38,8 +37,10 @@ struct GenreComputedPropertiesTests {
         let genre = Genre(name: "Test Genre", hexColor: hexColor)
 
         let color = genre.color
-        #expect(color is Color)
+        // Accessing color property doesn't crash - that's the primary test
         #expect(genre.hexColor == hexColor)
+        // Verify round-trip conversion works
+        #expect(color.hexColorCGOnly?.uppercased() == "#\(hexColor.uppercased())")
     }
 
     @Test("color property is consistent for multiple accesses")
@@ -50,10 +51,10 @@ struct GenreComputedPropertiesTests {
         let secondAccess = genre.color
         let thirdAccess = genre.color
 
-        // We can't directly compare Color instances, but we can ensure they're all created successfully
-        #expect(firstAccess is Color)
-        #expect(secondAccess is Color)
-        #expect(thirdAccess is Color)
+        // Verify all accesses produce the same hex value (computed property is deterministic)
+        #expect(firstAccess.hexColorCGOnly == "#336699")
+        #expect(secondAccess.hexColorCGOnly == "#336699")
+        #expect(thirdAccess.hexColorCGOnly == "#336699")
     }
 
     @Test("color property updates when hexColor changes")
@@ -61,11 +62,11 @@ struct GenreComputedPropertiesTests {
         let genre = Genre(name: "Test Genre", hexColor: "ff0000")
 
         let originalColor = genre.color
-        #expect(originalColor is Color)
+        #expect(originalColor.hexColorCGOnly == "#FF0000")
 
         genre.hexColor = "00ff00"
         let newColor = genre.color
-        #expect(newColor is Color)
+        #expect(newColor.hexColorCGOnly == "#00FF00")
 
         // Verify the hex color was actually changed
         #expect(genre.hexColor == "00ff00")
@@ -76,7 +77,7 @@ struct GenreComputedPropertiesTests {
         let genre = Genre(name: "Test Genre") // Uses default hexColor: "888888"
 
         let color = genre.color
-        #expect(color is Color)
+        #expect(color.hexColorCGOnly == "#888888")
         #expect(genre.hexColor == "888888")
     }
 }
