@@ -17,7 +17,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalDomain", path: "../CritiCalDomain"),
         .package(name: "CritiCalModels", path: "../CritiCalModels")
     ],
     targets: [
@@ -25,7 +24,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CritiCalStore",
-            dependencies: ["CritiCalDomain", "CritiCalModels"],
+            dependencies: ["CritiCalModels"],
             swiftSettings: [
               .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
               .enableUpcomingFeature("InferIsolatedConformances")

@@ -9,7 +9,6 @@ import Testing
 import SwiftData
 import Foundation
 import CritiCalModels
-import CritiCalDomain
 @testable import CritiCalStore
 
 @Suite("StoreFactory - Container Creation")

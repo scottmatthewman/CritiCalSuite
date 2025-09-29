@@ -1,6 +1,6 @@
 //
 //  EventStoreError.swift
-//  CritiCalDomain
+//  CritiCalStore
 //
 //  Created by Scott Matthewman on 21/09/2025.
 //

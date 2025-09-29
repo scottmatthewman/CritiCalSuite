@@ -22,18 +22,15 @@ CritiCalUI provides the presentation layer components for the CritiCal app. It c
 ### Preview & Testing Utilities
 - **`FakeEventsReader`**: Mock EventReading implementation for previews
 - **`FakeGenresReader`**: Mock GenreReading implementation for previews
-- **Conversion Extensions**: EventDTO ↔ DetachedEvent helpers for preview data
 
 ## Dependencies
 
 ```
 CritiCalUI
-├── CritiCalDomain (Repository protocols, legacy DTOs)
-└── CritiCalModels (DetachedEvent, DetachedGenre types)
+└── CritiCalModels (Repository protocols, DetachedEvent, DetachedGenre types)
 ```
 
-- **CritiCalDomain**: Uses repository protocols and legacy DTOs for preview data
-- **CritiCalModels**: Directly uses DetachedEvent/DetachedGenre and Event/Genre models
+- **CritiCalModels**: Uses repository protocols and DetachedEvent/DetachedGenre types
 
 ## Architecture Role
 
@@ -44,17 +41,17 @@ CritiCalUI serves as the presentation layer in the clean architecture:
 │   CritiCalApp   │ (Main app target)
 └────────┬────────┘
          │
-    ┌────▼────┐     ┌──────────────┐     ┌─────────────┐
-    │CritiCalUI│────▶│CritiCalDomain│────▶│CritiCalStore│
-    │(Views)  │     │ (Protocols)  │     │(Data Layer) │
-    └─────────┘     └──────────────┘     └─────────────┘
-         │                  │                     │
-         └──────────────────┼─────────────────────┘
-                            │
-                    ┌───────▼────────┐
-                    │ CritiCalModels │
-                    │ (Data Models)  │
-                    └────────────────┘
+    ┌────▼────┐     ┌─────────────┐
+    │CritiCalUI│────▶│CritiCalStore│
+    │(Views)  │     │(Data Layer) │
+    └─────┬───┘     └──────┬──────┘
+          │                │
+          └────────┬───────┘
+                   │
+           ┌───────▼────────┐
+           │ CritiCalModels │
+           │ (Data Models)  │
+           └────────────────┘
 ```
 
 ## Usage Patterns
@@ -81,13 +78,15 @@ let events = try await reader.recent(limit: 10) // Returns [DetachedEvent]
 The package includes comprehensive preview support:
 ```swift
 #Preview {
-    let dto = EventDTO(title: "Sample Event", ...)
-    let reader = FakeEventsReader(events: [DetachedEvent(eventDTO: dto)])
+    let event = DetachedEvent(
+        id: UUID(),
+        title: "Sample Event",
+        date: .now,
+        // ... other properties
+    )
+    let reader = FakeEventsReader(events: [event])
 
-    EventDetailView(id: dto.id)
+    EventDetailView(id: event.id)
         .environment(\.eventReader, reader)
 }
 ```
-
-### Migration Support
-The package supports both legacy DTOs and modern DetachedEvent types through conversion utilities, enabling gradual migration while maintaining preview functionality.

@@ -7,7 +7,6 @@
 
 import AppIntents
 import Foundation
-import CritiCalDomain
 import CritiCalModels
 
 public struct EventEntity: AppEntity, Identifiable, Sendable {

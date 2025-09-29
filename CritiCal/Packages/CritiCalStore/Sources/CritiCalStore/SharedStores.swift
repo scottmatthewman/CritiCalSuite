@@ -7,7 +7,6 @@
 
 import SwiftData
 import Foundation
-import CritiCalDomain
 import CritiCalModels
 
 /// Global actor to manage shared ModelContainer safely
