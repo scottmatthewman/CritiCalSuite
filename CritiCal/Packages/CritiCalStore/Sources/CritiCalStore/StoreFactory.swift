@@ -12,11 +12,22 @@ import CritiCalModels
 public enum StoreFactory {
     public static func makeContainer(cloud: Bool = true, inMemory: Bool = false) throws -> ModelContainer {
         let schema = Schema([Event.self, Genre.self])
-        let config = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: inMemory,
-            cloudKitDatabase: cloud ? .automatic : .none
-        )
+
+        let config: ModelConfiguration
+
+        if inMemory {
+            config = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: true
+            )
+        } else {
+            guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.app.strangemagic.CritiCal") else {
+                fatalError("Could not get group container URL")
+            }
+            let storeURL = containerURL.appendingPathComponent("default.store")
+            config = ModelConfiguration(url: storeURL)
+        }
+
         return try ModelContainer(for: schema, configurations: config)
     }
 

@@ -27,8 +27,6 @@ struct AppRouter: View {
                     EventListView { eventID in
                         router.navigate(toEvent: eventID)
                     }
-                    .navigationTitle("Events")
-                    .toolbarTitleDisplayMode(.inlineLarge)
                     .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
                         switch route {
                         case .eventDetails(let id):
