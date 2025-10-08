@@ -32,7 +32,7 @@ struct WeekCalendarView: View {
                             date: date,
                             selectedDate: $selectedDate,
                             isInCurrentMonth: nil,
-                            hasEvents: hasEvents(on: date),
+                            events: eventsOn(date: date),
                             namespace: namespace
                         )
                     }
@@ -116,9 +116,9 @@ struct WeekCalendarView: View {
         calendar.startOfWeek(containing: selectedDate)
     }
     
-    // Helper method to check if a date has events
-    private func hasEvents(on date: Date) -> Bool {
-        events.contains { event in
+    // Helper method to get events for a specific date
+    private func eventsOn(date: Date) -> [Event] {
+        events.filter { event in
             calendar.isDate(event.date, inSameDayAs: date)
         }
     }

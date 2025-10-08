@@ -86,9 +86,9 @@ public struct CalendarView: View {
         }
     }
     
-    // Helper method to check if a date has events (for highlighting)
-    internal func hasEvents(on date: Date) -> Bool {
-        events.contains { event in
+    // Helper method to get events for a specific date
+    internal func eventsOn(date: Date) -> [Event] {
+        events.filter { event in
             calendar.isDate(event.date, inSameDayAs: date)
         }
     }

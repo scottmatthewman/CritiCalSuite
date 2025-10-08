@@ -47,6 +47,7 @@ public struct EventListView: View {
                 scrollPosition: $scrollPosition,
                 onEventSelected: onEventSelected
             )
+            .safeAreaPadding(.bottom, 44)
         }
         .ignoresSafeArea(.container, edges: .bottom)
         .scrollEdgeEffectStyle(.hard, for: .top)
