@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import CritiCalModels
 
 public struct CalendarView: View {
     @Binding var selectedDate: Date
+    let events: [Event]
     var onVisibleRangeChange: ((DateInterval) -> Void)?
 
     @Environment(\.calendar) private var calendar
@@ -18,9 +20,11 @@ public struct CalendarView: View {
 
     init(
         selectedDate: Binding<Date>,
+        events: [Event] = [],
         onVisibleRangeChange: ((DateInterval) -> Void)? = nil
     ) {
         _selectedDate = selectedDate
+        self.events = events
         self.onVisibleRangeChange = onVisibleRangeChange
     }
 
@@ -32,9 +36,9 @@ public struct CalendarView: View {
 
             switch viewType {
             case .monthly:
-                MonthCalendarView(selectedDate: $selectedDate, namespace: calendarNS)
+                MonthCalendarView(selectedDate: $selectedDate, events: events, namespace: calendarNS)
             case .weekly:
-                WeekCalendarView(selectedDate: $selectedDate, namespace: calendarNS)
+                WeekCalendarView(selectedDate: $selectedDate, events: events, namespace: calendarNS)
             }
         }
         .scenePadding(.horizontal)
@@ -81,6 +85,13 @@ public struct CalendarView: View {
             calendar.dateInterval(of: .month, for: selectedDate)!
         }
     }
+    
+    // Helper method to check if a date has events (for highlighting)
+    internal func hasEvents(on date: Date) -> Bool {
+        events.contains { event in
+            calendar.isDate(event.date, inSameDayAs: date)
+        }
+    }
 }
 
 #Preview {
@@ -88,7 +99,7 @@ public struct CalendarView: View {
 
     NavigationStack {
         VStack {
-            CalendarView(selectedDate: $date) { dateInterval in
+            CalendarView(selectedDate: $date, events: []) { dateInterval in
                 print(date)
                 print(dateInterval)
             }

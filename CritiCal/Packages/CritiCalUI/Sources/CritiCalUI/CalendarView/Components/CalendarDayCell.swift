@@ -12,6 +12,7 @@ internal struct CalendarDayCell: View {
     let date: Date
     @Binding var selectedDate: Date
     let isInCurrentMonth: Bool?   // pass nil for week mode
+    let hasEvents: Bool
     let namespace: Namespace.ID
     @Environment(\.calendar) private var calendar
 
@@ -19,27 +20,37 @@ internal struct CalendarDayCell: View {
         Button {
             selectedDate = date
         } label: {
-            Text("\(calendar.component(.day, from: date))")
-                .font(.subheadline)
-                .fontDesign(.rounded)
-                .fontWeight((isInCurrentMonth ?? true) ? .semibold : .light)
-                .foregroundStyle(foregroundStyle)
-                .frame(maxWidth: .infinity, maxHeight: 34)
-                .background(
-                    ZStack {
-                        if isSelected {
-                            Circle()
-                                .fill(.tint)
-                                .matchedGeometryEffect(
-                                    id: CalendarNS.selectedDay,
-                                    in: namespace,
-                                    properties: .position,
-                                    anchor: .center
-                                )
-                        }
+            VStack(spacing: 2) {
+                Text("\(calendar.component(.day, from: date))")
+                    .font(.subheadline)
+                    .fontDesign(.rounded)
+                    .fontWeight((isInCurrentMonth ?? true) ? .semibold : .light)
+                    .foregroundStyle(foregroundStyle)
+                
+                // Event indicator with smooth opacity and scale animation
+                Circle()
+                    .fill(isSelected ? Color.white : Color.accentColor)
+                    .frame(width: 4, height: 4)
+                    .opacity(hasEvents ? 1.0 : 0.0)
+                    .scaleEffect(hasEvents ? 1.0 : 0.1)
+                    .animation(AnimationStyle.slide, value: hasEvents)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 34)
+            .background(
+                ZStack {
+                    if isSelected {
+                        Circle()
+                            .fill(.tint)
+                            .matchedGeometryEffect(
+                                id: CalendarNS.selectedDay,
+                                in: namespace,
+                                properties: .position,
+                                anchor: .center
+                            )
                     }
-                )
-                .frame(maxWidth: .infinity, minHeight: 44)
+                }
+            )
+            .frame(maxWidth: .infinity, minHeight: 44)
         }
         .contentShape(.rect)
         .buttonStyle(.plain)

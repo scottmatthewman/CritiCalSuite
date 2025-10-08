@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import CritiCalModels
 
 public struct MonthCalendarView: View {
     @Binding var selectedDate: Date
+    let events: [Event]
     let namespace: Namespace.ID
 
     @Environment(\.calendar) private var calendar
@@ -19,9 +21,11 @@ public struct MonthCalendarView: View {
 
     public init(
         selectedDate: Binding<Date>,
+        events: [Event] = [],
         namespace: Namespace.ID
     ) {
         self.namespace = namespace
+        self.events = events
         _selectedDate = selectedDate
         _month = State(initialValue: selectedDate.wrappedValue)
     }
@@ -76,9 +80,16 @@ public struct MonthCalendarView: View {
             date: date,
             selectedDate: $selectedDate,
             isInCurrentMonth: calendar.isDate(date, equalTo: month, toGranularity: .month),
+            hasEvents: hasEvents(on: date),
             namespace: namespace
         )
-
+    }
+    
+    // Helper method to check if a date has events
+    private func hasEvents(on date: Date) -> Bool {
+        events.contains { event in
+            calendar.isDate(event.date, inSameDayAs: date)
+        }
     }
 
     private var slideTransition: AnyTransition {
@@ -143,6 +154,6 @@ public struct MonthCalendarView: View {
     @Previewable @State var selectedDate: Date = .now
     @Previewable @Namespace var namespace
 
-    MonthCalendarView(selectedDate: $selectedDate, namespace: namespace)
+    MonthCalendarView(selectedDate: $selectedDate, events: [], namespace: namespace)
 }
 

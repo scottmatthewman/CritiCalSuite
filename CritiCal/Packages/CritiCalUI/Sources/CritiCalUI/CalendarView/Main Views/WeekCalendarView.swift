@@ -7,9 +7,11 @@
 
 import CritiCalExtensions
 import SwiftUI
+import CritiCalModels
 
 struct WeekCalendarView: View {
     @Binding var selectedDate: Date
+    let events: [Event]
     let namespace: Namespace.ID
 
     @Environment(\.calendar) private var calendar
@@ -30,6 +32,7 @@ struct WeekCalendarView: View {
                             date: date,
                             selectedDate: $selectedDate,
                             isInCurrentMonth: nil,
+                            hasEvents: hasEvents(on: date),
                             namespace: namespace
                         )
                     }
@@ -111,6 +114,13 @@ struct WeekCalendarView: View {
 
     private var weekStart: Date {
         calendar.startOfWeek(containing: selectedDate)
+    }
+    
+    // Helper method to check if a date has events
+    private func hasEvents(on date: Date) -> Bool {
+        events.contains { event in
+            calendar.isDate(event.date, inSameDayAs: date)
+        }
     }
 }
 

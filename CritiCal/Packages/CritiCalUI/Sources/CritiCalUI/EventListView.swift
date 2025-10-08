@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 import CritiCalModels
 
 public struct EventListView: View {
     @Environment(\.calendar) private var calendar
+
+    // Hoisted SwiftData query
+    @Query private var events: [Event]
 
     @State private var timeframe: EventTimeframe = .future
     @State private var selectedDate: Date = .now
@@ -22,15 +26,23 @@ public struct EventListView: View {
         onEventSelected: @escaping (UUID) -> Void
     ) {
         self.onEventSelected = onEventSelected
+        
+        // Initialize the query with a default predicate (will be updated dynamically)
+        let defaultPredicate: Predicate<Event> = #Predicate { _ in true }
+        _events = Query(
+            filter: defaultPredicate,
+            sort: \.date,
+            order: .forward
+        )
     }
 
     public var body: some View {
         VStack(spacing: 0) {
-            CalendarView(selectedDate: $selectedDate) {
+            CalendarView(selectedDate: $selectedDate, events: filteredEvents) {
                 interval = $0
             }
             EventList(
-                timeframe: timeframe,
+                events: filteredEvents,
                 within: interval,
                 scrollPosition: $scrollPosition,
                 onEventSelected: onEventSelected
@@ -42,6 +54,13 @@ public struct EventListView: View {
         .toolbarTitleDisplayMode(.inlineLarge)
         .onChange(of: selectedDate, initial: true) {
             scrollPosition = selectedDate.tagValue
+        }
+    }
+    
+    // Filter events based on the current interval
+    private var filteredEvents: [Event] {
+        events.filter { event in
+            event.date >= interval.start && event.date < interval.end
         }
     }
 }

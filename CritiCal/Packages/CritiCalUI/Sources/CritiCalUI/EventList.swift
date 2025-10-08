@@ -27,29 +27,21 @@ public struct EventList: View {
 
     @Environment(\.calendar) private var calendar
 
-    // Use @Query to efficiently load events directly from SwiftData
-    @Query private var events: [Event]
+    // Accept events as parameter instead of querying directly
+    private let events: [Event]
     private var onEventSelected: (UUID) -> Void
     private var interval: DateInterval
 
     public init(
-        timeframe: EventTimeframe = .future,
+        events: [Event],
         within interval: DateInterval,
         scrollPosition: Binding<String?>,
         onEventSelected: @escaping (UUID) -> Void
     ) {
+        self.events = events
         self.onEventSelected = onEventSelected
         self.interval = interval
-
         self._scrollPosition = scrollPosition
-        let predicate: Predicate<Event> = #Predicate {
-            $0.date >= interval.start && $0.date < interval.end
-        }
-        _events = Query(
-            filter: predicate,
-            sort: \.date,
-            order: .forward
-        )
     }
 
     public var body: some View {
@@ -144,7 +136,7 @@ public struct EventList: View {
 
     let range = Calendar.current.dateInterval(of: .year, for: .now)!
     NavigationStack {
-        EventList(within: range, scrollPosition: $scrollPosition) {
+        EventList(events: [], within: range, scrollPosition: $scrollPosition) {
             print("ID selected: \($0)")
         }
     }
