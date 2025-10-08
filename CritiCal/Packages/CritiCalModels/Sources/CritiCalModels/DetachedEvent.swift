@@ -26,7 +26,7 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
     nonisolated public let reviewUrl: URL?
     nonisolated public let rating: Double?
     nonisolated public let genre: DetachedGenre?
-
+    nonisolated public let publication: DetachedPublication?
 
     nonisolated public init(
         id: UUID,
@@ -44,7 +44,8 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
         reviewCompleted: Bool,
         reviewUrl: URL?,
         rating: Double?,
-        genre: DetachedGenre?
+        genre: DetachedGenre?,
+        publication: DetachedPublication?
     ) {
         self.id = id
         self.title = title
@@ -62,6 +63,7 @@ public struct DetachedEvent: Identifiable, Equatable, Sendable {
         self.reviewUrl = reviewUrl
         self.rating = rating
         self.genre = genre
+        self.publication = publication
     }
 
     /// Computed property for event end date
@@ -90,7 +92,8 @@ public extension Event {
             reviewCompleted: reviewCompleted,
             reviewUrl: reviewUrl,
             rating: rating,
-            genre: genre?.detached()
+            genre: genre?.detached(),
+            publication: publication?.detached()
         )
     }
 }

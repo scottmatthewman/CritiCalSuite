@@ -31,6 +31,8 @@ public final class Event {
 
     @Relationship(deleteRule: .nullify, inverse: \Genre.events)
     public var genre: Genre?
+    @Relationship(deleteRule: .nullify, inverse: \Publication.events)
+    public var publication: Publication?
 
     // Computed property for type-safe access to confirmation status
     public var confirmationStatus: ConfirmationStatus {

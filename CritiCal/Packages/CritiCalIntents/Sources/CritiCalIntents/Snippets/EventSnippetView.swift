@@ -135,6 +135,15 @@ public struct EventSnippetView: View {
             hexColor: "#FF5733",
             symbolName: "wand.and.stars",
             isDeactivated: false
+        ),
+        publication: DetachedPublication(
+            id: UUID(),
+            name: "The Stage",
+            hexColor: "48c3e7",
+            typicalWordCount: 350,
+            typicalFee: 80,
+            awardsStars: true,
+            isDeactivated: false
         )
     )
     EventSnippetView(

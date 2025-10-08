@@ -60,12 +60,13 @@ public struct EventList: View {
                         }
                     } header: {
                         sectionHeader(for: section.day, in: Date.now)
-                            .padding(.bottom, -8)
+                            .padding(.bottom, -16)
                     }
                     .id(section.day.tagValue)
                     .listSectionMargins(.all, 0)
                     .listSectionSpacing(.compact)
                     .listSectionSeparator(.hidden)
+                    .headerProminence(.increased)
                 }
             }
             .listStyle(.plain)

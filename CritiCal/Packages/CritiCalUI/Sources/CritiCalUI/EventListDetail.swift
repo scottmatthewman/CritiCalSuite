@@ -19,6 +19,7 @@ struct EventListDetail: View {
                         Label(genre.name, systemImage: genre.symbolName)
                             .labelStyle(.titleOnly)
                             .font(.caption)
+                            .bold()
                             .fixedSize()
                     }
                     if !event.festivalName.isEmpty {
@@ -38,18 +39,18 @@ struct EventListDetail: View {
                     .font(.subheadline)
                     .statusFormat(event.confirmationStatus)
                 HStack(alignment: .firstTextBaseline) {
-                    Label("The Reviews Hub", systemImage: "newspaper")
+                    if let publication = event.publication {
+                        Label(publication.name, systemImage: "newspaper")
+                            .labelStyle(.tag)
+                            .tint(publication.color)
+                    }
+                    if !event.confirmationStatus.isConfirmed() {
+                        Label(
+                            event.confirmationStatus.displayName,
+                            systemImage: event.confirmationStatus.systemImage
+                        )
                         .labelStyle(.tag)
-                        .tint(.purple)
-                    if false {
-                        HStack(spacing: -2) {
-                            ForEach(0..<5, id: \.self) { _ in
-                                Image(systemName: "star.fill")
-                            }
-                        }
-                        .foregroundStyle(.purple)
-                    } else {
-                        WarningLabel(text: "Overdue")
+                        .tint(.secondary)
                     }
                 }
                 .font(.caption2)
@@ -65,16 +66,16 @@ struct EventListDetail: View {
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
                     .statusFormat(event.confirmationStatus)
-                HStack(alignment: .firstTextBaseline, spacing: 4) {
-                    Label("E-ticket", systemImage: "ticket")
-                    Label("Claire" ,systemImage: "person.2")
-                    Label("13", systemImage: "photo.on.rectangle.angled")
-                }
-                .padding(.top, 4)
-                .foregroundStyle(.secondary)
-                .labelStyle(.iconOnly)
-                .symbolRenderingMode(.hierarchical)
-                if !event.confirmationStatus.isConfirmed() {
+                if let genre = event.genre {
+                    Image(systemName: genre.symbolName)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(8)
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.tint)
+                        .background(.tint.quaternary, in: .circle)
+                        .tint(genre.color.gradient)
+                } else if !event.confirmationStatus.isConfirmed() {
                     Label(
                         event.confirmationStatus.displayName,
                         systemImage: event.confirmationStatus
@@ -82,17 +83,13 @@ struct EventListDetail: View {
                     .labelStyle(.iconOnly)
                     .font(.title)
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(.tint)
+                    .symbolVariant(.fill)
+                    .foregroundStyle(.tertiary)
                 }
             }
             .font(.caption)
             .fixedSize()
             .padding(.trailing, 8)
-        }
-        .background(alignment: .trailing) {
-            Rectangle()
-                .fill(event.genre?.color ?? .gray)
-                .frame(width: 2)
         }
     }
 }
@@ -170,8 +167,17 @@ struct WarningLabel: View {
             name: "Musical Theatre",
             details: "",
             colorName: "Musical Theatre",
-            hexColor: "c02673",
+            hexColor: "3ab241",
             symbolName: "music.note",
+            isDeactivated: false
+        ),
+        publication: DetachedPublication(
+            id: UUID(),
+            name: "The Reviews Hub",
+            hexColor: "c045b3",
+            typicalWordCount: 550,
+            typicalFee: nil,
+            awardsStars: true,
             isDeactivated: false
         )
     )

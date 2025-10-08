@@ -137,7 +137,16 @@ struct EventCard: View {
         reviewCompleted: true,
         reviewUrl: URL(string: "https://theguardian.com/stage/foo"),
         rating: 4.5,
-        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "277726", symbolName: "music.note", isDeactivated: false)
+        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "277726", symbolName: "music.note", isDeactivated: false),
+        publication: DetachedPublication(
+            id: UUID(),
+            name: "Telegraph",
+            hexColor: "e4e454",
+            typicalWordCount: 725,
+            typicalFee: 200,
+            awardsStars: true,
+            isDeactivated: false
+        )
     )
 
     EventCard(event: event)

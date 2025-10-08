@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import CritiCalCore
 import CritiCalExtensions
 
 @Model
@@ -28,6 +29,10 @@ public final class Genre {
     // Computed property for SwiftUI Color
     public var color: Color {
         Color(hex: hexColor)
+    }
+
+    public var colorToken: ColorToken {
+        ColorToken(rawValue: colorName) ?? .blue
     }
 
     public init(

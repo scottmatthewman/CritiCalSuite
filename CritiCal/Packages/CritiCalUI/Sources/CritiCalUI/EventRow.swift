@@ -145,6 +145,15 @@ public struct EventRow: View {
             hexColor: "277726",
             symbolName: "music.note",
             isDeactivated: false
+        ),
+        publication: DetachedPublication(
+            id: UUID(),
+            name: "Telegraph",
+            hexColor: "e4e454",
+            typicalWordCount: 725,
+            typicalFee: 200,
+            awardsStars: true,
+            isDeactivated: false
         )
     )
     let reader = FakeEventsReader(events: [event])
