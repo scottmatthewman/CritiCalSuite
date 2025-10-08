@@ -47,15 +47,22 @@ public struct EventListView: View {
                 scrollPosition: $scrollPosition,
                 onEventSelected: onEventSelected
             )
-            .safeAreaPadding(.bottom, 44)
         }
-        .ignoresSafeArea(.container, edges: .bottom)
         .scrollEdgeEffectStyle(.hard, for: .top)
-        .navigationTitle("Events")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                MonthTitleButton(date: $selectedDate, onTap: returnToToday)
+                    .font(.title.bold())
+            }
+        }
         .onChange(of: selectedDate, initial: true) {
             scrollPosition = selectedDate.tagValue
         }
+    }
+    
+    private func returnToToday() {
+        selectedDate = Date.now
     }
     
     // Filter events based on the current interval

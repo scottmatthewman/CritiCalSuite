@@ -30,10 +30,6 @@ public struct CalendarView: View {
 
     public var body: some View {
         VStack {
-            MonthTitleButton(date: $selectedDate, onTap: returnToToday)
-                .font(.title.bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-
             switch viewType {
             case .monthly:
                 MonthCalendarView(selectedDate: $selectedDate, events: events, namespace: calendarNS)
@@ -73,10 +69,6 @@ public struct CalendarView: View {
         }
     }
 
-    private func returnToToday() {
-        self.selectedDate = Date.now
-    }
-
     private var visibleDateRange: DateInterval {
         switch viewType {
         case .weekly:
@@ -105,7 +97,12 @@ public struct CalendarView: View {
             }
             Spacer()
         }
-        .navigationTitle("Events")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                MonthTitleButton(date: $date, onTap: { date = .now })
+                    .font(.title.bold())
+            }
+        }
     }
 }

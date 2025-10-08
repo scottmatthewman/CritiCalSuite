@@ -18,7 +18,6 @@ struct WeekdayHeaderCell: View {
             .textCase(.uppercase)
             .frame(maxWidth: .infinity, minHeight: minHeight)
             .foregroundStyle(info.isWeekend ? .secondary : .primary)
-            .weekendBackground(info.isWeekend)
     }
 }
 

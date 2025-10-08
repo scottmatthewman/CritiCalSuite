@@ -8,14 +8,19 @@
 
 import SwiftUI
 
-internal struct MonthTitleButton: View {
+public struct MonthTitleButton: View {
     @Binding var date: Date
     let onTap: () -> Void
 
     @State private var isShowingDatePicker = false
     @State private var suppressNextTap = false
 
-    internal var body: some View {
+    public init(date: Binding<Date>, onTap: @escaping () -> Void) {
+        self._date = date
+        self.onTap = onTap
+    }
+
+    public var body: some View {
         Button(action: {
             if suppressNextTap {
                 suppressNextTap = false
