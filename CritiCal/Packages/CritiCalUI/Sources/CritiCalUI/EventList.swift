@@ -60,7 +60,7 @@ public struct EventList: View {
                         }
                     } header: {
                         sectionHeader(for: section.day, in: Date.now)
-                            .padding(0)
+                            .padding(.bottom, -8)
                     }
                     .id(section.day.tagValue)
                     .listSectionMargins(.all, 0)
@@ -107,13 +107,6 @@ public struct EventList: View {
         let isOutsideInterval = interval.intersection(with: wholeDay) == nil
 
         HStack {
-            if isToday {
-                Text("Today")
-                    .textCase(.uppercase)
-            } else if isTomorrow {
-                Text("Tomorrow")
-                    .textCase(.uppercase)
-            }
             Text(day, format: .dateTime.weekday(.wide))
                 .foregroundStyle(
                     calendar
@@ -126,6 +119,14 @@ public struct EventList: View {
                 .fontWeight(.light)
             if isOutsideInterval {
                 Text(day, format: .dateTime.month())
+            }
+            Spacer()
+            if isToday {
+                Text("Today")
+                    .textCase(.uppercase)
+            } else if isTomorrow {
+                Text("Tomorrow")
+                    .textCase(.uppercase)
             }
         }
     }
