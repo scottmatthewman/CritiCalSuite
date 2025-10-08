@@ -13,37 +13,30 @@ struct EventListDetail: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text(event.date, format: .dateTime.hour().minute())
-                .font(.caption)
-                .bold()
-                .monospacedDigit()
-                .strikethrough(event.confirmationStatus.isCancelled())
-                .foregroundStyle(
-                    event.confirmationStatus
-                        .isConfirmed() ? .primary : .secondary
-                )
             VStack(alignment: .leading) {
                 HStack(alignment: .firstTextBaseline) {
                     if let genre = event.genre {
                         Label(genre.name, systemImage: genre.symbolName)
                             .labelStyle(.titleOnly)
-                            .tint(genre.color)
                             .font(.caption)
                             .fixedSize()
                     }
                     if !event.festivalName.isEmpty {
                         Text(event.festivalName)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .textCase(.uppercase)
+                            .foregroundStyle(.tint)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                     }
                 }
                 Text(event.title)
                     .font(.headline)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
+                    .statusFormat(event.confirmationStatus)
                 Text(event.venueName)
                     .font(.subheadline)
+                    .statusFormat(event.confirmationStatus)
                 HStack(alignment: .firstTextBaseline) {
                     Label("The Reviews Hub", systemImage: "newspaper")
                         .labelStyle(.tag)
@@ -60,24 +53,73 @@ struct EventListDetail: View {
                     }
                 }
                 .font(.caption2)
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
+            }
+            Spacer()
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(event.date, format: .dateTime.hour().minute())
+                    .bold()
+                    .monospacedDigit()
+                    .foregroundStyle(.primary)
+                    .statusFormat(event.confirmationStatus)
+                Text(event.endDate, format: .dateTime.hour().minute())
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                    .statusFormat(event.confirmationStatus)
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Label("E-ticket", systemImage: "ticket")
                     Label("Claire" ,systemImage: "person.2")
                     Label("13", systemImage: "photo.on.rectangle.angled")
                 }
-                .symbolRenderingMode(.hierarchical)
-                .font(.caption2)
-                .labelIconToTitleSpacing(2)
-                .foregroundStyle(.secondary)
                 .padding(.top, 4)
+                .foregroundStyle(.secondary)
+                .labelStyle(.iconOnly)
+                .symbolRenderingMode(.hierarchical)
+                if !event.confirmationStatus.isConfirmed() {
+                    Label(
+                        event.confirmationStatus.displayName,
+                        systemImage: event.confirmationStatus
+                            .systemImage)
+                    .labelStyle(.iconOnly)
+                    .font(.title)
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(.tint)
+                }
             }
+            .font(.caption)
+            .fixedSize()
+            .padding(.trailing, 8)
         }
-        .background(alignment: .leading) {
+        .background(alignment: .trailing) {
             Rectangle()
                 .fill(event.genre?.color ?? .gray)
                 .frame(width: 2)
-                .offset(x: -6)
         }
+    }
+}
+
+struct StatusFormatModifier: ViewModifier {
+    var status: ConfirmationStatus
+
+    var opacity: CGFloat {
+        if status.isConfirmed() {
+            1.0
+        } else if status.isCancelled() {
+            0.4
+        } else {
+            0.6
+        }
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(opacity)
+            .strikethrough(status.isCancelled())
+    }
+}
+
+extension View {
+    func statusFormat(_ status: ConfirmationStatus) -> some View {
+        self.modifier(StatusFormatModifier(status: status))
     }
 }
 
@@ -110,7 +152,7 @@ struct WarningLabel: View {
     let event = DetachedEvent(
         id: UUID(),
         title: "A Midsummer Night's Dream",
-        festivalName: "Lambeth Fringe",
+        festivalName: "Lambeth Fringe 2025",
         date: .iso8601("2025-09-21T19:30:00Z"),
         durationMinutes: 90,
         venueName: "Bridge Theatre",

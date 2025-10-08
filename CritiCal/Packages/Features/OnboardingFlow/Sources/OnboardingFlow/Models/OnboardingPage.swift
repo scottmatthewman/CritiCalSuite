@@ -58,7 +58,7 @@ extension OnboardingPage {
         ),
         OnboardingPage(
             title: "Connect to navigation apps",
-            description: "On iPhone, navigation insttructions to your next event are a single click away",
+            description: "On iPhone, navigation instructions to your next event are a single click away",
             systemImage: "iphone.badge.location",
             imageColor: .teal
         ),

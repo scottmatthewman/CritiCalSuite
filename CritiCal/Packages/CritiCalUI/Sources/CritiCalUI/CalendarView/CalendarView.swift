@@ -14,6 +14,7 @@ public struct CalendarView: View {
     @Environment(\.calendar) private var calendar
     @Namespace private var calendarNS
     @State private var viewType: CalendarViewType = .monthly
+    @State private var currentRange: DateInterval?
 
     init(
         selectedDate: Binding<Date>,
@@ -61,7 +62,11 @@ public struct CalendarView: View {
     }
 
     private func handleDateRangeChange() {
-        onVisibleRangeChange?(visibleDateRange)
+        let newRange = visibleDateRange
+        if newRange != currentRange {
+            currentRange = newRange
+            onVisibleRangeChange?(newRange)
+        }
     }
 
     private func returnToToday() {

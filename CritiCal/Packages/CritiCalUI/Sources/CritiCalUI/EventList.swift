@@ -9,17 +9,39 @@ import SwiftUI
 import SwiftData
 import CritiCalModels
 
+extension Date {
+    static let tagFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        f.calendar = Calendar(identifier: .gregorian)
+        return f
+    }()
+
+    var tagValue: String {
+        Self.tagFormatter.string(from: self)
+    }
+}
+
 public struct EventList: View {
+    @Binding private var scrollPosition: String?
+
+    @Environment(\.calendar) private var calendar
+
     // Use @Query to efficiently load events directly from SwiftData
     @Query private var events: [Event]
     private var onEventSelected: (UUID) -> Void
+    private var interval: DateInterval
 
     public init(
         timeframe: EventTimeframe = .future,
         within interval: DateInterval,
+        scrollPosition: Binding<String?>,
         onEventSelected: @escaping (UUID) -> Void
     ) {
         self.onEventSelected = onEventSelected
+        self.interval = interval
+
+        self._scrollPosition = scrollPosition
         let predicate: Predicate<Event> = #Predicate {
             $0.date >= interval.start && $0.date < interval.end
         }
@@ -31,34 +53,38 @@ public struct EventList: View {
     }
 
     public var body: some View {
-        Group {
-            if events.isEmpty {
-                ScrollView {
-                    ContentUnavailableView {
-                        Label("No Events", systemImage: "calendar")
-                    } description: {
-                        Text("No events")
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-                .defaultScrollAnchor(.center)
-            } else {
-                List {
-                    ForEach(eventsGroupedByDate) { section in
-                        Section {
-                            ForEach(section.events) { event in
-                                Button {
-                                    onEventSelected(event.id)
-                                } label: {
-                                    EventListDetail(event: event)
-                                }
-                                .buttonStyle(.plain)
+        ScrollViewReader { scrollView in
+            List {
+                ForEach(eventsGroupedByDate) { section in
+                    Section {
+                        ForEach(section.events) { event in
+                            Button {
+                                onEventSelected(event.id)
+                            } label: {
+                                EventListDetail(event: event)
                             }
-                        } header: {
-                            Text(section.day,
-                                 format: .dateTime.weekday(.wide).day().month())
+                            .buttonStyle(.plain)
+                            .listRowSeparator(.hidden)
                         }
+                    } header: {
+                        sectionHeader(for: section.day, in: Date.now)
+                            .padding(0)
                     }
+                    .id(section.day.tagValue)
+                    .listSectionMargins(.all, 0)
+                    .listSectionSpacing(.compact)
+                    .listSectionSeparator(.hidden)
+                }
+            }
+            .listStyle(.plain)
+            .onChange(of: scrollPosition) {
+                guard let scrollPosition else { return }
+
+                let availableAnchors = eventsGroupedByDate.map(\.day).map(\.tagValue)
+                let requiredAnchor = availableAnchors.first { $0 >= scrollPosition }
+
+                withAnimation {
+                    scrollView.scrollTo(requiredAnchor, anchor: .top)
                 }
             }
         }
@@ -72,7 +98,6 @@ public struct EventList: View {
     }
 
     var eventsGroupedByDate: [EventSection] {
-        let calendar = Calendar.current
         let grouped = Dictionary(grouping: events.map { $0.detached() }) { detached in
             calendar.startOfDay(for: detached.date)
         }
@@ -81,12 +106,45 @@ public struct EventList: View {
         }
         .sorted { $0.day < $1.day }
     }
+
+    @ViewBuilder
+    private func sectionHeader(for day: Date, in sourceDate: Date) -> some View {
+        let isToday = calendar.isDateInToday(day)
+        let isTomorrow = calendar.isDateInTomorrow(day)
+        let wholeDay = calendar.dateInterval(of: .day, for: day)!
+        let isOutsideInterval = interval.intersection(with: wholeDay) == nil
+
+        HStack {
+            if isToday {
+                Text("Today")
+                    .textCase(.uppercase)
+            } else if isTomorrow {
+                Text("Tomorrow")
+                    .textCase(.uppercase)
+            }
+            Text(day, format: .dateTime.weekday(.wide))
+                .foregroundStyle(
+                    calendar
+                        .isDateInToday(
+                            day
+                        ) ? .secondary : .primary
+                )
+            Text(day, format: .dateTime.day())
+                .foregroundStyle(.secondary)
+                .fontWeight(.light)
+            if isOutsideInterval {
+                Text(day, format: .dateTime.month())
+            }
+        }
+    }
 }
 
 #Preview(traits: .sampleData) {
+    @Previewable @State var scrollPosition: String?
+
     let range = Calendar.current.dateInterval(of: .year, for: .now)!
     NavigationStack {
-        EventList(within: range) {
+        EventList(within: range, scrollPosition: $scrollPosition) {
             print("ID selected: \($0)")
         }
     }
