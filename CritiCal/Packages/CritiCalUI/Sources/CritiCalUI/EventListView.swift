@@ -38,6 +38,20 @@ public struct EventListView: View {
 
     public var body: some View {
         VStack(spacing: 0) {
+            // Month title header
+            HStack {
+                MonthTitleButton(date: $selectedDate, onTap: returnToToday)
+                    .font(.title.bold())
+                Spacer()
+                Button("Add", systemImage: "plus") { }
+                    .buttonStyle(.glassProminent)
+                    .imageScale(.large)
+                    .labelStyle(.iconOnly)
+            }
+            .padding(.horizontal)
+            .padding(.top, 8)
+            .padding(.bottom, 4)
+            
             CalendarView(selectedDate: $selectedDate, events: filteredEvents) {
                 interval = $0
             }
@@ -49,13 +63,7 @@ public struct EventListView: View {
             )
         }
         .scrollEdgeEffectStyle(.hard, for: .top)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                MonthTitleButton(date: $selectedDate, onTap: returnToToday)
-                    .font(.title.bold())
-            }
-        }
+        .navigationBarHidden(true)
         .onChange(of: selectedDate, initial: true) {
             scrollPosition = selectedDate.tagValue
         }
