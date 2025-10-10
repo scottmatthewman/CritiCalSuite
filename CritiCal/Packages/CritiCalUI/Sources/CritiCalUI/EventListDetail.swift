@@ -166,8 +166,7 @@ struct WarningLabel: View {
             id: UUID(),
             name: "Musical Theatre",
             details: "",
-            colorName: "Musical Theatre",
-            hexColor: "3ab241",
+            colorToken: .blue,
             symbolName: "music.note",
             isDeactivated: false
         ),
@@ -175,7 +174,7 @@ struct WarningLabel: View {
             id: UUID(),
             name: "The Reviews Hub",
             details: "",
-            colorName: "purple",
+            colorToken: .purple,
             typicalWordCount: 550,
             typicalFee: nil,
             awardsStars: true,

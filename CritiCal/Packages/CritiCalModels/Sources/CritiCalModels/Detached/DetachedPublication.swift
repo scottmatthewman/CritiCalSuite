@@ -14,7 +14,7 @@ public struct DetachedPublication: Identifiable, Equatable, Sendable {
     nonisolated public let id: UUID
     nonisolated public let name: String
     nonisolated public let details: String
-    nonisolated public let colorName: String
+    nonisolated public let colorToken: ColorToken
     nonisolated public let typicalWordCount: Int?
     nonisolated public let typicalFee: Int?
     nonisolated public let awardsStars: Bool
@@ -24,7 +24,7 @@ public struct DetachedPublication: Identifiable, Equatable, Sendable {
         id: UUID,
         name: String,
         details: String,
-        colorName: String,
+        colorToken: ColorToken,
         typicalWordCount: Int?,
         typicalFee: Int?,
         awardsStars: Bool,
@@ -33,7 +33,7 @@ public struct DetachedPublication: Identifiable, Equatable, Sendable {
         self.id = id
         self.name = name
         self.details = details
-        self.colorName = colorName
+        self.colorToken = colorToken
         self.typicalWordCount = typicalWordCount
         self.typicalFee = typicalFee
         self.awardsStars = awardsStars
@@ -41,10 +41,7 @@ public struct DetachedPublication: Identifiable, Equatable, Sendable {
     }
 
     public var color: Color {
-        if let colorToken = ColorToken(rawValue: colorName) {
-            return colorToken.color
-        }
-        return Color.accentColor
+        colorToken.color
     }
 }
 
@@ -54,7 +51,7 @@ public extension Publication {
             id: identifier ?? UUID(),
             name: name,
             details: details,
-            colorName: colorName,
+            colorToken: .cyan,
             typicalWordCount: typicalWordCount,
             typicalFee: typicalFee,
             awardsStars: awardsStars,

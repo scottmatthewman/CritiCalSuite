@@ -26,15 +26,6 @@ public final class Genre {
     @Relationship
     public var events: [Event]?
 
-    // Computed property for SwiftUI Color
-    public var color: Color {
-        Color(hex: hexColor)
-    }
-
-    public var colorToken: ColorToken {
-        ColorToken(rawValue: colorName) ?? .blue
-    }
-
     public init(
         identifier: UUID? = UUID(),
         name: String,
@@ -51,5 +42,16 @@ public final class Genre {
         self.hexColor = hexColor
         self.symbolName = symbolName
         self.isDeactivated = isDeactivated
+    }
+
+    // Computed property for SwiftUI Color
+    @MainActor
+    public var color: Color {
+        colorToken.color
+    }
+
+    public var colorToken: ColorToken {
+        get { ColorToken(rawValue: colorName) ?? .blue }
+        set { colorName = newValue.rawValue }
     }
 }

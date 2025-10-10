@@ -6,6 +6,7 @@
 //
 
 import CritiCalCore
+import CritiCalModels
 import Foundation
 
 @Observable

@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import CritiCalCore
 import CritiCalModels
 import Foundation
 
@@ -22,7 +23,7 @@ public struct GenreEntity: AppEntity, Identifiable, Sendable {
     public var details: String
 
     @Property(title: "Color")
-    public var hexColor: String
+    public var colorName: String
 
     @Property(title: "Is Active")
     public var isActive: Bool
@@ -34,11 +35,11 @@ public struct GenreEntity: AppEntity, Identifiable, Sendable {
         )
     }
 
-public init(from genre: DetachedGenre) {
+    public init(from genre: DetachedGenre) {
         self.id = genre.id
         self.name = genre.name
         self.details = genre.details
-        self.hexColor = genre.hexColor
+        self.colorName = genre.colorToken.rawValue
         self.isActive = !genre.isDeactivated
     }
 }

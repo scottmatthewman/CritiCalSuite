@@ -56,7 +56,7 @@ struct EditPublicationView: View {
         guard model.isValid else { return }
 
         publication.name = model.name
-        publication.colorName = model.colorToken.rawValue
+        publication.colorToken = model.colorToken
         publication.isDeactivated = model.isDeactivated
 
         publication.url = URL(string: model.urlString)

@@ -147,12 +147,19 @@ public struct EventDetailView: View {
         reviewCompleted: true,
         reviewUrl: URL(string: "https://theguardian.com/stage/foo"),
         rating: 4.5,
-        genre: DetachedGenre(id: UUID(), name: "Musical Theatre", details: "", colorName: "Musical Theatre", hexColor: "888888", symbolName: "theatermasks", isDeactivated: false),
+        genre: DetachedGenre(
+            id: UUID(),
+            name: "Musical Theatre",
+            details: "",
+            colorToken: .coral,
+            symbolName: "theatermasks",
+            isDeactivated: false
+        ),
         publication: DetachedPublication(
             id: UUID(),
             name: "Telegraph",
             details: "",
-            colorName: "blue",
+            colorToken: .blue,
             typicalWordCount: 725,
             typicalFee: 200,
             awardsStars: true,

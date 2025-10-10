@@ -5,8 +5,9 @@
 //  Created by Scott Matthewman on 24/09/2025.
 //
 
-import CritiCalStore
+import CritiCalCore
 import CritiCalModels
+import CritiCalStore
 import Foundation
 
 public actor FakeGenresReader: GenreReading & GenreWriting {
@@ -28,14 +29,31 @@ public actor FakeGenresReader: GenreReading & GenreWriting {
         genres.filter { $0.isDeactivated == false }
     }
 
-    public func create(name: String, details: String, hexColor: String) async throws -> UUID {
+    public func create(
+        name: String,
+        details: String,
+        colorToken: ColorToken
+    ) async throws -> UUID {
         let id = UUID()
-        let genre = DetachedGenre(id: id, name: name, details: details, colorName: "", hexColor: hexColor, symbolName: "theatermasks", isDeactivated: false)
+        let genre = DetachedGenre(
+            id: id,
+            name: name,
+            details: details,
+            colorToken: colorToken,
+            symbolName: "theatermasks",
+            isDeactivated: false
+        )
         genres.append(genre)
         return id
     }
 
-    public func update(genreID: UUID, name: String?, details: String?, hexColor: String?, isDeactivated: Bool?) async throws {
+    public func update(
+        genreID: UUID,
+        name: String?,
+        details: String?,
+        colorToken: ColorToken?,
+        isDeactivated: Bool?
+    ) async throws {
     }
 
     public func delete(genreID: UUID) async throws {

@@ -41,8 +41,7 @@ struct PublicationForm: View {
                 VStack(spacing: 12) {
                     LargeGenreCircle(
                         symbolName: "newspaper",
-                        color: model.colorToken
-                            .color)
+                        color: model.colorToken.color)
                     TextField("Name", text: $model.name)
                         .textInputAutocapitalization(.words)
                         .font(.title)

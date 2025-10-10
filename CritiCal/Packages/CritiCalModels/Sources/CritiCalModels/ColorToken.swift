@@ -5,6 +5,7 @@
 //  Created by Scott Matthewman on 24/09/2025.
 //
 
+import CritiCalExtensions
 import SwiftUI
 
 public enum ColorToken: String, CaseIterable, Identifiable, Codable, Sendable {
@@ -28,4 +29,8 @@ public enum ColorToken: String, CaseIterable, Identifiable, Codable, Sendable {
     case black    = "#000000"
 
     public var id: String { rawValue }
+
+    public var color: Color {
+        Color(hex: rawValue)
+    }
 }

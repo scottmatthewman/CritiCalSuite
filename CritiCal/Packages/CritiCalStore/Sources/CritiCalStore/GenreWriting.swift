@@ -5,21 +5,22 @@
 //  Created by Scott Matthewman on 22/09/2025.
 //
 
-import Foundation
+import CritiCalCore
 import CritiCalModels
+import Foundation
 
 public protocol GenreWriting: Sendable {
     func create(
         name: String,
         details: String,
-        hexColor: String
+        colorToken: ColorToken
     ) async throws -> UUID
 
     func update(
         genreID: UUID,
         name: String?,
         details: String?,
-        hexColor: String?,
+        colorToken: ColorToken?,
         isDeactivated: Bool?
     ) async throws
 

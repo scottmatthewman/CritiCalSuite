@@ -141,8 +141,7 @@ public struct EventRow: View {
             id: UUID(),
             name: "Musical Theatre",
             details: "",
-            colorName: "Musical Theatre",
-            hexColor: "277726",
+            colorToken: .blue,
             symbolName: "music.note",
             isDeactivated: false
         ),
@@ -150,7 +149,7 @@ public struct EventRow: View {
             id: UUID(),
             name: "Telegraph",
             details: "",
-            colorName: "purple",
+            colorToken: .blue,
             typicalWordCount: 725,
             typicalFee: 200,
             awardsStars: true,

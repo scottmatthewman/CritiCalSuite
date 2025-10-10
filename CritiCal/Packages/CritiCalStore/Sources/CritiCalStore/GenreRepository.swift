@@ -7,6 +7,7 @@
 
 import SwiftData
 import Foundation
+import CritiCalCore
 import CritiCalModels
 
 @ModelActor
@@ -43,12 +44,12 @@ public actor GenreRepository: GenreReading & GenreWriting {
     public func create(
         name: String,
         details: String,
-        hexColor: String
+        colorToken: ColorToken
     ) async throws -> UUID {
         let newGenre = Genre(
             name: name,
             details: details,
-            hexColor: hexColor
+            colorName: colorToken.rawValue
         )
         modelContext.insert(newGenre)
         do {
@@ -63,7 +64,7 @@ public actor GenreRepository: GenreReading & GenreWriting {
         genreID: UUID,
         name: String?,
         details: String?,
-        hexColor: String?,
+        colorToken: ColorToken?,
         isDeactivated: Bool?
     ) async throws {
         let fd = FetchDescriptor<Genre>(predicate: #Predicate { $0.identifier == genreID })
@@ -73,7 +74,7 @@ public actor GenreRepository: GenreReading & GenreWriting {
 
         if let name { genre.name = name }
         if let details { genre.details = details }
-        if let hexColor { genre.hexColor = hexColor }
+        if let colorToken { genre.colorToken = colorToken }
         if let isDeactivated { genre.isDeactivated = isDeactivated }
 
         do {

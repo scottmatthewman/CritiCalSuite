@@ -131,8 +131,7 @@ public struct EventSnippetView: View {
             id: UUID(),
             name: "Workshop",
             details: "Educational session",
-            colorName: "Workshop",
-            hexColor: "#FF5733",
+            colorToken: .coral,
             symbolName: "wand.and.stars",
             isDeactivated: false
         ),
@@ -140,7 +139,7 @@ public struct EventSnippetView: View {
             id: UUID(),
             name: "The Stage",
             details: "The industry newspaper",
-            colorName: "teal",
+            colorToken: .teal,
             typicalWordCount: 350,
             typicalFee: 80,
             awardsStars: true,

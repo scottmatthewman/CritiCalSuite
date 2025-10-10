@@ -51,7 +51,7 @@ struct EditGenreView: View {
 
         genre.name = model.name
         genre.details = model.details
-        genre.colorName = model.colorToken.rawValue
+        genre.colorToken = model.colorToken
         genre.symbolName = model.symbolName
         genre.isDeactivated = model.isDeactivated
 

@@ -50,7 +50,8 @@ public final class Publication {
     }
 
     public var colorToken: ColorToken {
-        ColorToken(rawValue: colorName) ?? .gray
+        get { ColorToken(rawValue: colorName) ?? .gray }
+        set { self.colorName = newValue.rawValue }
     }
 
     @MainActor

@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import CritiCalModels
 import CritiCalExtensions
 
 public extension GenreEntity {
     /// SwiftUI Color derived from the hex color string
+    @MainActor
     var color: Color {
-        Color(hex: hexColor)
+        guard
+            let colorToken = ColorToken(rawValue: colorName)
+        else { return .accentColor }
+
+        return colorToken.color
     }
 }
+
