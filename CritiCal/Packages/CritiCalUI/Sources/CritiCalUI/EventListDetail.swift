@@ -174,7 +174,8 @@ struct WarningLabel: View {
         publication: DetachedPublication(
             id: UUID(),
             name: "The Reviews Hub",
-            hexColor: "c045b3",
+            details: "",
+            colorName: "purple",
             typicalWordCount: 550,
             typicalFee: nil,
             awardsStars: true,
@@ -190,6 +191,6 @@ struct WarningLabel: View {
                 Text(event.date, format: .dateTime.weekday(.wide).day().month())
             }
         }
-        .listStyle(.grouped)
+        .listStyle(.plain)
     }
 }

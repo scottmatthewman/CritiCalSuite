@@ -1,14 +1,14 @@
 //
-//  GenreForm.swift
+//  PublicationForm.swift
 //  CritiCal
 //
-//  Created by Scott Matthewman on 25/09/2025.
+//  Created by Scott Matthewman on 09/10/2025.
 //
 
 import SwiftUI
 
-struct GenreForm: View {
-    @Bindable var model: GenreFormModel
+struct PublicationForm: View {
+    @Bindable var model: PublicationFormModel
 
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.horizontalSizeClass) private var hSize
@@ -40,7 +40,7 @@ struct GenreForm: View {
             Section {
                 VStack(spacing: 12) {
                     LargeGenreCircle(
-                        symbolName: model.symbolName,
+                        symbolName: "newspaper",
                         color: model.colorToken
                             .color)
                     TextField("Name", text: $model.name)
@@ -54,28 +54,39 @@ struct GenreForm: View {
                             in: .rect(cornerRadius: 12)
                         )
                         .focused($focused, equals: .name)
+                    Toggle("Deactivate publication", isOn: $model.isDeactivated)
+                        .focused($focused, equals: .isDeactivated)
                 }
-                TextField(
-                    "Description (optional)",
-                    text: $model.details,
-                    axis: .vertical
-                )
-                .lineLimit(1...3)
-                .focused($focused, equals: .description)
-                Toggle("Deactivate genre", isOn: $model.isDeactivated)
-                    .focused($focused, equals: .isDeactivated)
             }
             Section("Color") {
                 ColorSelectionField(selection: $model.colorToken, columns: columns)
                     .focused($focused, equals: .color)
             }
-            Section("Icon") {
-                TextField("Search", text: $iconSearch)
-                    .padding(.vertical, 2)
-                    .padding(.horizontal, 8)
-                    .background(.tertiary, in: .capsule)
-                IconSelectionField(selectedSymbol: $model.symbolName, columns: columns)
-                    .focused($focused, equals: .icon)
+            Section {
+                TextField("Website URL", text: $model.urlString)
+                Toggle("Awards Stars", isOn: $model.awardsStars)
+            }
+            Section("Review Defaults") {
+                LabeledContent("Word Count") {
+                    TextField(
+                        "Typical word count",
+                        value: $model.typicalWordCount,
+                        format: .number,
+                        prompt: Text("e.g., 400")
+                    )
+                    .labelsHidden()
+                    .multilineTextAlignment(.trailing)
+                }
+                LabeledContent("Fee (£)") {
+                    TextField(
+                        "Typical fee",
+                        value: $model.typicalFee,
+                        format: .number,
+                        prompt: Text("e.g., 80")
+                    )
+                    .labelsHidden()
+                    .multilineTextAlignment(.trailing)
+                }
             }
         }
         .defaultFocus($focused, .name, priority: .userInitiated)

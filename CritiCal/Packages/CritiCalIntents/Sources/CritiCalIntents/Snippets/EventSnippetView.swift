@@ -139,7 +139,8 @@ public struct EventSnippetView: View {
         publication: DetachedPublication(
             id: UUID(),
             name: "The Stage",
-            hexColor: "48c3e7",
+            details: "The industry newspaper",
+            colorName: "teal",
             typicalWordCount: 350,
             typicalFee: 80,
             awardsStars: true,

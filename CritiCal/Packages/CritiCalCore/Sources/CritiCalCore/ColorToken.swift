@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum ColorToken: String, CaseIterable, Identifiable, Codable {
+public enum ColorToken: String, CaseIterable, Identifiable, Codable, Sendable {
     case tomato   = "#E94635"
     case coral    = "#FA7364"
     case orange   = "#FF9400"

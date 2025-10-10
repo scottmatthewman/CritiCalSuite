@@ -1,8 +1,8 @@
 //
-//  NewGenreView.swift
+//  NewPublicationView.swift
 //  CritiCal
 //
-//  Created by Scott Matthewman on 24/09/2025.
+//  Created by Scott Matthewman on 09/10/2025.
 //
 
 import CritiCalCore
@@ -11,16 +11,16 @@ import CritiCalStore
 import SwiftData
 import SwiftUI
 
-struct NewGenreView: View {
+struct NewPublicationView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
-    @State private var model = GenreFormModel()
+    @State private var model = PublicationFormModel()
 
     var body: some View {
         NavigationStack {
-            GenreForm(model: model)
-                .navigationTitle("New Genre")
+            PublicationForm(model: model)
+                .navigationTitle("New Publication")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(role: .cancel, action: cancel)
@@ -33,7 +33,6 @@ struct NewGenreView: View {
                 .toolbarTitleDisplayMode(.inline)
         }
     }
-
     private func cancel() {
         dismiss()
     }
@@ -41,20 +40,23 @@ struct NewGenreView: View {
     private func save() {
         guard model.isValid else { return }
 
-        let genre = Genre(
+        let publication = Publication(
             name: model.name,
             details: model.details,
             colorName: model.colorToken.rawValue,
-            symbolName: model.symbolName,
+            url: URL(string: model.urlString),
+            typicalWordCount: model.typicalWordCount,
+            typicalFee: model.typicalFee,
+            awardsStars: model.awardsStars,
             isDeactivated: model.isDeactivated
         )
 
-        modelContext.insert(genre)
+        modelContext.insert(publication)
 
         dismiss()
     }
 }
 
-#Preview(traits: .sampleData) {
-    NewGenreView()
+#Preview {
+    NewPublicationView()
 }

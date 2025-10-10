@@ -9,7 +9,10 @@ import Foundation
 
 public extension Event {
     @MainActor
-    static var sampleData: [Event] {
+    static func sampleData(
+        genres: [Genre] = [],
+        publications: [Publication] = []
+    ) -> [Event] {
         let titles = ["A Midsummer Night's Dream", "Hamlet", "Romeo and Juliet", "Macbeth", "The Tempest"]
         let venues: [String: String] = [
             "ID0ADE784CB355FCF": "Theatre Royal Drury Lane",
@@ -21,18 +24,17 @@ public extension Event {
         let calendar = Calendar.current
         let baseDate = calendar.date(bySettingHour: 19, minute: 30, second: 0, of: .now)!
 
-        let genres = Genre.sampleData
-        
         return titles.enumerated().map { index, title in
             let event = Event(title: title)
             event.date = calendar.date(byAdding: .day, value: index * 4, to: baseDate)!
             event.durationMinutes = 105
             event.festivalName = "London Theatre Festival"
             event.genre = genres.randomElement()
+            event.publication = publications.randomElement()
             event.confirmationStatus = ConfirmationStatus.allCases.randomElement()!
             if let venueID = venues.keys.randomElement() {
                 event.venueName = venues[venueID, default: "Unknown Venue"]
-//                event.venueIdentifier = venueID
+                event.venueIdentifier = venueID
             }
 
             // Add lead photo with specified probabilities

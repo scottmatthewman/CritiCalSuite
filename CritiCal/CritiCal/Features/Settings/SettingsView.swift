@@ -24,7 +24,7 @@ public struct SettingsView: View {
                         Label("Genres", systemImage: "list.bullet")
                     }
                     NavigationLink {
-                        Text("Publications View")
+                        PublicationsListView()
                     } label: {
                         Label("Publications", systemImage: "newspaper")
                     }

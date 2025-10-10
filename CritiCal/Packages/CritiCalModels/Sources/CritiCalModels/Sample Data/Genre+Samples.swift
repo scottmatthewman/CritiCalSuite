@@ -8,6 +8,7 @@
 import Foundation
 
 public extension Genre {
+    @MainActor
     static var sampleData: [Genre] {
         [
             Genre(

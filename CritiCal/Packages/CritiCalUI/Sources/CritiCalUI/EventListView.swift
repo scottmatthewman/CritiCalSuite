@@ -18,7 +18,6 @@ public struct EventListView: View {
     @State private var timeframe: EventTimeframe = .future
     @State private var selectedDate: Date = .now
     @State private var interval: DateInterval = .init()
-    @State private var scrollPosition: String? = nil
 
     private var onEventSelected: (UUID) -> Void
 
@@ -58,15 +57,12 @@ public struct EventListView: View {
             EventList(
                 events: filteredEvents,
                 within: interval,
-                scrollPosition: $scrollPosition,
+                selectedDate: $selectedDate,
                 onEventSelected: onEventSelected
             )
         }
         .scrollEdgeEffectStyle(.hard, for: .top)
         .navigationBarHidden(true)
-        .onChange(of: selectedDate, initial: true) {
-            scrollPosition = selectedDate.tagValue
-        }
     }
     
     private func returnToToday() {

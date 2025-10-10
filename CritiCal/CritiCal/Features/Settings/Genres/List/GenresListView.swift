@@ -79,6 +79,7 @@ public struct GenresListView: View {
             GenreRow(genre: genre)
         }
         .foregroundStyle(.primary)
+        .matchedTransitionSource(id: genre.identifier, in: namespace)
     }
 }
 

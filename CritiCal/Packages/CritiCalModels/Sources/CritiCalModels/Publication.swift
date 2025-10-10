@@ -15,26 +15,24 @@ import CritiCalExtensions
 public final class Publication {
     public var identifier: UUID?
     public var name: String = ""
-//    public var details: String = ""
-    public var hexColor: String = "8888"
-//    public var colorName: String = "gray"
-//    public var symbolName: String = "theatermasks"
+    public var details: String = ""
+    public var colorName: String = "gray"
 
-    var typicalWordCount: Int?
-    var typicalFee: Int?
-    var awardsStars: Bool = true
-    var isDeactivated: Bool = false
+    public var url: URL?
+    public var typicalWordCount: Int?
+    public var typicalFee: Int?
+    public var awardsStars: Bool = true
+    public var isDeactivated: Bool = false
 
     @Relationship
     public var events: [Event]?
 
-    init(
+    public init(
         identifier: UUID? = UUID(),
         name: String,
         details: String,
-        hexColor: String,
-//        colorName: String,
-//        symbolName: String,
+        colorName: String,
+        url: URL? = nil,
         typicalWordCount: Int? = nil,
         typicalFee: Int? = nil,
         awardsStars: Bool,
@@ -42,21 +40,21 @@ public final class Publication {
     ) {
         self.identifier = identifier
         self.name = name
-//        self.details = details
-        self.hexColor = hexColor
-//        self.colorName = colorName
-//        self.symbolName = symbolName
+        self.details = details
+        self.colorName = colorName
+        self.url = url
         self.typicalWordCount = typicalWordCount
         self.typicalFee = typicalFee
         self.awardsStars = awardsStars
         self.isDeactivated = isDeactivated
     }
 
-    public var color: Color {
-        Color(hex: hexColor)
+    public var colorToken: ColorToken {
+        ColorToken(rawValue: colorName) ?? .gray
     }
 
-//    public var colorToken: ColorToken {
-//        ColorToken(rawValue: colorName) ?? .blue
-//    }
+    @MainActor
+    public var color: Color {
+        colorToken.color
+    }
 }

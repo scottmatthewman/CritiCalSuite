@@ -31,10 +31,10 @@ public struct EventDetailView: View {
                             .foregroundStyle(.secondary)
                         }
                         if let genre = event.genre {
-                            Label(genre.name, systemImage: "tag")
-                                .tint(genre.color)
+                            Label(genre.name, systemImage: genre.symbolName)
                         }
                     }
+                    .tint(event.genre?.color)
 
                     DisclosureGroup {
                         LabeledContent {
@@ -118,9 +118,7 @@ public struct EventDetailView: View {
             await load()
         }
         .navigationTitle("Event")
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     private func load() async {
@@ -131,7 +129,7 @@ public struct EventDetailView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     let eventId = UUID()
     let event = DetachedEvent(
         id: eventId,
@@ -153,7 +151,8 @@ public struct EventDetailView: View {
         publication: DetachedPublication(
             id: UUID(),
             name: "Telegraph",
-            hexColor: "e4e454",
+            details: "",
+            colorName: "blue",
             typicalWordCount: 725,
             typicalFee: 200,
             awardsStars: true,

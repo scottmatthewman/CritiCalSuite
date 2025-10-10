@@ -18,6 +18,7 @@ public final class Event {
     public var durationMinutes: Int?
     public var festivalName: String = ""
     public var venueName: String = ""
+    public var venueIdentifier: String?
     public var confirmationStatusRaw: String?
     public var url: URL?
     public var details: String = ""
@@ -55,6 +56,7 @@ public final class Event {
         title: String = "",
         festivalName: String = "",
         venueName: String = "",
+        venueIdentifier: String? = nil,
         date: Date = Date.now,
         durationMinutes: Int? = nil,
         confirmationStatusRaw: String? = "draft",
@@ -72,6 +74,7 @@ public final class Event {
         self.title = title
         self.festivalName = festivalName
         self.venueName = venueName
+        self.venueIdentifier = venueIdentifier
         self.date = date
         self.durationMinutes = durationMinutes
         self.confirmationStatusRaw = confirmationStatusRaw

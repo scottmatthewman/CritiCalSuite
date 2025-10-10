@@ -149,7 +149,8 @@ public struct EventRow: View {
         publication: DetachedPublication(
             id: UUID(),
             name: "Telegraph",
-            hexColor: "e4e454",
+            details: "",
+            colorName: "purple",
             typicalWordCount: 725,
             typicalFee: 200,
             awardsStars: true,

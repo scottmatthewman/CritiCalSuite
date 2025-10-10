@@ -20,12 +20,17 @@ extension Date {
     var tagValue: String {
         Self.tagFormatter.string(from: self)
     }
+
+    static func fromTagValue(_ tag: String) -> Date? {
+        tagFormatter.date(from: tag)
+    }
 }
 
 public struct EventList: View {
-    @Binding private var scrollPosition: String?
-
     @Environment(\.calendar) private var calendar
+    @State private var scrollPosition = ScrollPosition(idType: String.self)
+    @Binding private var selectedDate: Date
+    @State private var changingDateProgrammatically = false
 
     // Accept events as parameter instead of querying directly
     private let events: [Event]
@@ -35,18 +40,18 @@ public struct EventList: View {
     public init(
         events: [Event],
         within interval: DateInterval,
-        scrollPosition: Binding<String?>,
+        selectedDate: Binding<Date>,
         onEventSelected: @escaping (UUID) -> Void
     ) {
         self.events = events
-        self.onEventSelected = onEventSelected
         self.interval = interval
-        self._scrollPosition = scrollPosition
+        self._selectedDate = selectedDate
+        self.onEventSelected = onEventSelected
     }
 
     public var body: some View {
-        ScrollViewReader { scrollView in
-            List {
+        ScrollView {
+            VStack(spacing: 20) {
                 ForEach(eventsGroupedByDate) { section in
                     Section {
                         ForEach(section.events) { event in
@@ -60,7 +65,6 @@ public struct EventList: View {
                         }
                     } header: {
                         sectionHeader(for: section.day, in: Date.now)
-                            .padding(.bottom, -16)
                     }
                     .id(section.day.tagValue)
                     .listSectionMargins(.all, 0)
@@ -69,17 +73,39 @@ public struct EventList: View {
                     .headerProminence(.increased)
                 }
             }
-            .listStyle(.plain)
-            .onChange(of: scrollPosition) {
-                guard let scrollPosition else { return }
+            .scenePadding([.horizontal, .top])
+        }
+        .scrollTargetLayout()
+        .scrollPosition($scrollPosition, anchor: .top)
+        .onScrollTargetVisibilityChange(
+            idType: String.self,
+            threshold: 0.9
+        ) { visibleIDs in
+            if !changingDateProgrammatically,
+               let visibleID = visibleIDs.first,
+               let newDate = Date.fromTagValue(visibleID) {
+                changingDateProgrammatically = true
 
-                let availableAnchors = eventsGroupedByDate.map(\.day).map(\.tagValue)
-                let requiredAnchor = availableAnchors.first { $0 >= scrollPosition }
+                selectedDate = newDate
 
-                withAnimation {
-                    scrollView.scrollTo(requiredAnchor, anchor: .top)
-                }
+                DispatchQueue.main
+                    .asyncAfter(
+                        deadline: .now() + 0.2
+                    ) {
+                        changingDateProgrammatically = false
+                    }
             }
+        }
+        .onChange(of: selectedDate) {
+            changingDateProgrammatically = true
+
+            scrollPosition = .init(id: selectedDate.tagValue)
+            DispatchQueue.main
+                .asyncAfter(
+                    deadline: .now() + 0.2
+                ) {
+                    changingDateProgrammatically = false
+                }
         }
     }
 
@@ -109,37 +135,45 @@ public struct EventList: View {
 
         HStack {
             Text(day, format: .dateTime.weekday(.wide))
-                .foregroundStyle(
-                    calendar
-                        .isDateInToday(
-                            day
-                        ) ? .secondary : .primary
-                )
+                .bold()
             Text(day, format: .dateTime.day())
                 .foregroundStyle(.secondary)
-                .fontWeight(.light)
             if isOutsideInterval {
                 Text(day, format: .dateTime.month())
+                    .foregroundStyle(.secondary)
             }
             Spacer()
             if isToday {
                 Text("Today")
+                    .bold()
                     .textCase(.uppercase)
             } else if isTomorrow {
                 Text("Tomorrow")
+                    .bold()
                     .textCase(.uppercase)
             }
         }
+        .font(.headline)
+        .padding(.vertical, 8)
+        .background(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.separator),
+            alignment: .bottom
+        )
     }
 }
 
+
 #Preview(traits: .sampleData) {
-    @Previewable @State var scrollPosition: String?
+    @Previewable @State var selectedDate: Date = .now
+    @Previewable @Query var events: [Event]
 
     let range = Calendar.current.dateInterval(of: .year, for: .now)!
     NavigationStack {
-        EventList(events: [], within: range, scrollPosition: $scrollPosition) {
+        EventList(events: events, within: range, selectedDate: $selectedDate) {
             print("ID selected: \($0)")
         }
     }
 }
+

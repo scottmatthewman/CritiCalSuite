@@ -27,19 +27,11 @@ struct GenreRow: View {
                 }
             }
         } icon: {
-            Circle()
-                .frame(width: 44, height: 44)
-                .foregroundStyle(.tint.quaternary)
-                .overlay(
-                    Image(systemName: "theatermasks")
-                        .resizable()
-                        .scaledToFit()
-                        .padding(4)
-                        .foregroundStyle(.tint)
-                )
+            CircularIcon(systemImage: genre.symbolName)
+                .foregroundStyle(.tint)
+                .background(.tint.quaternary, in: .circle)
+                .tint(genre.color.gradient)
         }
-        .labelStyle(.tintedIcon)
-        .tint(genre.color)
     }
 }
 
