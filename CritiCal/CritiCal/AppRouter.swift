@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import AppSettings
 import CritiCalUI
 import CritiCalIntents
 import CritiCalStore

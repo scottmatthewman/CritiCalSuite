@@ -5,6 +5,7 @@
 //  Created by Scott Matthewman on 25/09/2025.
 //
 
+import CritiCalUI
 import SwiftUI
 
 struct GenreForm: View {
@@ -39,10 +40,8 @@ struct GenreForm: View {
         Form {
             Section {
                 VStack(spacing: 12) {
-                    LargeGenreCircle(
-                        symbolName: model.symbolName,
-                        color: model.colorToken
-                            .color)
+                    CircularIcon(systemImage: model.symbolName, diameter: 100)
+                        .tint(model.color)
                     TextField("Name", text: $model.name)
                         .textInputAutocapitalization(.words)
                         .font(.title)
@@ -66,7 +65,7 @@ struct GenreForm: View {
                     .focused($focused, equals: .isDeactivated)
             }
             Section("Color") {
-                ColorSelectionField(selection: $model.colorToken, columns: columns)
+                ColorTokenField(selection: $model.colorToken, columns: columns)
                     .focused($focused, equals: .color)
             }
             Section("Icon") {
@@ -74,7 +73,7 @@ struct GenreForm: View {
                     .padding(.vertical, 2)
                     .padding(.horizontal, 8)
                     .background(.tertiary, in: .capsule)
-                IconSelectionField(selectedSymbol: $model.symbolName, columns: columns)
+                AppSymbolField(selectedSymbol: $model.symbolName, columns: columns)
                     .focused($focused, equals: .icon)
             }
         }

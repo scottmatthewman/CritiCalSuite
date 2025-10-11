@@ -1,5 +1,5 @@
 //
-//  IconCell.swift
+//  AppSymbolCell.swift
 //  CritiCal
 //
 //  Created by Scott Matthewman on 24/09/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IconCell: View {
+struct AppSymbolCell: View {
     let name: String
     let selected: Bool
     var action: () -> Void
@@ -33,12 +33,12 @@ struct IconCell: View {
     @Previewable @State var isSelected: Bool = false
 
     HStack {
-        IconCell(
+        AppSymbolCell(
             name: "theatermasks",
             selected: isSelected,
             action: { isSelected.toggle() }
         )
-        IconCell(
+        AppSymbolCell(
             name: "checkmark.seal",
             selected: !isSelected,
             action: { isSelected.toggle() }

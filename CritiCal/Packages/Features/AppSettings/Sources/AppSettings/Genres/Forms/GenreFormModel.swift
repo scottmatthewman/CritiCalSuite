@@ -6,7 +6,7 @@
 //
 
 import CritiCalModels
-import Foundation
+import SwiftUI
 
 @Observable
 class GenreFormModel {
@@ -32,6 +32,10 @@ class GenreFormModel {
 
     func stripName() {
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var color: Color {
+        colorToken.color
     }
 
     var isValid: Bool {

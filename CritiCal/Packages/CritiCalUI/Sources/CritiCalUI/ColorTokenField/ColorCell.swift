@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ColorCell: View {
     let color: Color
-    let selected: Bool
+    let isSelected: Bool
     var action: () -> Void
 
     var body: some View {
@@ -17,7 +17,7 @@ struct ColorCell: View {
             ZStack {
                 Circle()
                     .fill(color)
-                if selected {
+                if isSelected {
                     Circle()
                         .strokeBorder(.white.opacity(0.8), lineWidth: 2)
                         .overlay(
@@ -31,7 +31,7 @@ struct ColorCell: View {
             .shadow(radius: 1, y: 1)
         }
         .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
@@ -39,7 +39,7 @@ struct ColorCell: View {
     @Previewable @State var isSelected: Bool = true
 
     HStack {
-        ColorCell(color: .teal, selected: isSelected) { isSelected.toggle() }
-        ColorCell(color: .teal, selected: !isSelected) { isSelected.toggle() }
+        ColorCell(color: .teal, isSelected: isSelected) { isSelected.toggle() }
+        ColorCell(color: .teal, isSelected: !isSelected) { isSelected.toggle() }
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import CritiCalModels
-import Foundation
+import SwiftUI
 
 @Observable
 class PublicationFormModel {
@@ -42,6 +42,10 @@ class PublicationFormModel {
 
     func stripName() {
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var color: Color {
+        colorToken.color
     }
 
     var isValid: Bool {

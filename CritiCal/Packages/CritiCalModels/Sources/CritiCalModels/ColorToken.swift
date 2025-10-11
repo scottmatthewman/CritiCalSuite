@@ -34,3 +34,13 @@ public enum ColorToken: String, CaseIterable, Identifiable, Codable, Sendable {
         Color(hex: rawValue)
     }
 }
+
+extension ColorToken: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        // Add any custom capitalisation here
+        default:
+            rawValue.capitalized
+        }
+    }
+}
