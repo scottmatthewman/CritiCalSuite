@@ -5,7 +5,6 @@
 //  Created by Scott Matthewman on 09/10/2025.
 //
 
-import CritiCalCore
 import CritiCalExtensions
 import CritiCalModels
 import CritiCalStore
@@ -30,14 +29,10 @@ struct PublicationsListView: View {
     var body: some View {
         List {
             Section {
-                ForEach(activePublications) { publication in
-                    row(for: publication)
-                }
+                ForEach(activePublications, content: row)
             }
             Section("Deactivated publications") {
-                ForEach(deactivatedPublications) { publication in
-                    row(for: publication)
-                }
+                ForEach(deactivatedPublications, content: row)
             }
         }
         .navigationTitle("Publications")

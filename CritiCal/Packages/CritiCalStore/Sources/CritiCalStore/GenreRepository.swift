@@ -7,7 +7,6 @@
 
 import SwiftData
 import Foundation
-import CritiCalCore
 import CritiCalModels
 
 @ModelActor

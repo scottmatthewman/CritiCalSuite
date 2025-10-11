@@ -5,7 +5,6 @@
 //  Created by Scott Matthewman on 08/10/2025.
 //
 
-import CritiCalCore
 import CritiCalExtensions
 import Foundation
 import SwiftUI

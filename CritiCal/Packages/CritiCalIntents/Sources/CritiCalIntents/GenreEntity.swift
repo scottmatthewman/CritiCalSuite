@@ -6,7 +6,6 @@
 //
 
 import AppIntents
-import CritiCalCore
 import CritiCalModels
 import Foundation
 

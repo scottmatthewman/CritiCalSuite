@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D20943092E7F2C0D00298B5B /* AllTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D20943082E7F2C0D00298B5B /* AllTests.xctestplan */; };
-		D272B6302E8A73C700613A39 /* CritiCalCore in Frameworks */ = {isa = PBXBuildFile; productRef = D272B62F2E8A73C700613A39 /* CritiCalCore */; };
 		D272B6322E8A73C700613A39 /* CritiCalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6312E8A73C700613A39 /* CritiCalExtensions */; };
 		D272B6342E8A73C700613A39 /* CritiCalIntents in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6332E8A73C700613A39 /* CritiCalIntents */; };
 		D272B6362E8A73C700613A39 /* CritiCalModels in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6352E8A73C700613A39 /* CritiCalModels */; };
@@ -87,7 +86,6 @@
 			files = (
 				D272B6342E8A73C700613A39 /* CritiCalIntents in Frameworks */,
 				D272B6362E8A73C700613A39 /* CritiCalModels in Frameworks */,
-				D272B6302E8A73C700613A39 /* CritiCalCore in Frameworks */,
 				D272B6382E8A73C700613A39 /* CritiCalStore in Frameworks */,
 				D272B6322E8A73C700613A39 /* CritiCalExtensions in Frameworks */,
 				D272B63C2E8A73C700613A39 /* OnboardingFlow in Frameworks */,
@@ -177,7 +175,6 @@
 			);
 			name = CritiCal;
 			packageProductDependencies = (
-				D272B62F2E8A73C700613A39 /* CritiCalCore */,
 				D272B6312E8A73C700613A39 /* CritiCalExtensions */,
 				D272B6332E8A73C700613A39 /* CritiCalIntents */,
 				D272B6352E8A73C700613A39 /* CritiCalModels */,
@@ -691,10 +688,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D272B62F2E8A73C700613A39 /* CritiCalCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CritiCalCore;
-		};
 		D272B6312E8A73C700613A39 /* CritiCalExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CritiCalExtensions;

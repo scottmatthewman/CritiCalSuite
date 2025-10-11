@@ -37,14 +37,10 @@ CritiCalModels sits at the foundation of the app architecture:
 │  CritiCalApp    │
 └─────────┬───────┘
           │
-    ┌─────▼─────┐     ┌──────────────┐     ┌─────────────┐
+    ┌─────▼─────┐     ┌──────────────┐     ┌──────────────┐
     │CritiCalUI │────▶│CritiCalStore │────▶│CritiCalModels│
-    └───────────┘     └──────────────┘     └──────┬──────┘
-                                                   │
-                                          ┌────────▼────────┐
-                                          │  CritiCalCore   │
-                                          │   (Utilities)   │
-                                          └─────────────────┘
+    └───────────┘     └──────────────┘     └──────────────┘
+
 ```
 
 ## Usage Patterns

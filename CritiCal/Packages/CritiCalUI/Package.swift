@@ -17,7 +17,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalCore", path: "../CritiCalCore"),
         .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
         .package(name: "CritiCalStore", path: "../CritiCalStore"),
         .package(name: "CritiCalModels", path: "../CritiCalModels")
@@ -28,7 +27,6 @@ let package = Package(
         .target(
             name: "CritiCalUI",
             dependencies: [
-                "CritiCalCore",
                 "CritiCalExtensions",
                 "CritiCalStore",
                 "CritiCalModels"

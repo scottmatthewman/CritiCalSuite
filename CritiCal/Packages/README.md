@@ -9,7 +9,6 @@ The CritiCal application is built using a clean architecture pattern with separa
 ```
 CritiCal App
 ├── CritiCalModels     (Core data models and detached types)
-├── CritiCalCore       (Shared utilities and UI-agnostic helpers)
 ├── CritiCalStore      (SwiftData persistence implementation)
 ├── CritiCalUI         (SwiftUI presentation layer)
 └── CritiCalIntents    (App Intents for system integration)
@@ -28,15 +27,11 @@ CritiCal App
                                   │             │ (Data Access)   │
                                   │             └─────────┬───────┘
                                   │                       │
-                            ┌─────▼─────────────────────▼─────┐
-                            │        CritiCalModels           │
-                            │    (Core Data Models)           │
-                            └──────────────┬──────────────────┘
-                                           │
-                                  ┌────────▼────────┐
-                                  │  CritiCalCore   │
-                                  │   (Utilities)   │
-                                  └─────────────────┘
+                            ┌─────▼───────────────────────▼─────┐
+                            │         CritiCalModels            │
+                            │      (Core Data Models)           │
+                            └───────────────────────────────────┘
+
 ```
 
 ## Package Responsibilities
@@ -48,14 +43,6 @@ CritiCal App
 - Core enums (`ConfirmationStatus`) used across the application
 - Repository protocols (`EventReading`, `EventWriting`, `GenreReading`, `GenreWriting`)
 - **Dependencies**: CritiCalExtensions (for color utilities)
-
-### CritiCalCore
-**Utilities Layer**
-- UI-agnostic helper types and utilities
-- AppSymbol and CuratedSymbols for SF Symbol management
-- ColorToken enumeration for consistent color palette
-- Shared components used across multiple packages
-- **Dependencies**: None (leaf package)
 
 ### CritiCalStore
 **Data Persistence Layer**

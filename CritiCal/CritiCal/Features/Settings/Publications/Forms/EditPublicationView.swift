@@ -5,7 +5,6 @@
 //  Created by Scott Matthewman on 09/10/2025.
 //
 
-import CritiCalCore
 import CritiCalModels
 import CritiCalStore
 import SwiftData
