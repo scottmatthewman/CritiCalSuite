@@ -16,4 +16,12 @@ public final class AppSettingsReader: SettingsReadable, @unchecked Sendable {
     public var completedOnboardingVersionNumber: Int? {
         Defaults[.completedOnboardingVersion]
     }
+
+    public var preferredTransitMode: TransitMode {
+        Defaults[.preferredTransitMode]
+    }
+
+    public var calculateTravelTime: Bool {
+        Defaults[.calculateTravelTime]
+    }
 }

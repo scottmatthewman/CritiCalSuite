@@ -35,4 +35,23 @@ public final class MockSettingsWriter: SettingsWritable, @unchecked Sendable {
     public func resetOnboarding() {
         suite.removeObject(forKey: Defaults.Keys.completedOnboardingVersion.name)
     }
+
+    public var preferredTransitMode: TransitMode {
+        guard let rawValue = suite.string(forKey: Defaults.Keys.preferredTransitMode.name),
+              let mode = TransitMode(rawValue: rawValue) else {
+            return .publicTransit // default
+        }
+        return mode
+    }
+
+    public func setPreferredTransitMode(_ mode: TransitMode) {
+        suite.set(mode.rawValue, forKey: Defaults.Keys.preferredTransitMode.name)
+    }
+
+    public var calculateTravelTime: Bool {
+        suite.bool(forKey: Defaults.Keys.calculateTravelTime.name)
+    }
+    public func setCalculateTravelTime(_ calculate: Bool) {
+        suite.set(calculate, forKey: Defaults.Keys.calculateTravelTime.name)
+    }
 }

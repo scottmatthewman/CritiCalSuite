@@ -24,4 +24,20 @@ public final class AppSettingsWriter: SettingsWritable, @unchecked Sendable {
     public func resetOnboarding() {
         Defaults.reset(.completedOnboardingVersion)
     }
+
+    public var preferredTransitMode: TransitMode {
+        Defaults[.preferredTransitMode]
+    }
+
+    public func setPreferredTransitMode(_ mode: TransitMode) {
+        Defaults[.preferredTransitMode] = mode
+    }
+
+    public var calculateTravelTime: Bool {
+        Defaults[.calculateTravelTime]
+    }
+
+    public func setCalculateTravelTime(_ calculate: Bool) {
+        Defaults[.calculateTravelTime] = calculate
+    }
 }

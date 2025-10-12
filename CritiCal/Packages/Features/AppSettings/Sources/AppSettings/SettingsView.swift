@@ -5,13 +5,14 @@
 //  Created by Scott Matthewman on 23/09/2025.
 //
 
-import CritiCalExtensions
-import CritiCalUI
-import CritiCalStore
+import CritiCalSettings
 import SwiftUI
 
 public struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Setting(.calculateTravelTime) private var calculateTravelTime
+    @Setting(.preferredTransitMode) private var preferredTransitMode
+    @Setting(.directionsProvider) private var directionsProvider
 
     public init() { }
 
@@ -21,6 +22,19 @@ public struct SettingsView: View {
                 Section("Metadata settings") {
                     NavigationLink("Genres", systemImage: "list.bullet", destination: GenresListView.init)
                     NavigationLink("Publications", systemImage: "newspaper", destination: PublicationsListView.init)
+                }
+
+                Section {
+                    Toggle(isOn: $calculateTravelTime) {
+                        Text("Show travel time estimates")
+                        Text("Always provided by Apple Maps")
+                    }
+                    TransitModePicker(transitMode: $preferredTransitMode)
+                    DirectionsProviderPicker(selection: $directionsProvider)
+                } header: {
+                    Text("Maps and Directions")
+                } footer: {
+                    Text("Your chosen transit mode will be used for travel time estimates, and will be passed to third party directions providers where possible.\n\nDirections open in selected app, or on their website if not available")
                 }
             }
             .navigationTitle("Settings")
@@ -42,6 +56,6 @@ public struct SettingsView: View {
     private func close() { dismiss() }
 }
 
-#Preview(traits: .sampleData) {
+#Preview {
     SettingsView()
 }

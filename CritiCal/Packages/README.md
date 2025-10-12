@@ -16,22 +16,34 @@ CritiCal App
 
 ## Dependency Graph
 
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   CritiCalApp   │     │  CritiCalUI     │     │ CritiCalIntents │
-│  (Main Target)  │────▶│  (Presentation) │     │ (System Intents)│
-└─────────────────┘     └─────────┬───────┘     └─────────┬───────┘
-                                  │                       │
-                                  │             ┌─────────▼───────┐
-                                  │             │  CritiCalStore  │
-                                  │             │ (Data Access)   │
-                                  │             └─────────┬───────┘
-                                  │                       │
-                            ┌─────▼───────────────────────▼─────┐
-                            │         CritiCalModels            │
-                            │      (Core Data Models)           │
-                            └───────────────────────────────────┘
+For convenience, the CritiCal internal packages are listed without the `CritiCal...` prefix.
 
+```mermaid
+---
+config:
+  layout: elk
+---
+flowchart LR
+    subgraph AppFeatures
+        AppSettings
+        OnboardingFlow
+    end
+    subgraph CritiCalInternals
+        Extensions
+        Models
+        Navigation
+        Settings
+        Store
+        UI
+    end
+
+    App --> AppFeatures & Navigation
+    AppSettings --> Models & Extensions & UI & Settings
+    OnboardingFlow --> Settings
+    CritiCalIntents --> CritiCalInternals
+    Models --> Extensions
+    Store --> Models
+    UI --> Extensions & Store & Models
 ```
 
 ## Package Responsibilities
