@@ -1,6 +1,6 @@
 //
 //  OnboardingVersion.swift
-//  OnboardingFlow
+//  CritiCalModels
 //
 //  Created by Scott Matthewman on 22/09/2025.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents the version of the onboarding flow
-public struct OnboardingVersion: Codable, Comparable, Sendable {
+public struct OnboardingVersion: Codable, Comparable, Sendable, Hashable {
     /// The version number of the onboarding flow
     public let version: Int
 

@@ -9,11 +9,15 @@ import AppIntents
 import AppSettings
 import CritiCalUI
 import CritiCalIntents
+import CritiCalModels
+import CritiCalNavigation
 import CritiCalStore
 import OnboardingFlow
+import SwiftData
 import SwiftUI
 
 struct AppRouter: View {
+    @Environment(\.modelContext) private var modelContext
     @Environment(NavigationRouter.self) private var router
     @State private var onboardingSettings = OnboardingSettings()
 
@@ -25,14 +29,14 @@ struct AppRouter: View {
             }
             Tab("Events", systemImage: "theatermasks", value: .events) {
                 NavigationStack(path: $router.eventsPath) {
-                    EventListView { eventID in
-                        router.navigate(toEvent: eventID)
-                    }
-                    .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
-                        switch route {
-                        case .eventDetails(let id):
-                            EventDetailView(id: id)
-                        }
+                    EventListView()
+                        .navigationDestination(for: NavigationRouter.EventTabRoute.self) { route in
+                            switch route {
+                            case .event(let event):
+                                EventDetailView(event: event)
+                            case .eventByIdentifier(let id):
+                                EventDetailViewByID(id: id)
+                            }
                     }
                 }
             }
@@ -50,13 +54,29 @@ struct AppRouter: View {
         }
         .onAppIntentExecution(OpenEventIntent.self) { intent in
             let eventID = intent.target.id
-            router.navigate(toEvent: eventID)
+            Task { await resolve(eventID: eventID) }
         }
         .sheet(isPresented: $router.isSettingsViewPresented) {
             SettingsView()
         }
         .tabBarMinimizeBehavior(.onScrollDown)
         .onboardingFlow(settings: onboardingSettings)
+    }
+
+    private func resolve(eventID: UUID) async {
+        do {
+            var descriptor = FetchDescriptor<Event>(
+                predicate: #Predicate { $0.identifier == eventID }
+            )
+            descriptor.fetchLimit = 1
+            if let event = try modelContext.fetch(descriptor).first {
+                router.navigate(to: event)
+            } else {
+                router.navigate(toEventID: eventID)
+            }
+        } catch {
+            router.navigate(toEventID: eventID)
+        }
     }
 }
 

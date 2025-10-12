@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CritiCalUI",
+    name: "CritiCalSettings",
     platforms: [
         .iOS(.v26),
         .macOS(.v26)
@@ -12,36 +12,30 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CritiCalUI",
-            targets: ["CritiCalUI"]
+            name: "CritiCalSettings",
+            targets: ["CritiCalSettings"]
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
-        .package(name: "CritiCalModels", path: "../CritiCalModels"),
-        .package(name: "CritiCalNavigation", path: "../CritiCalNavigation"),
-        .package(name: "CritiCalStore", path: "../CritiCalStore")
+        .package(url: "https://github.com/sindresorhus/Defaults.git", from: "9.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CritiCalUI",
+            name: "CritiCalSettings",
             dependencies: [
-                "CritiCalExtensions",
-                "CritiCalModels",
-                "CritiCalNavigation",
-                "CritiCalStore"
+                .product(name: "Defaults", package: "Defaults")
             ],
             swiftSettings: [
-                .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
-                .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
+                .defaultIsolation(MainActor.self),
+                .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
                 .enableUpcomingFeature("InferIsolatedConformances")
             ]
         ),
         .testTarget(
-            name: "CritiCalUITests",
-            dependencies: ["CritiCalUI", "CritiCalStore"]
+            name: "CritiCalSettingsTests",
+            dependencies: ["CritiCalSettings"]
         ),
     ]
 )

@@ -6,13 +6,15 @@
 //
 import Foundation
 
-public enum ConfirmationStatus: String, Equatable, CaseIterable, @unchecked Sendable {
+public enum ConfirmationStatus: String, Identifiable, Equatable, CaseIterable, @unchecked Sendable {
     case draft
     case tentative
     case bidForReview
     case awaitingConfirmation
     case confirmed
     case cancelled
+
+    public var id: Self { self }
 }
 
 // Mark: Representation
@@ -27,7 +29,7 @@ public extension ConfirmationStatus {
         case .bidForReview:
             "Bid for Review"
         case .awaitingConfirmation:
-            "Awaiting Confirmation"
+            "TBC"
         case .confirmed:
             "Confirmed"
         case .cancelled:
@@ -78,6 +80,7 @@ extension ConfirmationStatus {
     static let isCancelled: Set<ConfirmationStatus> = [.cancelled]
 
     public func isConfirmed() -> Bool { Self.isConfirmed.contains(self) }
+    public func isNotConfirmed() -> Bool { !isConfirmed() }
     public func isPending() -> Bool { Self.isPending.contains(self) }
     public func isDraft() -> Bool { Self.isDraft.contains(self) }
     public func isCancelled() -> Bool { Self.isCancelled.contains(self) }

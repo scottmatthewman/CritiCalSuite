@@ -7,6 +7,7 @@
 
 import AppIntents
 import CritiCalIntents
+import CritiCalNavigation
 import CritiCalStore
 import CritiCalUI
 import SwiftData

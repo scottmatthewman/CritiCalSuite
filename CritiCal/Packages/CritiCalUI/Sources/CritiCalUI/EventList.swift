@@ -5,9 +5,10 @@
 //  Created by Scott Matthewman on 20/09/2025.
 //
 
-import SwiftUI
-import SwiftData
 import CritiCalModels
+import CritiCalNavigation
+import SwiftData
+import SwiftUI
 
 extension Date {
     static let tagFormatter: DateFormatter = {
@@ -28,25 +29,24 @@ extension Date {
 
 public struct EventList: View {
     @Environment(\.calendar) private var calendar
+    @Environment(NavigationRouter.self) private var router
+
     @State private var scrollPosition = ScrollPosition(idType: String.self)
     @Binding private var selectedDate: Date
     @State private var changingDateProgrammatically = false
 
     // Accept events as parameter instead of querying directly
     private let events: [Event]
-    private var onEventSelected: (UUID) -> Void
     private var interval: DateInterval
 
     public init(
         events: [Event],
         within interval: DateInterval,
         selectedDate: Binding<Date>,
-        onEventSelected: @escaping (UUID) -> Void
     ) {
         self.events = events
         self.interval = interval
         self._selectedDate = selectedDate
-        self.onEventSelected = onEventSelected
     }
 
     public var body: some View {
@@ -55,10 +55,11 @@ public struct EventList: View {
                 ForEach(eventsGroupedByDate) { section in
                     Section {
                         ForEach(section.events) { event in
-                            Button {
-                                onEventSelected(event.id)
-                            } label: {
-                                EventListDetail(event: event)
+                            NavigationLink(
+                                value: NavigationRouter.EventTabRoute
+                                    .event(event)
+                            ) {
+                                EventListDetail(event: event.detached())
                             }
                             .buttonStyle(.plain)
                             .listRowSeparator(.hidden)
@@ -111,14 +112,14 @@ public struct EventList: View {
 
     struct EventSection: Identifiable {
         var day: Date
-        var events: [DetachedEvent]
+        var events: [Event]
 
         var id: Date { day }
     }
 
     var eventsGroupedByDate: [EventSection] {
-        let grouped = Dictionary(grouping: events.map { $0.detached() }) { detached in
-            calendar.startOfDay(for: detached.date)
+        let grouped = Dictionary(grouping: events) { event in
+            calendar.startOfDay(for: event.date)
         }
         return grouped.map { (day, events) in
             EventSection(day: day, events: events.sorted { $0.date < $1.date })
@@ -171,9 +172,7 @@ public struct EventList: View {
 
     let range = Calendar.current.dateInterval(of: .year, for: .now)!
     NavigationStack {
-        EventList(events: events, within: range, selectedDate: $selectedDate) {
-            print("ID selected: \($0)")
-        }
+        EventList(events: events, within: range, selectedDate: $selectedDate)
     }
 }
 

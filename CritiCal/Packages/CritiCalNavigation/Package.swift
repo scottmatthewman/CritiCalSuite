@@ -4,23 +4,27 @@
 import PackageDescription
 
 let package = Package(
-    name: "OnboardingFlow",
+    name: "CritiCalNavigation",
     platforms: [
         .iOS(.v26),
         .macOS(.v26)
     ],
     products: [
+        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "OnboardingFlow",
-            targets: ["OnboardingFlow"]),
+            name: "CritiCalNavigation",
+            targets: ["CritiCalNavigation"]
+        ),
     ],
     dependencies: [
-        .package(name: "CritiCalSettings", path: "../../CritiCalSettings")
+        .package(name: "CritiCalModels", path: "../CritiCalModels")
     ],
     targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "OnboardingFlow",
-            dependencies: ["CritiCalSettings"],
+            name: "CritiCalNavigation",
+            dependencies: ["CritiCalModels"],
             swiftSettings: [
                 .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
@@ -28,8 +32,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "OnboardingFlowTests",
-            dependencies: ["OnboardingFlow"]
+            name: "CritiCalNavigationTests",
+            dependencies: ["CritiCalNavigation"]
         ),
     ]
 )

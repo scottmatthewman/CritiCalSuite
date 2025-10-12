@@ -50,7 +50,7 @@ public extension Publication {
             id: identifier ?? UUID(),
             name: name,
             details: details,
-            colorToken: .cyan,
+            colorToken: colorToken,
             typicalWordCount: typicalWordCount,
             typicalFee: typicalFee,
             awardsStars: awardsStars,

@@ -33,6 +33,7 @@ public struct OnboardingFlowModifier: ViewModifier {
                     settings.completeOnboarding()
                 }
                 .frame(minWidth: 600, minHeight: 500)
+                .interactiveDismissDisabled()
             }
             #endif
     }

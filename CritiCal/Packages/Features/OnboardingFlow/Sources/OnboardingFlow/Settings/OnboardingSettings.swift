@@ -6,69 +6,45 @@
 //
 
 import SwiftUI
+import CritiCalSettings
 
 /// Manages the persistence of onboarding state
 @Observable
 public final class OnboardingSettings {
-    private let userDefaults: UserDefaults
-    private let onboardingVersionKey = "com.critical.onboardingVersion"
+    private let settings: any SettingsWritable
 
     /// The version of onboarding that was last completed
-    @ObservationIgnored
-    private var _completedVersion: OnboardingVersion?
-
     public var completedVersion: OnboardingVersion? {
         get {
-            _completedVersion
+            guard let versionNumber = settings.completedOnboardingVersionNumber else {
+                return nil
+            }
+            return OnboardingVersion(version: versionNumber)
         }
         set {
-            _completedVersion = newValue
-            saveCompletedVersion()
+            settings.setCompletedOnboardingVersionNumber(newValue?.version)
         }
     }
 
     /// Whether the current version of onboarding should be shown
     public var shouldShowOnboarding: Bool {
         guard let completedVersion else {
-            // Never shown onboarding before
             return true
         }
-        // Show if current version is newer than completed version
         return OnboardingVersion.current > completedVersion
     }
 
-    public init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-        self._completedVersion = loadCompletedVersion()
+    public init(settings: any SettingsWritable = AppSettingsWriter.shared) {
+        self.settings = settings
     }
 
     /// Mark the current version of onboarding as completed
     public func completeOnboarding() {
-        completedVersion = OnboardingVersion.current
+        completedVersion = .current
     }
 
     /// Reset onboarding (useful for testing)
     public func resetOnboarding() {
-        completedVersion = nil
-        userDefaults.removeObject(forKey: onboardingVersionKey)
-    }
-
-    // MARK: - Private
-
-    private func loadCompletedVersion() -> OnboardingVersion? {
-        guard let data = userDefaults.data(forKey: onboardingVersionKey),
-              let version = try? JSONDecoder().decode(OnboardingVersion.self, from: data) else {
-            return nil
-        }
-        return version
-    }
-
-    private func saveCompletedVersion() {
-        if let version = _completedVersion,
-           let data = try? JSONEncoder().encode(version) {
-            userDefaults.set(data, forKey: onboardingVersionKey)
-        } else {
-            userDefaults.removeObject(forKey: onboardingVersionKey)
-        }
+        settings.resetOnboarding()
     }
 }

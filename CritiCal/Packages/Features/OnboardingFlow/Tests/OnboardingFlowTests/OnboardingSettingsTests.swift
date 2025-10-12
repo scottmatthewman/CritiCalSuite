@@ -7,6 +7,7 @@
 
 import Testing
 import Foundation
+import CritiCalSettings
 @testable import OnboardingFlow
 
 @Suite("OnboardingSettings") @MainActor
@@ -17,7 +18,8 @@ struct OnboardingSettingsTests {
         let userDefaults = UserDefaults(suiteName: "test.onboarding")!
         userDefaults.removePersistentDomain(forName: "test.onboarding")
 
-        let settings = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings = MockSettingsWriter(suite: userDefaults)
+        let settings = OnboardingSettings(settings: mockSettings)
 
         #expect(settings.shouldShowOnboarding == true)
         #expect(settings.completedVersion == nil)
@@ -31,7 +33,8 @@ struct OnboardingSettingsTests {
         let userDefaults = UserDefaults(suiteName: "test.onboarding.completed")!
         userDefaults.removePersistentDomain(forName: "test.onboarding.completed")
 
-        let settings = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings = MockSettingsWriter(suite: userDefaults)
+        let settings = OnboardingSettings(settings: mockSettings)
 
         // Complete onboarding
         settings.completeOnboarding()
@@ -48,7 +51,8 @@ struct OnboardingSettingsTests {
         let userDefaults = UserDefaults(suiteName: "test.onboarding.version")!
         userDefaults.removePersistentDomain(forName: "test.onboarding.version")
 
-        let settings = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings = MockSettingsWriter(suite: userDefaults)
+        let settings = OnboardingSettings(settings: mockSettings)
 
         // Set completed version to older version
         settings.completedVersion = OnboardingVersion(version: OnboardingVersion.current.version - 1)
@@ -64,11 +68,13 @@ struct OnboardingSettingsTests {
         let userDefaults = UserDefaults(suiteName: "test.onboarding.persist")!
         userDefaults.removePersistentDomain(forName: "test.onboarding.persist")
 
-        let settings1 = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings1 = MockSettingsWriter(suite: userDefaults)
+        let settings1 = OnboardingSettings(settings: mockSettings1)
         settings1.completeOnboarding()
 
         // Create new instance with same UserDefaults
-        let settings2 = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings2 = MockSettingsWriter(suite: userDefaults)
+        let settings2 = OnboardingSettings(settings: mockSettings2)
 
         #expect(settings2.shouldShowOnboarding == false)
         #expect(settings2.completedVersion == OnboardingVersion.current)
@@ -82,7 +88,8 @@ struct OnboardingSettingsTests {
         let userDefaults = UserDefaults(suiteName: "test.onboarding.reset")!
         userDefaults.removePersistentDomain(forName: "test.onboarding.reset")
 
-        let settings = OnboardingSettings(userDefaults: userDefaults)
+        let mockSettings = MockSettingsWriter(suite: userDefaults)
+        let settings = OnboardingSettings(settings: mockSettings)
         settings.completeOnboarding()
 
         #expect(settings.shouldShowOnboarding == false)

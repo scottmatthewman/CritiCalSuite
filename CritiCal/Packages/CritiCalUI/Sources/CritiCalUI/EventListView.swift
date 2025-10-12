@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import CritiCalModels
+import CritiCalNavigation
 
 public struct EventListView: View {
     @Environment(\.calendar) private var calendar
@@ -19,13 +20,7 @@ public struct EventListView: View {
     @State private var selectedDate: Date = .now
     @State private var interval: DateInterval = .init()
 
-    private var onEventSelected: (UUID) -> Void
-
-    public init(
-        onEventSelected: @escaping (UUID) -> Void
-    ) {
-        self.onEventSelected = onEventSelected
-        
+    public init() {
         // Initialize the query with a default predicate (will be updated dynamically)
         let defaultPredicate: Predicate<Event> = #Predicate { _ in true }
         _events = Query(
@@ -57,8 +52,7 @@ public struct EventListView: View {
             EventList(
                 events: filteredEvents,
                 within: interval,
-                selectedDate: $selectedDate,
-                onEventSelected: onEventSelected
+                selectedDate: $selectedDate
             )
         }
         .scrollEdgeEffectStyle(.hard, for: .top)
@@ -79,6 +73,7 @@ public struct EventListView: View {
 
 #Preview(traits: .sampleData) {
     NavigationStack {
-        EventListView(onEventSelected: { print($0) })
+        EventListView()
     }
+    .environment(NavigationRouter())
 }

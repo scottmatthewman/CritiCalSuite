@@ -5,6 +5,7 @@
 //  Created by Scott Matthewman on 26/09/2025.
 //
 
+import CritiCalNavigation
 import SwiftUI
 
 struct HomeView: View {

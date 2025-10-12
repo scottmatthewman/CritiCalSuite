@@ -15,6 +15,7 @@
 		D272B63A2E8A73C700613A39 /* CritiCalUI in Frameworks */ = {isa = PBXBuildFile; productRef = D272B6392E8A73C700613A39 /* CritiCalUI */; };
 		D272B63C2E8A73C700613A39 /* OnboardingFlow in Frameworks */ = {isa = PBXBuildFile; productRef = D272B63B2E8A73C700613A39 /* OnboardingFlow */; };
 		D2B3DA6F2E9A82DA003A20E2 /* AppSettings in Frameworks */ = {isa = PBXBuildFile; productRef = D2B3DA6E2E9A82DA003A20E2 /* AppSettings */; };
+		D2B3DA752E9AAB99003A20E2 /* CritiCalNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = D2B3DA742E9AAB99003A20E2 /* CritiCalNavigation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 				D272B6362E8A73C700613A39 /* CritiCalModels in Frameworks */,
 				D272B6382E8A73C700613A39 /* CritiCalStore in Frameworks */,
 				D272B6322E8A73C700613A39 /* CritiCalExtensions in Frameworks */,
+				D2B3DA752E9AAB99003A20E2 /* CritiCalNavigation in Frameworks */,
 				D272B63C2E8A73C700613A39 /* OnboardingFlow in Frameworks */,
 				D272B63A2E8A73C700613A39 /* CritiCalUI in Frameworks */,
 			);
@@ -184,6 +186,7 @@
 				D272B6392E8A73C700613A39 /* CritiCalUI */,
 				D272B63B2E8A73C700613A39 /* OnboardingFlow */,
 				D2B3DA6E2E9A82DA003A20E2 /* AppSettings */,
+				D2B3DA742E9AAB99003A20E2 /* CritiCalNavigation */,
 			);
 			productName = CritiCal;
 			productReference = D2145E7B2E7C23BF00699882 /* CritiCal.app */;
@@ -718,6 +721,10 @@
 		D2B3DA6E2E9A82DA003A20E2 /* AppSettings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppSettings;
+		};
+		D2B3DA742E9AAB99003A20E2 /* CritiCalNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CritiCalNavigation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
