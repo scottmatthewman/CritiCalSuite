@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CritiCalUI",
+    name: "CritiCalMaps",
     platforms: [
         .iOS(.v26),
         .macOS(.v26)
@@ -12,31 +12,19 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CritiCalUI",
-            targets: ["CritiCalUI"]
+            name: "CritiCalMaps",
+            targets: ["CritiCalMaps"]
         ),
     ],
     dependencies: [
-        .package(name: "CritiCalExtensions", path: "../CritiCalExtensions"),
-        .package(name: "CritiCalMaps", path: "../CritiCalMaps"),
-        .package(name: "CritiCalModels", path: "../CritiCalModels"),
-        .package(name: "CritiCalNavigation", path: "../CritiCalNavigation"),
         .package(name: "CritiCalSettings", path: "../CritiCalSettings"),
-        .package(name: "CritiCalStore", path: "../CritiCalStore")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CritiCalUI",
-            dependencies: [
-                "CritiCalExtensions",
-                "CritiCalMaps",
-                "CritiCalModels",
-                "CritiCalNavigation",
-                "CritiCalSettings",
-                "CritiCalStore"
-            ],
+            name: "CritiCalMaps",
+            dependencies: ["CritiCalSettings"],
             swiftSettings: [
                 .defaultIsolation(MainActor.self),                 // Swift 6.2 default actor isolation
                 .enableUpcomingFeature("NonisolatedNonsendingByDefault"), // “Approachable Concurrency”
@@ -44,8 +32,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "CritiCalUITests",
-            dependencies: ["CritiCalUI", "CritiCalStore"]
+            name: "CritiCalMapsTests",
+            dependencies: ["CritiCalMaps"]
         ),
     ]
 )

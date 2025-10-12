@@ -6,7 +6,9 @@
 //
 
 import CritiCalExtensions
+import CritiCalMaps
 import CritiCalModels
+import CritiCalSettings
 import CritiCalStore
 import MapKit
 import SwiftData
@@ -20,6 +22,8 @@ enum MapLoadingState {
 
 public struct EventMapDetails: View {
     private let event: Event
+    @ReadOnlySetting(.calculateTravelTime) private var calculateTravelTime
+    @ReadOnlySetting(.preferredTransitMode) private var transitMode
     @State private var loadingState: MapLoadingState = .loading
     @State private var mapItemToShow: MKMapItem?
 
@@ -56,17 +60,29 @@ public struct EventMapDetails: View {
         VStack(alignment: .leading) {
             Text("One-line address of the theatre")
                 .font(.subheadline)
-                .redacted(reason: .placeholder)
             Text("venue-website.com")
                 .foregroundStyle(.tint)
                 .font(.subheadline)
-                .redacted(reason: .placeholder)
             ProgressView()
                 .frame(height: 160)
                 .frame(maxWidth: .infinity)
                 .background(.quaternary)
                 .clipShape(.rect(cornerRadius: 20))
+            HStack {
+                if calculateTravelTime {
+                    Text("60 mins travel")
+                }
+                Spacer()
+                Text("Directions in app")
+            }
+            .foregroundStyle(.secondary)
+            if calculateTravelTime {
+                Text("Travel times are approximate. Check before travel.")
+                    .font(.footnote)
+                    .foregroundStyle(.tertiary)
+            }
         }
+        .redacted(reason: .placeholder)
     }
 
     func resolvedView(mapItem: MKMapItem) -> some View {
@@ -90,7 +106,16 @@ public struct EventMapDetails: View {
             }
             .frame(height: 160)
             .clipShape(.rect(cornerRadius: 20))
-
+            HStack {
+                TravelTimeView(destination: mapItem)
+                Spacer()
+                OpenDirectionsButton(destination: mapItem)
+            }
+            if calculateTravelTime {
+                Text("Travel times are approximate. Check before travel.")
+                    .font(.footnote)
+                    .foregroundStyle(.tertiary)
+            }
         }
     }
 

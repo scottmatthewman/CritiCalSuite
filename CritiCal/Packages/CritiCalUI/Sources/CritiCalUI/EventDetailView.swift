@@ -79,21 +79,28 @@ public struct EventDetailView: View {
                 EventMapDetails(event: event)
                     .scenePadding(.horizontal)
 
-                if let url = event.url {
-                    Link(destination: url) {
-                        LabeledContent {
-                            Text(url.trimmedHost ?? url.absoluteString)
-                        } label: {
-                            Label("Website", systemImage: "globe")
+                Divider()
+
+                VStack(alignment: .leading) {
+                    if let url = event.url {
+                        Link(destination: url) {
+                            LabeledContent {
+                                Text(url.trimmedHost ?? url.absoluteString)
+                            } label: {
+                                Label("Website", systemImage: "globe")
+                            }
                         }
                     }
-                }
 
-                if event.details.isEmpty == false {
-                    Text(event.details)
-                        .lineSpacing(4.0)
+                    if event.details.isEmpty == false {
+                        Text(event.details)
+                            .lineSpacing(4.0)
+                    }
                 }
+                .scenePadding(.horizontal)
             }
+
+            
         }
         .listStyle(.plain)
         .navigationTitle("Event")

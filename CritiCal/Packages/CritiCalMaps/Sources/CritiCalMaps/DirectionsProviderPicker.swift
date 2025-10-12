@@ -12,7 +12,7 @@ public struct DirectionsProviderPicker: View {
     private var title: LocalizedStringKey
     @Binding private var selection: DirectionsProvider
 
-    init(
+    public init(
         _ title: LocalizedStringKey = "Directions Provider",
         selection: Binding<DirectionsProvider>
     ) {
@@ -22,11 +22,15 @@ public struct DirectionsProviderPicker: View {
 
     public var body: some View {
         Picker("Directions Provider", selection: $selection) {
-            ForEach(DirectionsProvider.allCases, id: \.self) { provider in
+            ForEach(availableProviders, id: \.self) { provider in
                 Text(provider.displayName)
                     .tag(provider)
             }
         }
+    }
+
+    private var availableProviders: [DirectionsProvider] {
+        DirectionsProvider.allCases.filter(\.canBeUsedForDirections)
     }
 }
 

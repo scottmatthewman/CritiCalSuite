@@ -5,6 +5,7 @@
 //  Created by Scott Matthewman on 23/09/2025.
 //
 
+import CritiCalMaps
 import CritiCalSettings
 import SwiftUI
 
@@ -34,7 +35,7 @@ public struct SettingsView: View {
                 } header: {
                     Text("Maps and Directions")
                 } footer: {
-                    Text("Your chosen transit mode will be used for travel time estimates, and will be passed to third party directions providers where possible.\n\nDirections open in selected app, or on their website if not available")
+                    Text("Your chosen transit mode will be used for travel time estimates, and will be passed to third party directions providers where possible. Not all providers support all transit modes.\n\nDirections open in selected app, or on their website if not available")
                 }
             }
             .navigationTitle("Settings")
